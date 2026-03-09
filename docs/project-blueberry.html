@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>蓝莓骑行首页 · 野野 × 小野</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#06080D;color:#E8ECF1;font-family:-apple-system,'SF Pro Display','PingFang SC','Helvetica Neue',sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:#3B82F6;text-decoration:none}
+.back{position:fixed;bottom:24px;right:24px;z-index:100;font-size:13px;color:rgba(255,255,255,0.7);display:flex;align-items:center;gap:6px;transition:all 0.3s;background:rgba(6,8,13,0.7);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:10px 18px;border-radius:24px;border:1px solid rgba(255,255,255,0.1)}
+.back:hover{color:#fff;border-color:rgba(255,255,255,0.3)}
+.hero-img{width:100%;height:60vh;min-height:360px;object-fit:cover;display:block;filter:brightness(0.7)}
+.hero-overlay{position:relative;margin-top:-120px;padding:0 24px;max-width:800px;margin-left:auto;margin-right:auto;z-index:2}
+.hero-overlay h1{font-size:clamp(32px,5vw,48px);font-weight:800;letter-spacing:-1px;margin-bottom:8px}
+.hero-overlay .sub{font-size:16px;color:rgba(255,255,255,0.55);margin-bottom:24px}
+.tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:40px}
+.tags span{font-size:11px;padding:4px 12px;border-radius:20px;background:rgba(59,130,246,0.12);color:#3B82F6}
+.content{max-width:800px;margin:0 auto;padding:0 24px 80px}
+.content h2{font-size:22px;font-weight:700;margin:48px 0 16px;letter-spacing:-0.3px}
+.content p{font-size:15px;color:rgba(255,255,255,0.6);margin-bottom:16px;line-height:1.8}
+.content ul{padding-left:20px;margin-bottom:16px}
+.content li{font-size:14px;color:rgba(255,255,255,0.55);margin-bottom:8px}
+.code-block{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:20px 24px;margin:16px 0 24px;overflow-x:auto;font-family:'SF Mono','Fira Code',monospace;font-size:13px;color:rgba(255,255,255,0.7);line-height:1.6;white-space:pre}
+.highlight{background:linear-gradient(135deg,rgba(59,130,246,0.08),rgba(249,115,22,0.06));border:1px solid rgba(59,130,246,0.12);border-radius:16px;padding:24px;margin:24px 0}
+.highlight h3{font-size:16px;font-weight:600;margin-bottom:8px}
+.highlight p{font-size:14px;color:rgba(255,255,255,0.55);margin:0}
+/* Phone Mockup Gallery */
+.phone-gallery{display:flex;gap:24px;overflow-x:auto;padding:24px 0 32px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+.phone-gallery::-webkit-scrollbar{height:4px}
+.phone-gallery::-webkit-scrollbar-track{background:transparent}
+.phone-gallery::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:4px}
+.phone-frame{flex-shrink:0;width:260px;scroll-snap-align:center}
+.phone-device{width:260px;height:520px;border-radius:36px;border:3px solid rgba(255,255,255,0.12);background:#111;position:relative;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.6)}
+.phone-device::before{content:'';position:absolute;top:12px;left:50%;transform:translateX(-50%);width:80px;height:24px;border-radius:12px;background:rgba(0,0,0,0.9);z-index:10}
+.app-screen{width:100%;height:100%;position:relative;overflow:hidden;overflow-y:auto}
+.app-screen::-webkit-scrollbar{display:none}
+.phone-label{text-align:center;margin-top:12px;font-size:12px;color:rgba(255,255,255,0.4)}
+</style>
+</head>
+<body>
+<a href="index.html#projects" class="back">← 返回总览</a>
+<img class="hero-img" src="https://images.unsplash.com/photo-1571333250630-f0230c320b6d?w=1400&q=80" alt="蓝莓骑行">
+<div class="hero-overlay">
+  <h1>蓝莓骑行 首页</h1>
+  <div class="sub">Figma 设计稿 → 代码像素级还原 · React Native</div>
+  <div class="tags"><span>Figma 还原</span><span>品牌切换</span><span>周卡体系</span><span>筛选系统</span><span>纯 JS</span></div>
+</div>
+<div class="content">
+  <h2>界面预览</h2>
+  <p>蓝莓骑行首页的核心界面——Figma 设计稿像素级还原：</p>
+  <div class="phone-gallery">
+    <div class="phone-frame">
+      <div class="phone-device">
+        <div class="app-screen" style="background:#F2F2F8;font-family:-apple-system,'SF Pro Display','PingFang SC',sans-serif;">
+          <div style="position:relative;height:230px;overflow:hidden;">
+            <img src="https://images.unsplash.com/photo-1544191696-102dbdaeeaa0?w=600&q=60" style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;" alt="">
+            <div style="position:absolute;top:0;left:0;right:0;height:100%;background:linear-gradient(180deg,rgba(0,0,0,0.55) 0%,transparent 40%,transparent 60%,rgba(0,0,0,0.5) 100%);"></div>
+            <div style="position:absolute;top:24px;left:10px;right:10px;z-index:2;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                <div style="display:flex;align-items:center;gap:3px;">
+                  <img src="https://img.icons8.com/color/96/blueberry.png" style="width:12px;height:12px;border-radius:2px;" alt="">
+                  <span style="font-size:10px;font-weight:700;color:#fff;">蓝莓骑行</span>
+                </div>
+                <div style="background:rgba(255,255,255,0.7);border-radius:50px;padding:2px 6px;display:flex;align-items:center;gap:3px;">
+                  <div style="width:4px;height:4px;border-radius:2px;background:#000;"></div>
+                  <div style="width:2px;height:2px;border-radius:1px;background:#000;"></div>
+                </div>
+              </div>
+              <div style="display:flex;gap:10px;margin-bottom:10px;">
+                <span style="font-size:9px;font-weight:600;color:#fff;">精选</span>
+                <span style="font-size:8px;color:rgba(255,255,255,0.6);">门店探索</span>
+                <span style="font-size:8px;color:rgba(255,255,255,0.6);">最新赛事</span>
+                <span style="font-size:8px;color:rgba(255,255,255,0.6);">社区讨论</span>
+              </div>
+              <div style="margin-top:16px;">
+                <div style="font-size:13px;font-weight:600;color:#fff;letter-spacing:0.3px;">来吧·一起骑行！</div>
+                <div style="font-size:8px;color:#fff;font-weight:300;letter-spacing:-0.2px;">城市Ebike-和她一起轻松出行</div>
+              </div>
+              <div style="background:#fff;border-radius:50px;height:20px;display:flex;align-items:center;justify-content:center;margin-top:8px;">
+                <span style="font-size:7px;color:#000;">探索更多</span>
+              </div>
+              <div style="display:flex;justify-content:center;gap:3px;margin-top:8px;">
+                <div style="width:10px;height:3px;border-radius:2px;background:#fff;"></div>
+                <div style="width:3px;height:3px;border-radius:2px;background:rgba(255,255,255,0.3);"></div>
+                <div style="width:3px;height:3px;border-radius:2px;background:rgba(255,255,255,0.3);"></div>
+                <div style="width:3px;height:3px;border-radius:2px;background:rgba(255,255,255,0.3);"></div>
+              </div>
+            </div>
+          </div>
+          <div style="padding:8px 10px;">
+            <div style="display:flex;gap:4px;overflow:hidden;margin-bottom:10px;">
+              <div style="width:47px;height:60px;border-radius:6px;overflow:hidden;position:relative;">
+                <img src="https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=200&q=60" style="width:100%;height:100%;object-fit:cover;" alt="">
+                <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.5));padding:2px;text-align:center;"><span style="font-size:7px;color:#fff;font-weight:600;">城市通勤</span></div>
+              </div>
+              <div style="width:47px;height:60px;border-radius:6px;overflow:hidden;position:relative;">
+                <img src="https://images.unsplash.com/photo-1571333250630-f0230c320b6d?w=200&q=60" style="width:100%;height:100%;object-fit:cover;" alt="">
+                <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.5));padding:2px;text-align:center;"><span style="font-size:7px;color:#fff;font-weight:600;">公路竞技</span></div>
+              </div>
+              <div style="width:47px;height:60px;border-radius:6px;overflow:hidden;position:relative;">
+                <img src="https://images.unsplash.com/photo-1532298229144-0ec0c57515c7?w=200&q=60" style="width:100%;height:100%;object-fit:cover;" alt="">
+                <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.5));padding:2px;text-align:center;"><span style="font-size:7px;color:#fff;font-weight:600;">E-Bike</span></div>
+              </div>
+              <div style="width:47px;height:60px;border-radius:6px;overflow:hidden;position:relative;">
+                <img src="https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=200&q=60" style="width:100%;height:100%;object-fit:cover;" alt="">
+                <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.5));padding:2px;text-align:center;"><span style="font-size:7px;color:#fff;font-weight:600;">儿童专属</span></div>
+              </div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+              <span style="font-size:11px;font-weight:600;color:#0A0519;letter-spacing:0.2px;">周周上新</span>
+              <span style="font-size:8px;color:#999;">探索更多 ›</span>
+            </div>
+            <div style="display:flex;gap:4px;margin-bottom:4px;">
+              <span style="font-size:8px;font-weight:600;color:#0A0519;background:#fff;padding:2px 6px;border-radius:50px;">TEEK</span>
+              <span style="font-size:8px;color:#333;opacity:0.9;">Blueberry</span>
+              <span style="font-size:8px;color:#333;opacity:0.8;">小布</span>
+            </div>
+            <div style="position:relative;height:160px;margin-top:4px;">
+              <div style="position:absolute;width:124px;height:162px;background:#1C3762;border-radius:6px;left:50%;top:50%;transform:translate(-50%,-50%) rotate(3deg);opacity:0.5;"></div>
+              <div style="position:absolute;width:124px;height:162px;background:#1C3762;border-radius:6px;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2;padding:6px;overflow:hidden;">
+                <div style="background:#202229;border-radius:3px;padding:1px 4px;display:inline-block;margin-bottom:4px;border:0.5px solid #1D1F24;"><span style="font-size:6px;color:#fff;">推荐榜NO.1</span></div>
+                <div style="font-size:11px;font-weight:600;color:#000;letter-spacing:-0.2px;">TREK Domane AL 2</div>
+                <div style="font-size:7px;color:#666;">碳纤维材质，兼具超轻重量</div>
+                <img src="https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=300&q=60" style="width:100%;height:55px;object-fit:cover;border-radius:4px;margin-top:4px;" alt="">
+                <div style="background:rgba(255,255,255,0.16);border:0.5px solid rgba(255,255,255,0.52);border-radius:4px;padding:3px 6px;display:flex;justify-content:space-between;align-items:center;margin-top:4px;">
+                  <span style="font-size:10px;color:#fff;">¥199/日起租</span>
+                  <span style="font-size:8px;color:#fff;background:rgba(255,255,255,0.53);padding:2px 6px;border-radius:4px;">去选购</span>
+                </div>
+              </div>
+              <div style="position:absolute;width:124px;height:162px;background:#1C3762;border-radius:6px;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-3deg);opacity:0.3;"></div>
+            </div>
+          </div>
+          <div style="position:absolute;bottom:0;left:0;right:0;">
+            <div style="width:183px;height:32px;border-radius:17px;background:#0F0F0F;margin:0 auto;display:flex;align-items:center;justify-content:space-evenly;position:relative;overflow:hidden;">
+              <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(255,255,255,0.1);border-radius:17px;"></div>
+              <div style="text-align:center;z-index:1;width:26px;height:26px;border-radius:13px;background:#0A0519;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+                <span style="font-size:9px;color:#fff;">⌂</span>
+                <span style="font-size:5px;color:rgba(255,255,255,0.9);">主页</span>
+              </div>
+              <div style="text-align:center;z-index:1;">
+                <span style="font-size:9px;color:rgba(255,255,255,0.5);">⚙</span>
+                <div style="font-size:5px;color:rgba(255,255,255,0.35);">控车</div>
+              </div>
+              <div style="text-align:center;z-index:1;">
+                <span style="font-size:9px;color:rgba(255,255,255,0.5);">☺</span>
+                <div style="font-size:5px;color:rgba(255,255,255,0.35);">我的</div>
+              </div>
+            </div>
+            <div style="width:67px;height:3px;border-radius:50px;background:#111;margin:4px auto 6px;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="phone-label">首页 · Banner + 分类 + 周周上新</div>
+    </div>
+    <div class="phone-frame">
+      <div class="phone-device">
+        <div class="app-screen" style="background:#F2F2F8;font-family:-apple-system,'SF Pro Display','PingFang SC',sans-serif;">
+          <div style="padding:10px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+              <span style="font-size:11px;font-weight:600;color:#0A0519;">更多好车</span>
+              <span style="font-size:8px;color:#999;">探索更多 ›</span>
+            </div>
+            <div style="display:flex;gap:4px;margin-bottom:10px;">
+              <span style="font-size:7px;font-weight:600;color:#fff;background:#0A0519;padding:4px 8px;border-radius:4px;">全部</span>
+              <span style="font-size:7px;color:#666;background:#fff;padding:4px 8px;border-radius:4px;">Ebike</span>
+              <span style="font-size:7px;color:#666;background:#fff;padding:4px 8px;border-radius:4px;">公路车</span>
+              <span style="font-size:7px;color:#666;background:#fff;padding:4px 8px;border-radius:4px;">山地车</span>
+              <span style="font-size:7px;color:#666;background:#fff;padding:4px 8px;border-radius:4px;">折叠车</span>
+            </div>
+            <div style="background:#fff;border-radius:6px;overflow:hidden;margin-bottom:8px;">
+              <img src="https://images.unsplash.com/photo-1511994298241-608e28f14fde?w=400&q=60" style="width:100%;height:110px;object-fit:cover;" alt="">
+              <div style="padding:7px;">
+                <div style="font-size:11px;font-weight:700;color:#0A0519;letter-spacing:-0.2px;">Madone SLR 9 Gen 8</div>
+                <div style="font-size:7px;color:#666;">碳纤维车架 · 专业竞速</div>
+              </div>
+              <div style="background:#F7F7F7;padding:6px 7px;display:flex;justify-content:space-between;align-items:center;border-radius:0 0 6px 6px;">
+                <div>
+                  <div style="display:flex;align-items:baseline;gap:2px;">
+                    <span style="font-size:10px;font-weight:700;color:#0A0519;">199</span>
+                    <span style="font-size:6px;color:#0A0519;">元/天</span>
+                    <span style="font-size:6px;color:#999;margin-left:4px;">36元/小时</span>
+                  </div>
+                  <div style="font-size:6px;color:#879099;">新车售价：¥20300起</div>
+                </div>
+                <div style="width:44px;height:18px;border-radius:9px;background:#0A0519;display:flex;align-items:center;justify-content:center;">
+                  <span style="font-size:7px;font-weight:600;color:#fff;">选TA</span>
+                </div>
+              </div>
+            </div>
+            <div style="background:#fff;border-radius:6px;overflow:hidden;">
+              <img src="https://images.unsplash.com/photo-1475666675596-cca2035b3d79?w=400&q=60" style="width:100%;height:80px;object-fit:cover;" alt="">
+              <div style="padding:7px;">
+                <div style="font-size:11px;font-weight:700;color:#0A0519;">Domane AL 5 Disc</div>
+                <div style="font-size:7px;color:#666;">铝合金车架 · 舒适耐用</div>
+              </div>
+              <div style="background:#F7F7F7;padding:6px 7px;display:flex;justify-content:space-between;align-items:center;border-radius:0 0 6px 6px;">
+                <div>
+                  <div style="display:flex;align-items:baseline;gap:2px;">
+                    <span style="font-size:10px;font-weight:700;color:#0A0519;">149</span>
+                    <span style="font-size:6px;color:#0A0519;">元/天</span>
+                    <span style="font-size:6px;color:#999;margin-left:4px;">28元/小时</span>
+                  </div>
+                  <div style="font-size:6px;color:#879099;">新车售价：¥15800起</div>
+                </div>
+                <div style="width:44px;height:18px;border-radius:9px;background:#0A0519;display:flex;align-items:center;justify-content:center;">
+                  <span style="font-size:7px;font-weight:600;color:#fff;">选TA</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="phone-label">筛选 · 全宽产品卡 + 价格体系</div>
+    </div>
+  </div>
+  <div style="font-size:13px;color:rgba(255,255,255,0.35);margin-bottom:8px;">← 左右滑动查看更多界面 · 基于 HomePage.tsx 真实代码数据渲染</div>
+  <div style="margin:16px 0 0;display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+    <button onclick="copyCode('blueberry')" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:24px;background:linear-gradient(135deg,#3B82F6,#2563eb);color:#fff;border:none;cursor:pointer;font-size:13px;font-weight:600;transition:transform 0.2s;font-family:inherit;">📋 复制完整代码</button>
+    <a href="https://snack.expo.dev" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:24px;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.7);border:1px solid rgba(255,255,255,0.15);cursor:pointer;font-size:13px;font-weight:500;text-decoration:none;transition:all 0.2s;">🚀 打开 Snack Expo</a>
+    <span id="blueberry-status" style="font-size:12px;color:rgba(255,255,255,0.35);display:block;margin-top:8px;">使用方法：① 点「复制完整代码」→ ② 点「打开 Snack Expo」→ ③ 在 Snack 编辑器中全选(⌘A)并粘贴(⌘V)</span>
+  </div>
+<script>
+function copyCode(id) {
+  var codeEl = document.getElementById(id + '-code');
+  if (!codeEl) return;
+  var code = codeEl.textContent;
+  navigator.clipboard.writeText(code).then(function() {
+    var btn = event.target;
+    btn.textContent = '✅ 已复制！去 Snack 粘贴 →';
+    btn.style.background = 'linear-gradient(135deg,#10B981,#059669)';
+    document.getElementById(id + '-status').textContent = '代码已复制到剪贴板 → 现在点右边按钮打开 Snack → 在编辑器中 ⌘A 全选后 ⌘V 粘贴';
+    document.getElementById(id + '-status').style.color = '#4ade80';
+    setTimeout(function() { btn.textContent = '📋 复制完整代码'; btn.style.background = 'linear-gradient(135deg,#3B82F6,#2563eb)'; }, 5000);
+  });
+}
+</script>
+<pre id="blueberry-code" style="position:absolute;left:-9999px;">import React, { useState, useRef, useEffect } from &#x27;react&#x27;;
+import {
+  ScrollView,
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions,
+  ImageBackground,
+  Animated,
+  PanResponder,
+  Image,
+  FlatList,
+} from &#x27;react-native&#x27;;
+
+var { width } = Dimensions.get(&#x27;window&#x27;);
+var CARD_W = 248;
+var CARD_H = 325;
+var NAV_TABS = [&#x27;精选&#x27;, &#x27;门店探索&#x27;, &#x27;最新赛事&#x27;, &#x27;社区讨论&#x27;];
+
+var BANNERS = [
+  { id: &#x27;1&#x27;, image: &#x27;https://images.unsplash.com/photo-1544191696-102dbdaeeaa0?w=1200&amp;q=80&#x27;, title: &#x27;来吧·一起骑行！&#x27;, sub: &#x27;城市Ebike-和她一起轻松出行&#x27; },
+  { id: &#x27;2&#x27;, image: &#x27;https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200&amp;q=80&#x27;, title: &#x27;山地越野挑战&#x27;, sub: &#x27;征服每一座山峰&#x27; },
+  { id: &#x27;3&#x27;, image: &#x27;https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=1200&amp;q=80&#x27;, title: &#x27;城市通勤新选择&#x27;, sub: &#x27;轻松穿梭·绿色出行&#x27; },
+  { id: &#x27;4&#x27;, image: &#x27;https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&amp;q=80&#x27;, title: &#x27;E-Bike新体验&#x27;, sub: &#x27;电助力·骑行无限可能&#x27; },
+];
+
+var CATEGORIES = [
+  { id: &#x27;1&#x27;, label: &#x27;城市通勤&#x27;, image: &#x27;https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=400&amp;q=80&#x27; },
+  { id: &#x27;2&#x27;, label: &#x27;公路竞技&#x27;, image: &#x27;https://images.unsplash.com/photo-1571333250630-f0230c320b6d?w=400&amp;q=80&#x27; },
+  { id: &#x27;3&#x27;, label: &#x27;E-Bike&#x27;, image: &#x27;https://images.unsplash.com/photo-1532298229144-0ec0c57515c7?w=400&amp;q=80&#x27; },
+  { id: &#x27;4&#x27;, label: &#x27;儿童专属&#x27;, image: &#x27;https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=400&amp;q=80&#x27; },
+  { id: &#x27;5&#x27;, label: &#x27;城市穿梭&#x27;, image: &#x27;https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&amp;q=80&#x27; },
+  { id: &#x27;6&#x27;, label: &#x27;公路竞速&#x27;, image: &#x27;https://images.unsplash.com/photo-1576435728678-68d0fbf94e91?w=400&amp;q=80&#x27; },
+  { id: &#x27;7&#x27;, label: &#x27;EBike&#x27;, image: &#x27;https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&amp;q=80&#x27; },
+  { id: &#x27;8&#x27;, label: &#x27;山地越野&#x27;, image: &#x27;https://images.unsplash.com/photo-1544191696-102dbdaeeaa0?w=400&amp;q=80&#x27; },
+];
+
+var BRAND_DATA = [
+  {
+    brand: &#x27;TEEK&#x27;, inactiveOpacity: 1,
+    cards: [
+      { id: 1, badge: &#x27;推荐榜NO.1&#x27;, image: &#x27;https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=600&amp;q=80&#x27;, name: &#x27;TREK Domane AL 2&#x27;, desc: &#x27;碳纤维材质，兼具超轻重量&#x27;, price: &#x27;¥199/日起租&#x27;, cardBg: &#x27;#1C3762&#x27; },
+      { id: 2, badge: &#x27;销售榜NO.1&#x27;, image: &#x27;https://images.unsplash.com/photo-1511994298241-608e28f14fde?w=600&amp;q=80&#x27;, name: &#x27;TREK Madone SLR&#x27;, desc: &#x27;专业竞速，极致性能&#x27;, price: &#x27;¥299/日起租&#x27;, cardBg: &#x27;#1C3762&#x27; },
+      { id: 3, badge: &#x27;口碑榜NO.1&#x27;, image: &#x27;https://images.unsplash.com/photo-1475666675596-cca2035b3d79?w=600&amp;q=80&#x27;, name: &#x27;TREK Émonda&#x27;, desc: &#x27;超轻爬坡利器&#x27;, price: &#x27;¥259/日起租&#x27;, cardBg: &#x27;#1C3762&#x27; },
+    ],
+  },
+  {
+    brand: &#x27;Blueberry&#x27;, inactiveOpacity: 0.9,
+    cards: [
+      { id: 4, badge: &#x27;推荐榜NO.1&#x27;, image: &#x27;https://images.unsplash.com/photo-1571333250630-f0230c320b6d?w=600&amp;q=80&#x27;, name: &#x27;Blueberry City&#x27;, desc: &#x27;城市通勤，轻松骑行&#x27;, price: &#x27;¥159/日起租&#x27;, cardBg: &#x27;#2D1B4E&#x27; },
+      { id: 5, badge: &#x27;新品推荐&#x27;, image: &#x27;https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&amp;q=80&#x27;, name: &#x27;Blueberry E-Go&#x27;, desc: &#x27;电助力城市穿梭&#x27;, price: &#x27;¥189/日起租&#x27;, cardBg: &#x27;#2D1B4E&#x27; },
+    ],
+  },
+  {
+    brand: &#x27;小布&#x27;, inactiveOpacity: 0.8,
+    cards: [
+      { id: 6, badge: &#x27;口碑榜NO.1&#x27;, image: &#x27;https://images.unsplash.com/photo-1532298229144-0ec0c57515c7?w=600&amp;q=80&#x27;, name: &#x27;Brompton C Line&#x27;, desc: &#x27;折叠便携，随心出行&#x27;, price: &#x27;¥129/日起租&#x27;, cardBg: &#x27;#1B3A2F&#x27; },
+      { id: 7, badge: &#x27;销售榜NO.1&#x27;, image: &#x27;https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&amp;q=80&#x27;, name: &#x27;Brompton P Line&#x27;, desc: &#x27;钛合金超轻折叠&#x27;, price: &#x27;¥179/日起租&#x27;, cardBg: &#x27;#1B3A2F&#x27; },
+    ],
+  },
+  {
+    brand: &#x27;Specialized&#x27;, inactiveOpacity: 0.9,
+    cards: [
+      { id: 8, badge: &#x27;新品推荐&#x27;, image: &#x27;https://images.unsplash.com/photo-1576435728678-68d0fbf94e91?w=600&amp;q=80&#x27;, name: &#x27;Turbo Vado SL&#x27;, desc: &#x27;电助力，轻松骑行&#x27;, price: &#x27;¥249/日起租&#x27;, cardBg: &#x27;#3B2A1A&#x27; },
+      { id: 9, badge: &#x27;推荐榜NO.1&#x27;, image: &#x27;https://images.unsplash.com/photo-1544191696-102dbdaeeaa0?w=600&amp;q=80&#x27;, name: &#x27;Tarmac SL8&#x27;, desc: &#x27;顶级公路竞速&#x27;, price: &#x27;¥349/日起租&#x27;, cardBg: &#x27;#3B2A1A&#x27; },
+    ],
+  },
+];
+
+var ALL_CARDS = [];
+var BRAND_START = [];
+BRAND_DATA.forEach(function(b) {
+  BRAND_START.push(ALL_CARDS.length);
+  b.cards.forEach(function(c) { ALL_CARDS.push(c); });
+});
+
+function getBrandForCard(ci) {
+  for (var i = BRAND_START.length - 1; i &gt;= 0; i--) {
+    if (ci &gt;= BRAND_START[i]) return i;
+  }
+  return 0;
+}
+
+var FILTER_TABS = [&#x27;全部&#x27;, &#x27;Ebike&#x27;, &#x27;公路车&#x27;, &#x27;山地车&#x27;, &#x27;折叠车&#x27;, &#x27;宠物拖箱&#x27;];
+
+var PRODUCTS = [
+  { id: &#x27;1&#x27;, image: &#x27;https://images.unsplash.com/photo-1511994298241-608e28f14fde?w=600&amp;q=80&#x27;, name: &#x27;Madone SLR 9 Gen 8&#x27;, desc: &#x27;碳纤维车架 · 专业竞速&#x27;, dayPrice: &#x27;199&#x27;, hourPrice: &#x27;36&#x27;, retailPrice: &#x27;¥20300起&#x27; },
+  { id: &#x27;2&#x27;, image: &#x27;https://images.unsplash.com/photo-1475666675596-cca2035b3d79?w=600&amp;q=80&#x27;, name: &#x27;Domane AL 5 Disc&#x27;, desc: &#x27;铝合金车架 · 舒适耐用&#x27;, dayPrice: &#x27;149&#x27;, hourPrice: &#x27;28&#x27;, retailPrice: &#x27;¥15800起&#x27; },
+  { id: &#x27;3&#x27;, image: &#x27;https://images.unsplash.com/photo-1532298229144-0ec0c57515c7?w=600&amp;q=80&#x27;, name: &#x27;Brompton C Line&#x27;, desc: &#x27;折叠便携 · 城市通勤&#x27;, dayPrice: &#x27;129&#x27;, hourPrice: &#x27;24&#x27;, retailPrice: &#x27;¥12500起&#x27; },
+  { id: &#x27;4&#x27;, image: &#x27;https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=600&amp;q=80&#x27;, name: &#x27;Canyon Spectral CF&#x27;, desc: &#x27;全山地利器 · 德国工艺&#x27;, dayPrice: &#x27;179&#x27;, hourPrice: &#x27;32&#x27;, retailPrice: &#x27;¥18600起&#x27; },
+  { id: &#x27;5&#x27;, image: &#x27;https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&amp;q=80&#x27;, name: &#x27;Turbo Vado SL 5.0&#x27;, desc: &#x27;电助力 · 城市穿梭&#x27;, dayPrice: &#x27;219&#x27;, hourPrice: &#x27;40&#x27;, retailPrice: &#x27;¥23800起&#x27; },
+];
+
+// ==================== GradientSim: 用多层View模拟线性渐变 ====================
+function GradientDown(props) {
+  var h = props.height || 120;
+  var c = props.color || &#x27;0,0,0&#x27;;
+  var startOp = props.startOpacity !== undefined ? props.startOpacity : 0.6;
+  var endOp = props.endOpacity !== undefined ? props.endOpacity : 0;
+  var layers = 6;
+  var views = [];
+  for (var i = 0; i &lt; layers; i++) {
+    var op = startOp + (endOp - startOp) * (i / (layers - 1));
+    views.push(
+      &lt;View key={i} style={{
+        position: &#x27;absolute&#x27;, left: 0, right: 0,
+        top: (h / layers) * i,
+        height: h / layers + 1,
+        backgroundColor: &#x27;rgba(&#x27; + c + &#x27;,&#x27; + op.toFixed(3) + &#x27;)&#x27;,
+      }} /&gt;
+    );
+  }
+  return &lt;View style={[{ position: &#x27;absolute&#x27;, left: 0, right: 0, height: h }, props.posStyle]}&gt;{views}&lt;/View&gt;;
+}
+
+function GradientUp(props) {
+  var h = props.height || 120;
+  var c = props.color || &#x27;0,0,0&#x27;;
+  var startOp = props.startOpacity !== undefined ? props.startOpacity : 0;
+  var endOp = props.endOpacity !== undefined ? props.endOpacity : 0.7;
+  var layers = 6;
+  var views = [];
+  for (var i = 0; i &lt; layers; i++) {
+    var op = startOp + (endOp - startOp) * (i / (layers - 1));
+    views.push(
+      &lt;View key={i} style={{
+        position: &#x27;absolute&#x27;, left: 0, right: 0,
+        top: (h / layers) * i,
+        height: h / layers + 1,
+        backgroundColor: &#x27;rgba(&#x27; + c + &#x27;,&#x27; + op.toFixed(3) + &#x27;)&#x27;,
+      }} /&gt;
+    );
+  }
+  return &lt;View style={[{ position: &#x27;absolute&#x27;, left: 0, right: 0, height: h }, props.posStyle]}&gt;{views}&lt;/View&gt;;
+}
+
+// ==================== 主组件 ====================
+export default function App() {
+  var st = useState(0);
+  var activeTab = st[0], setActiveTab = st[1];
+  var scrollY = useRef(new Animated.Value(0)).current;
+  return (
+    &lt;View style={s.root}&gt;
+      &lt;View style={s.container}&gt;
+        {activeTab === 0 &amp;&amp; &lt;HomeScreen scrollY={scrollY} /&gt;}
+        {activeTab === 1 &amp;&amp; &lt;Empty label=&quot;控车&quot; /&gt;}
+        {activeTab === 2 &amp;&amp; &lt;Empty label=&quot;我的&quot; /&gt;}
+      &lt;/View&gt;
+      &lt;BottomBar active={activeTab} onPress={setActiveTab} /&gt;
+    &lt;/View&gt;
+  );
+}
+
+// ==================== 首页 ====================
+function HomeScreen(props) {
+  var scrollY = props.scrollY;
+  var nt = useState(0), navTab = nt[0], setNavTab = nt[1];
+  var ft = useState(0), filterTab = ft[0], setFilterTab = ft[1];
+  var se = useState(true), scrollEnabled = se[0], setScrollEnabled = se[1];
+  var bn = useState(0), bannerIdx = bn[0], setBannerIdx = bn[1];
+
+  var bannerAnim = useRef(new Animated.Value(0)).current;
+  var bannerTimer = useRef(null);
+  var textFade = useRef(new Animated.Value(1)).current;
+
+  useEffect(function() {
+    bannerTimer.current = setInterval(function() {
+      setBannerIdx(function(prev) {
+        var next = (prev + 1) % BANNERS.length;
+        Animated.timing(textFade, { toValue: 0, duration: 150, useNativeDriver: true }).start(function() {
+          Animated.timing(bannerAnim, { toValue: -next * width, duration: 500, useNativeDriver: true }).start(function() {
+            Animated.timing(textFade, { toValue: 1, duration: 250, useNativeDriver: true }).start();
+          });
+        });
+        return next;
+      });
+    }, 3500);
+    return function() { clearInterval(bannerTimer.current); };
+  }, []);
+
+  return (
+    &lt;Animated.ScrollView
+      style={{ flex: 1 }}
+      scrollEnabled={scrollEnabled}
+      showsVerticalScrollIndicator={false}
+      onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], { useNativeDriver: false })}
+      scrollEventThrottle={16}
+    &gt;
+      {/* ===== Hero Banner ===== */}
+      &lt;View style={s.hero}&gt;
+        &lt;Animated.View style={[s.bannerStrip, { transform: [{ translateX: bannerAnim }] }]}&gt;
+          {BANNERS.map(function(b) {
+            return (
+              &lt;View key={b.id} style={s.bannerSlide}&gt;
+                &lt;ImageBackground source={{ uri: b.image }} style={s.heroBannerBg} /&gt;
+              &lt;/View&gt;
+            );
+          })}
+        &lt;/Animated.View&gt;
+        {/* Figma: 顶部渐变 180deg black→transparent 89% */}
+        &lt;GradientDown height={260} color=&quot;0,0,0&quot; startOpacity={0.55} endOpacity={0} posStyle={{ top: 0 }} /&gt;
+        {/* Figma: 底部渐变 向上渐暗 */}
+        &lt;GradientUp height={220} color=&quot;0,0,0&quot; startOpacity={0} endOpacity={0.5} posStyle={{ bottom: 0, top: undefined }} /&gt;
+
+        &lt;View style={s.heroInner}&gt;
+          &lt;View style={s.statusBar}&gt;&lt;Text style={s.statusTime}&gt;9:41&lt;/Text&gt;&lt;/View&gt;
+          &lt;View style={s.topRow}&gt;
+            &lt;View style={s.logoRow}&gt;
+              &lt;Image source={{ uri: &#x27;https://img.icons8.com/color/96/blueberry.png&#x27; }} style={s.logoIcon} /&gt;
+              &lt;Text style={s.logoText}&gt;蓝莓骑行&lt;/Text&gt;
+            &lt;/View&gt;
+            &lt;View style={s.capsule}&gt;
+              &lt;View style={s.capsuleDotGroup}&gt;
+                &lt;View style={s.capsuleDot} /&gt;
+                &lt;View style={s.capsuleDotSm} /&gt;
+                &lt;View style={s.capsuleDotSm} /&gt;
+              &lt;/View&gt;
+              &lt;View style={s.capsuleLine} /&gt;
+              &lt;View style={s.capsuleCircle}&gt;&lt;View style={s.capsuleCircleInner} /&gt;&lt;/View&gt;
+            &lt;/View&gt;
+          &lt;/View&gt;
+          {/* Figma: active 16px/600, inactive 14px/400 opacity 0.6 */}
+          &lt;View style={s.navRow}&gt;
+            {NAV_TABS.map(function(t, i) {
+              return (
+                &lt;TouchableOpacity key={t} onPress={function() { setNavTab(i); }} style={s.navItem}&gt;
+                  &lt;Text style={[s.navText, i === navTab &amp;&amp; s.navTextActive]}&gt;{t}&lt;/Text&gt;
+                  {i === navTab &amp;&amp; &lt;View style={s.navDot} /&gt;}
+                &lt;/TouchableOpacity&gt;
+              );
+            })}
+          &lt;/View&gt;
+          &lt;Animated.View style={[s.heroTextArea, { opacity: textFade }]}&gt;
+            &lt;Text style={s.heroTitle}&gt;{BANNERS[bannerIdx].title}&lt;/Text&gt;
+            &lt;Text style={s.heroSub}&gt;{BANNERS[bannerIdx].sub}&lt;/Text&gt;
+          &lt;/Animated.View&gt;
+          &lt;TouchableOpacity style={s.heroBtn} activeOpacity={0.85}&gt;
+            &lt;Text style={s.heroBtnText}&gt;探索更多&lt;/Text&gt;
+          &lt;/TouchableOpacity&gt;
+          &lt;View style={s.heroDots}&gt;
+            {BANNERS.map(function(_, i) {
+              return &lt;View key={i} style={[s.dot, { width: i === bannerIdx ? 16 : 6, height: 6, borderRadius: 3 }, i === bannerIdx ? s.dotActive : s.dotInactive]} /&gt;;
+            })}
+          &lt;/View&gt;
+        &lt;/View&gt;
+      &lt;/View&gt;
+
+      {/* ===== 分类横滑 ===== */}
+      &lt;View style={s.catSection}&gt;
+        &lt;FlatList data={CATEGORIES} horizontal showsHorizontalScrollIndicator={false}
+          keyExtractor={function(item) { return item.id; }}
+          contentContainerStyle={{ paddingHorizontal: 16 }}
+          ItemSeparatorComponent={function() { return &lt;View style={{ width: 8 }} /&gt;; }}
+          renderItem={function(info) {
+            var item = info.item;
+            return (
+              &lt;TouchableOpacity style={s.catCard} activeOpacity={0.8}&gt;
+                &lt;ImageBackground source={{ uri: item.image }} style={s.catImg} imageStyle={{ borderRadius: 12 }}&gt;
+                  &lt;View style={s.catOverlay}&gt;
+                    {/* Figma: 底部渐变从transparent到dark */}
+                    &lt;View style={s.catGrad1} /&gt;
+                    &lt;View style={s.catGrad2} /&gt;
+                    &lt;View style={s.catGrad3} /&gt;
+                    &lt;View style={s.catGrad4} /&gt;
+                    &lt;Text style={s.catLabel}&gt;{item.label}&lt;/Text&gt;
+                  &lt;/View&gt;
+                &lt;/ImageBackground&gt;
+              &lt;/TouchableOpacity&gt;
+            );
+          }}
+        /&gt;
+      &lt;/View&gt;
+
+      {/* ===== 周周上新 ===== */}
+      &lt;View style={s.weeklySection}&gt;
+        &lt;View style={s.secHeader}&gt;
+          &lt;Text style={s.secTitle}&gt;周周上新&lt;/Text&gt;
+          &lt;View style={s.secMoreRow}&gt;&lt;Text style={s.secMore}&gt;探索更多&lt;/Text&gt;&lt;Text style={s.secMoreArrow}&gt; ›&lt;/Text&gt;&lt;/View&gt;
+        &lt;/View&gt;
+        &lt;WeeklyCards setParentScroll={setScrollEnabled} /&gt;
+      &lt;/View&gt;
+
+      {/* ===== 更多好车 ===== */}
+      &lt;View style={s.moreSection}&gt;
+        &lt;View style={s.secHeader}&gt;
+          &lt;Text style={s.secTitle}&gt;更多好车&lt;/Text&gt;
+          &lt;View style={s.secMoreRow}&gt;&lt;Text style={s.secMore}&gt;探索更多&lt;/Text&gt;&lt;Text style={s.secMoreArrow}&gt; ›&lt;/Text&gt;&lt;/View&gt;
+        &lt;/View&gt;
+        {/* Figma: active white bg borderRadius 8, inactive transparent opacity 0.44, font 12px */}
+        &lt;ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginBottom: 16 }} contentContainerStyle={{ paddingHorizontal: 16 }}&gt;
+          {FILTER_TABS.map(function(t, i) {
+            return (
+              &lt;TouchableOpacity key={t} style={[s.filterChip, i === filterTab &amp;&amp; s.filterChipActive]} onPress={function() { setFilterTab(i); }}&gt;
+                &lt;Text style={[s.filterText, i === filterTab &amp;&amp; s.filterTextActive]}&gt;{t}&lt;/Text&gt;
+              &lt;/TouchableOpacity&gt;
+            );
+          })}
+        &lt;/ScrollView&gt;
+        {PRODUCTS.map(function(p) { return &lt;FullProductCard key={p.id} item={p} /&gt;; })}
+      &lt;/View&gt;
+      &lt;View style={{ height: 100 }} /&gt;
+    &lt;/Animated.ScrollView&gt;
+  );
+}
+
+// ==================== 周周上新卡片 ====================
+function WeeklyCards(props) {
+  var setParentScroll = props.setParentScroll;
+  var cs = useState(0), curCard = cs[0], setCurCard = cs[1];
+  var activeBrand = getBrandForCard(curCard);
+  var anim = useRef(new Animated.Value(0)).current;
+  var curRef = useRef(0);
+
+  var goToCard = function(idx) {
+    if (idx &lt; 0) idx = 0;
+    if (idx &gt;= ALL_CARDS.length) idx = ALL_CARDS.length - 1;
+    Animated.spring(anim, { toValue: idx, tension: 80, friction: 12, useNativeDriver: true }).start();
+    curRef.current = idx;
+    setCurCard(idx);
+  };
+
+  var pan = useRef(
+    PanResponder.create({
+      onStartShouldSetPanResponder: function() { return false; },
+      onMoveShouldSetPanResponder: function(_, g) {
+        if (Math.abs(g.dx) &gt; 8 &amp;&amp; Math.abs(g.dx) &gt; Math.abs(g.dy) * 1.2) {
+          setParentScroll(false);
+          return true;
+        }
+        return false;
+      },
+      onPanResponderGrant: function() { anim.stopAnimation(); },
+      onPanResponderMove: function(_, g) { anim.setValue(curRef.current - g.dx / CARD_W); },
+      onPanResponderRelease: function(_, g) {
+        setParentScroll(true);
+        var t = curRef.current;
+        var d = g.dx / CARD_W;
+        if (d &lt; -0.2 &amp;&amp; t &lt; ALL_CARDS.length - 1) t += 1;
+        else if (d &gt; 0.2 &amp;&amp; t &gt; 0) t -= 1;
+        Animated.spring(anim, { toValue: t, tension: 80, friction: 12, useNativeDriver: true }).start();
+        curRef.current = t;
+        setCurCard(t);
+      },
+      onPanResponderTerminate: function() { setParentScroll(true); },
+    })
+  ).current;
+
+  return (
+    &lt;View style={s.wkWrapper}&gt;
+      {/* 左侧品牌Tab - Figma: TEEK+5, Blueberry+60, 小布+104, Specialized+148 */}
+      &lt;View style={s.brandCol}&gt;
+        {BRAND_DATA.map(function(b, i) {
+          var isActive = i === activeBrand;
+          // Figma Y offsets: 5, 60, 104, 148 relative to section top
+          var OFFSETS = [5, 60, 104, 148];
+          var mt = i === 0 ? OFFSETS[0] : OFFSETS[i] - OFFSETS[i - 1] - 30;
+          return (
+            &lt;TouchableOpacity key={b.brand} onPress={function() { goToCard(BRAND_START[i]); }} activeOpacity={0.7}
+              style={[s.brandItem, { marginTop: mt }, isActive &amp;&amp; s.brandItemActive]}&gt;
+              &lt;Text style={[
+                s.brandText,
+                { opacity: isActive ? 1 : b.inactiveOpacity },
+                isActive &amp;&amp; s.brandTextActive,
+              ]}&gt;{b.brand}&lt;/Text&gt;
+            &lt;/TouchableOpacity&gt;
+          );
+        })}
+      &lt;/View&gt;
+
+      {/* 右侧卡片 - 扇形堆叠 */}
+      &lt;View style={s.cardArea} {...pan.panHandlers}&gt;
+        {ALL_CARDS.map(function(card, idx) {
+          var offset = Animated.subtract(new Animated.Value(idx), anim);
+          var tx = offset.interpolate({ inputRange: [-2, -1, 0, 1, 2], outputRange: [-30, -15, 0, 18, 36], extrapolate: &#x27;clamp&#x27; });
+          var ty = offset.interpolate({ inputRange: [-2, -1, 0, 1, 2], outputRange: [16, 8, 0, 12, 24], extrapolate: &#x27;clamp&#x27; });
+          var sc = offset.interpolate({ inputRange: [-2, -1, 0, 1, 2], outputRange: [0.82, 0.9, 1, 0.95, 0.88], extrapolate: &#x27;clamp&#x27; });
+          var op = offset.interpolate({ inputRange: [-2, -1, 0, 1, 2], outputRange: [0, 0.3, 1, 0.7, 0], extrapolate: &#x27;clamp&#x27; });
+          var rot = offset.interpolate({ inputRange: [-2, -1, 0, 1, 2], outputRange: [&#x27;-5deg&#x27;, &#x27;-2.5deg&#x27;, &#x27;0deg&#x27;, &#x27;2.5deg&#x27;, &#x27;5deg&#x27;], extrapolate: &#x27;clamp&#x27; });
+          var zIdx = ALL_CARDS.length - Math.abs(idx - curCard);
+          var isFront = idx === curCard;
+          return (
+            &lt;Animated.View key={card.id} style={[s.wkCard, {
+              backgroundColor: card.cardBg,
+              zIndex: zIdx,
+              opacity: op,
+              transform: [{ translateX: tx }, { translateY: ty }, { scale: sc }, { rotate: rot }],
+            }]}&gt;
+              {/* Figma: badge bg #202229, borderRadius 6, stroke #1D1F24 0.5px */}
+              &lt;View style={s.wkBadge}&gt;
+                &lt;Text style={s.wkBadgeText}&gt;{card.badge}&lt;/Text&gt;
+              &lt;/View&gt;
+              {/* Figma: brand 22px/600, front=#000, behind=#333 */}
+              &lt;Text style={[s.wkBrand, !isFront &amp;&amp; { color: &#x27;#333&#x27; }]}&gt;{card.name}&lt;/Text&gt;
+              &lt;Text style={s.wkDesc}&gt;{card.desc}&lt;/Text&gt;
+              &lt;View style={s.wkLinkRow}&gt;
+                &lt;Text style={s.wkLink}&gt;了解车型&lt;/Text&gt;
+                &lt;Text style={s.wkLinkArrow}&gt; ›&lt;/Text&gt;
+              &lt;/View&gt;
+              &lt;Image source={{ uri: card.image }} style={s.wkImg} resizeMode=&quot;contain&quot; /&gt;
+              &lt;View style={s.wkShadowEllipse} /&gt;
+              {/* Figma: footer glass bg rgba(255,255,255,0.16), stroke rgba(255,255,255,0.52) 0.5px */}
+              &lt;View style={s.wkFooter}&gt;
+                &lt;Text style={s.wkPrice}&gt;{card.price}&lt;/Text&gt;
+                &lt;View style={s.wkBuyBtn}&gt;&lt;Text style={s.wkBuyText}&gt;去选购&lt;/Text&gt;&lt;/View&gt;
+              &lt;/View&gt;
+            &lt;/Animated.View&gt;
+          );
+        })}
+      &lt;/View&gt;
+    &lt;/View&gt;
+  );
+}
+
+// ==================== 更多好车 - 全宽产品卡 ====================
+function FullProductCard(props) {
+  var item = props.item;
+  return (
+    &lt;View style={s.fpCard}&gt;
+      &lt;ImageBackground source={{ uri: item.image }} style={s.fpImg} imageStyle={{ borderTopLeftRadius: 12, borderTopRightRadius: 12 }} /&gt;
+      &lt;View style={s.fpBody}&gt;
+        {/* Figma: 20px/700, letterSpacing -2% */}
+        &lt;Text style={s.fpName}&gt;{item.name}&lt;/Text&gt;
+        {/* Figma: 12px/400, color #666666 */}
+        &lt;Text style={s.fpDesc}&gt;{item.desc}&lt;/Text&gt;
+      &lt;/View&gt;
+      {/* Figma: price bar bg #F7F7F7, borderRadius 0 0 16 16, height 60 */}
+      &lt;View style={s.fpPriceBar}&gt;
+        &lt;View&gt;
+          &lt;View style={{ flexDirection: &#x27;row&#x27;, alignItems: &#x27;baseline&#x27; }}&gt;
+            {/* Figma: 17.95px/700 */}
+            &lt;Text style={s.fpDayPrice}&gt;{item.dayPrice}&lt;/Text&gt;
+            &lt;Text style={s.fpDayUnit}&gt;元/天&lt;/Text&gt;
+            {/* Figma: 10.77px/400 */}
+            &lt;Text style={s.fpHourPrice}&gt;  {item.hourPrice}元/小时&lt;/Text&gt;
+          &lt;/View&gt;
+          {/* Figma: 10px/400, color #879099 */}
+          &lt;Text style={s.fpRetail}&gt;新车售价：{item.retailPrice}&lt;/Text&gt;
+        &lt;/View&gt;
+        {/* Figma: 89x36, borderRadius 18, bg #0A0519, font 14px/600 white */}
+        &lt;TouchableOpacity style={s.fpSelectBtn} activeOpacity={0.8}&gt;
+          &lt;Text style={s.fpSelectText}&gt;选TA&lt;/Text&gt;
+        &lt;/TouchableOpacity&gt;
+      &lt;/View&gt;
+    &lt;/View&gt;
+  );
+}
+
+// ==================== 底部TabBar ====================
+function BottomBar(props) {
+  var active = props.active, onPress = props.onPress;
+  var tabs = [
+    { icon: &#x27;⌂&#x27;, label: &#x27;主页&#x27; },
+    { icon: &#x27;⚙&#x27;, label: &#x27;控车&#x27; },
+    { icon: &#x27;☺&#x27;, label: &#x27;我的&#x27; },
+  ];
+  return (
+    &lt;View style={s.btBar}&gt;
+      &lt;View style={s.btInner}&gt;
+        {/* Figma: glass overlay rgba(255,255,255,0.1) */}
+        &lt;View style={s.btGlass} /&gt;
+        {tabs.map(function(t, i) {
+          return (
+            &lt;TouchableOpacity key={t.label} style={s.btItem} onPress={function() { onPress(i); }} activeOpacity={0.7}&gt;
+              {/* Figma: active circle 52x52, bg #0A0519 */}
+              &lt;View style={[s.btCircle, i === active &amp;&amp; s.btCircleActive]}&gt;
+                &lt;Text style={[s.btIconSymbol, i === active &amp;&amp; s.btIconActive]}&gt;{t.icon}&lt;/Text&gt;
+                &lt;Text style={[s.btLabel, i === active &amp;&amp; s.btLabelActive]}&gt;{t.label}&lt;/Text&gt;
+              &lt;/View&gt;
+            &lt;/TouchableOpacity&gt;
+          );
+        })}
+      &lt;/View&gt;
+      {/* Figma: home indicator 134x5, borderRadius 100, color #111 */}
+      &lt;View style={s.homeIndicator} /&gt;
+    &lt;/View&gt;
+  );
+}
+
+function Empty(props) {
+  return &lt;View style={s.empty}&gt;&lt;Text style={s.emptyText}&gt;{props.label}&lt;/Text&gt;&lt;/View&gt;;
+}
+
+// ==================== Figma-Exact 样式 ====================
+var s = StyleSheet.create({
+  root: { flex: 1, backgroundColor: &#x27;#F2F2F8&#x27; },
+  container: { flex: 1 },
+
+  // ===== Hero Banner =====
+  hero: { width: width, height: 458, position: &#x27;relative&#x27;, overflow: &#x27;hidden&#x27; },
+  bannerStrip: { flexDirection: &#x27;row&#x27;, position: &#x27;absolute&#x27;, top: 0, left: 0, height: 458 },
+  bannerSlide: { width: width, height: 458 },
+  heroBannerBg: { width: &#x27;100%&#x27;, height: &#x27;100%&#x27; },
+  heroInner: { flex: 1, paddingTop: 0, zIndex: 3 },
+  statusBar: { height: 44, justifyContent: &#x27;center&#x27;, paddingLeft: 29 },
+  statusTime: { fontSize: 17, fontWeight: &#x27;500&#x27;, color: &#x27;#fff&#x27; },
+  topRow: { flexDirection: &#x27;row&#x27;, justifyContent: &#x27;space-between&#x27;, alignItems: &#x27;center&#x27;, paddingHorizontal: 16, marginBottom: 12 },
+  logoRow: { flexDirection: &#x27;row&#x27;, alignItems: &#x27;center&#x27; },
+  logoIcon: { width: 22, height: 22, marginRight: 6, borderRadius: 4 },
+  logoText: { fontSize: 17, fontWeight: &#x27;700&#x27;, color: &#x27;#fff&#x27; },
+  capsule: { flexDirection: &#x27;row&#x27;, alignItems: &#x27;center&#x27;, backgroundColor: &#x27;rgba(255,255,255,0.7)&#x27;, borderRadius: 100, paddingHorizontal: 10, height: 32 },
+  capsuleDotGroup: { flexDirection: &#x27;row&#x27;, alignItems: &#x27;center&#x27; },
+  capsuleDot: { width: 8, height: 8, borderRadius: 4, backgroundColor: &#x27;#000&#x27;, marginRight: 4 },
+  capsuleDotSm: { width: 4, height: 4, borderRadius: 2, backgroundColor: &#x27;#000&#x27;, marginRight: 4 },
+  capsuleLine: { width: 0.5, height: 20, backgroundColor: &#x27;rgba(0,0,0,0.2)&#x27;, marginHorizontal: 6 },
+  capsuleCircle: { width: 18, height: 18, borderRadius: 9, borderWidth: 2, borderColor: &#x27;#000&#x27;, justifyContent: &#x27;center&#x27;, alignItems: &#x27;center&#x27; },
+  capsuleCircleInner: { width: 6, height: 6, borderRadius: 3, backgroundColor: &#x27;#000&#x27; },
+
+  // Figma: active 16px/600, inactive 14px/400 opacity 0.6
+  navRow: { flexDirection: &#x27;row&#x27;, paddingHorizontal: 16, marginBottom: 16 },
+  navItem: { marginRight: 24, alignItems: &#x27;center&#x27; },
+  navText: { fontSize: 14, fontWeight: &#x27;400&#x27;, color: &#x27;rgba(255,255,255,0.6)&#x27; },
+  navTextActive: { fontSize: 16, color: &#x27;#fff&#x27;, fontWeight: &#x27;600&#x27; },
+  navDot: { width: 4, height: 4, borderRadius: 2, backgroundColor: &#x27;#D9D9D9&#x27;, marginTop: 4 },
+
+  // Figma: hero title 24px/600 letterSpacing 2%, sub 15px/300 letterSpacing -2%
+  heroTextArea: { paddingHorizontal: 20, marginTop: 20 },
+  heroTitle: { fontSize: 24, fontWeight: &#x27;600&#x27;, color: &#x27;#fff&#x27;, letterSpacing: 0.48, marginBottom: 8 },
+  heroSub: { fontSize: 15, fontWeight: &#x27;300&#x27;, color: &#x27;#fff&#x27;, letterSpacing: -0.3 },
+  heroBtn: { marginHorizontal: 17, marginTop: 12, height: 36, borderRadius: 100, backgroundColor: &#x27;#fff&#x27;, justifyContent: &#x27;center&#x27;, alignItems: &#x27;center&#x27; },
+  heroBtnText: { fontSize: 12, color: &#x27;#000&#x27; },
+  heroDots: { flexDirection: &#x27;row&#x27;, justifyContent: &#x27;center&#x27;, alignItems: &#x27;center&#x27;, marginTop: 16, marginBottom: 12 },
+  dot: { marginHorizontal: 3 },
+  dotActive: { backgroundColor: &#x27;#fff&#x27; },
+  dotInactive: { backgroundColor: &#x27;rgba(255,255,255,0.3)&#x27; },
+
+  // ===== 分类卡片 Figma: 94x120, borderRadius 12, gap 8 =====
+  catSection: { marginTop: 16, marginBottom: 20 },
+  catCard: { width: 94, height: 120 },
+  catImg: { width: 94, height: 120 },
+  catOverlay: { flex: 1, borderRadius: 12, justifyContent: &#x27;flex-end&#x27;, alignItems: &#x27;center&#x27;, paddingBottom: 12, overflow: &#x27;hidden&#x27; },
+  // 4层模拟底部渐变: transparent → dark
+  catGrad1: { position: &#x27;absolute&#x27;, bottom: 0, left: 0, right: 0, height: 60, backgroundColor: &#x27;rgba(0,0,0,0.05)&#x27;, borderBottomLeftRadius: 12, borderBottomRightRadius: 12 },
+  catGrad2: { position: &#x27;absolute&#x27;, bottom: 0, left: 0, right: 0, height: 45, backgroundColor: &#x27;rgba(0,0,0,0.12)&#x27;, borderBottomLeftRadius: 12, borderBottomRightRadius: 12 },
+  catGrad3: { position: &#x27;absolute&#x27;, bottom: 0, left: 0, right: 0, height: 30, backgroundColor: &#x27;rgba(0,0,0,0.18)&#x27;, borderBottomLeftRadius: 12, borderBottomRightRadius: 12 },
+  catGrad4: { position: &#x27;absolute&#x27;, bottom: 0, left: 0, right: 0, height: 16, backgroundColor: &#x27;rgba(0,0,0,0.22)&#x27;, borderBottomLeftRadius: 12, borderBottomRightRadius: 12 },
+  catLabel: { fontSize: 14, fontWeight: &#x27;600&#x27;, color: &#x27;#fff&#x27;, zIndex: 1 },
+
+  // ===== Section Header =====
+  secHeader: { flexDirection: &#x27;row&#x27;, justifyContent: &#x27;space-between&#x27;, alignItems: &#x27;center&#x27;, paddingHorizontal: 16, marginBottom: 14 },
+  // Figma: 20px/600, letterSpacing 2%, color #0A0519
+  secTitle: { fontSize: 20, fontWeight: &#x27;600&#x27;, color: &#x27;#0A0519&#x27;, letterSpacing: 0.4 },
+  secMoreRow: { flexDirection: &#x27;row&#x27;, alignItems: &#x27;center&#x27; },
+  secMore: { fontSize: 14, color: &#x27;#999&#x27; },
+  secMoreArrow: { fontSize: 16, color: &#x27;#999&#x27; },
+
+  // ===== 周周上新 =====
+  weeklySection: { marginBottom: 24 },
+  wkWrapper: { flexDirection: &#x27;row&#x27;, paddingLeft: 12 },
+  brandCol: { width: 90, paddingTop: 0 },
+  // Figma: active = white pill, height 30, padding 4px 10px, borderRadius 100
+  brandItem: { paddingHorizontal: 10, paddingVertical: 4, borderRadius: 100, height: 30, justifyContent: &#x27;center&#x27;, alignSelf: &#x27;flex-start&#x27; },
+  brandItemActive: { backgroundColor: &#x27;#FFFFFF&#x27; },
+  // Figma: inactive 14px/400 color #333, active 14px/600 color #0A0519
+  brandText: { fontSize: 14, fontWeight: &#x27;400&#x27;, color: &#x27;#333&#x27; },
+  brandTextActive: { fontSize: 14, fontWeight: &#x27;600&#x27;, color: &#x27;#0A0519&#x27;, opacity: 1 },
+
+  cardArea: { flex: 1, height: CARD_H + 50, alignItems: &#x27;center&#x27;, position: &#x27;relative&#x27; },
+  // Figma: 248x325, borderRadius 12, shadow 0px 2px 8px rgba(17,17,17,0.04)
+  wkCard: {
+    position: &#x27;absolute&#x27;, width: CARD_W, height: CARD_H, borderRadius: 12, padding: 12, overflow: &#x27;hidden&#x27;,
+    shadowColor: &#x27;#111&#x27;, shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.04, shadowRadius: 8, elevation: 4,
+  },
+  // Figma: badge bg #202229, borderRadius 6, stroke #1D1F24 0.5px, font 10px/400
+  wkBadge: { alignSelf: &#x27;flex-start&#x27;, paddingHorizontal: 8, paddingVertical: 4, borderRadius: 6, marginBottom: 8, backgroundColor: &#x27;#202229&#x27;, borderWidth: 0.5, borderColor: &#x27;#1D1F24&#x27; },
+  wkBadgeText: { fontSize: 10, fontWeight: &#x27;400&#x27;, color: &#x27;#fff&#x27; },
+  // Figma: 22px/600, letterSpacing -2%
+  wkBrand: { fontSize: 22, fontWeight: &#x27;600&#x27;, color: &#x27;#000&#x27;, letterSpacing: -0.44, marginBottom: 2 },
+  // Figma: 12px/400, color #666666
+  wkDesc: { fontSize: 12, fontWeight: &#x27;400&#x27;, color: &#x27;#666666&#x27;, letterSpacing: -0.24, marginBottom: 4 },
+  // Figma: 12px/400, color #333, right-aligned with arrow
+  wkLinkRow: { flexDirection: &#x27;row&#x27;, alignItems: &#x27;center&#x27;, alignSelf: &#x27;flex-end&#x27;, marginBottom: 8 },
+  wkLink: { fontSize: 12, fontWeight: &#x27;400&#x27;, color: &#x27;#333&#x27; },
+  wkLinkArrow: { fontSize: 14, color: &#x27;#333&#x27; },
+  wkImg: { width: &#x27;100%&#x27;, height: 120, borderRadius: 8, marginBottom: 8, backgroundColor: &#x27;rgba(255,255,255,0.1)&#x27; },
+  wkShadowEllipse: { width: 160, height: 12, borderRadius: 80, backgroundColor: &#x27;rgba(0,0,0,0.15)&#x27;, alignSelf: &#x27;center&#x27;, marginBottom: 8 },
+  // Figma: footer glass bg rgba(255,255,255,0.16), stroke rgba(255,255,255,0.52) 0.5px, blur(4px)
+  wkFooter: {
+    flexDirection: &#x27;row&#x27;, justifyContent: &#x27;space-between&#x27;, alignItems: &#x27;center&#x27;,
+    backgroundColor: &#x27;rgba(255,255,255,0.16)&#x27;, borderRadius: 8, paddingHorizontal: 12, paddingVertical: 8,
+    borderWidth: 0.5, borderColor: &#x27;rgba(255,255,255,0.52)&#x27;,
+  },
+  // Figma: 20px/400, color white
+  wkPrice: { fontSize: 20, fontWeight: &#x27;400&#x27;, color: &#x27;#fff&#x27; },
+  // Figma: bg rgba(255,255,255,0.53), stroke #FFFFFF 0.5px, font 14px/500
+  wkBuyBtn: { backgroundColor: &#x27;rgba(255,255,255,0.53)&#x27;, borderRadius: 8, paddingHorizontal: 12, paddingVertical: 6, borderWidth: 0.5, borderColor: &#x27;#fff&#x27; },
+  wkBuyText: { fontSize: 14, fontWeight: &#x27;500&#x27;, color: &#x27;#fff&#x27; },
+
+  // ===== 更多好车 =====
+  moreSection: { marginBottom: 24 },
+  // Figma: borderRadius 8, active深色高对比, inactive白底
+  filterChip: { paddingHorizontal: 16, paddingVertical: 8, borderRadius: 8, backgroundColor: &#x27;#fff&#x27;, marginRight: 8 },
+  filterChipActive: { backgroundColor: &#x27;#0A0519&#x27; },
+  filterText: { fontSize: 12, fontWeight: &#x27;400&#x27;, color: &#x27;#666&#x27; },
+  filterTextActive: { color: &#x27;#fff&#x27;, fontWeight: &#x27;600&#x27; },
+
+  // Figma: card 361 wide, bg white, borderRadius 12
+  fpCard: { marginHorizontal: 14, marginBottom: 12, backgroundColor: &#x27;#fff&#x27;, borderRadius: 12, overflow: &#x27;hidden&#x27; },
+  // Figma: image 359x225, borderRadius 12 top
+  fpImg: { width: &#x27;100%&#x27;, height: 225 },
+  fpBody: { paddingHorizontal: 14, paddingTop: 12, paddingBottom: 8 },
+  // Figma: 20px/700, letterSpacing -2%
+  fpName: { fontSize: 20, fontWeight: &#x27;700&#x27;, color: &#x27;#0A0519&#x27;, letterSpacing: -0.4, marginBottom: 4 },
+  // Figma: 12px/400, color #666666
+  fpDesc: { fontSize: 12, fontWeight: &#x27;400&#x27;, color: &#x27;#666666&#x27;, letterSpacing: -0.24 },
+  // Figma: price bar bg #F7F7F7, borderRadius 0 0 16 16, height 60
+  fpPriceBar: {
+    flexDirection: &#x27;row&#x27;, justifyContent: &#x27;space-between&#x27;, alignItems: &#x27;center&#x27;,
+    backgroundColor: &#x27;#F7F7F7&#x27;, paddingHorizontal: 14, height: 60,
+    borderBottomLeftRadius: 16, borderBottomRightRadius: 16,
+  },
+  // Figma: 17.95px/700
+  fpDayPrice: { fontSize: 18, fontWeight: &#x27;700&#x27;, color: &#x27;#0A0519&#x27; },
+  fpDayUnit: { fontSize: 11, fontWeight: &#x27;400&#x27;, color: &#x27;#0A0519&#x27; },
+  // Figma: 10.77px/400
+  fpHourPrice: { fontSize: 11, fontWeight: &#x27;400&#x27;, color: &#x27;#999&#x27; },
+  // Figma: 10px/400, color #879099
+  fpRetail: { fontSize: 10, fontWeight: &#x27;400&#x27;, color: &#x27;#879099&#x27;, marginTop: 2 },
+  // Figma: 89x36, borderRadius 18, bg #0A0519, font 14px/600 white
+  fpSelectBtn: { width: 89, height: 36, borderRadius: 18, backgroundColor: &#x27;#0A0519&#x27;, justifyContent: &#x27;center&#x27;, alignItems: &#x27;center&#x27; },
+  fpSelectText: { fontSize: 14, fontWeight: &#x27;600&#x27;, color: &#x27;#fff&#x27; },
+
+  // ===== 底部TabBar =====
+  // Figma: 366x64, borderRadius 34, bg #0F0F0F
+  btBar: { position: &#x27;absolute&#x27;, bottom: 20, left: 12, right: 12, alignItems: &#x27;center&#x27; },
+  btInner: { flexDirection: &#x27;row&#x27;, width: 366, height: 64, borderRadius: 34, backgroundColor: &#x27;#0F0F0F&#x27;, alignItems: &#x27;center&#x27;, justifyContent: &#x27;space-evenly&#x27;, overflow: &#x27;hidden&#x27; },
+  // Figma: glass overlay rgba(255,255,255,0.1)
+  btGlass: { position: &#x27;absolute&#x27;, top: 0, left: 0, right: 0, bottom: 0, backgroundColor: &#x27;rgba(255,255,255,0.1)&#x27;, borderRadius: 34 },
+  btItem: { alignItems: &#x27;center&#x27;, zIndex: 1 },
+  // Figma: active circle 52x52, bg #0A0519
+  btCircle: { width: 52, height: 52, borderRadius: 26, justifyContent: &#x27;center&#x27;, alignItems: &#x27;center&#x27; },
+  btCircleActive: { backgroundColor: &#x27;#0A0519&#x27; },
+  btIconSymbol: { fontSize: 18, color: &#x27;rgba(255,255,255,0.5)&#x27;, marginBottom: 1 },
+  btIconActive: { color: &#x27;#fff&#x27; },
+  btLabel: { fontSize: 9, color: &#x27;rgba(255,255,255,0.35)&#x27;, letterSpacing: 0.2 },
+  btLabelActive: { color: &#x27;rgba(255,255,255,0.9)&#x27; },
+  // Figma: home indicator 134x5, borderRadius 100, color #111
+  homeIndicator: { width: 134, height: 5, borderRadius: 100, backgroundColor: &#x27;#111&#x27;, marginTop: 8, alignSelf: &#x27;center&#x27; },
+
+  empty: { flex: 1, justifyContent: &#x27;center&#x27;, alignItems: &#x27;center&#x27; },
+  emptyText: { fontSize: 16, color: &#x27;#999&#x27; },
+});
+</pre>
+
+  <h2>交互与动画</h2>
+  <div class="highlight">
+    <h3>核心动效参数</h3>
+    <p>Banner 轮播：setInterval 3500ms + Animated.timing 500ms 滑动 + 文字 fade 150ms/250ms<br>
+    卡片扇形展开：Animated.spring, tension 80, friction 12，带旋转 ±5deg<br>
+    手势滑动：PanResponder, 阈值 dx > 8px 且 dx > dy × 1.2 才触发水平滑动<br>
+    渐变模拟：GradientDown/GradientUp 6 层 View 叠加，opacity 线性插值</p>
+  </div>
+
+  <h2>项目概述</h2>
+  <p>蓝莓骑行首页是整个协作中难度最高的项目。基于野野提供的 Figma 设计稿（文件 OekG1RNnxeQMcJNuvYMJ28），要求像素级还原到 React Native 代码，并在 Snack Expo 上可预览。</p>
+
+  <h2>核心功能</h2>
+  <ul>
+    <li>Hero Banner 自动轮播，带文字淡入淡出动画</li>
+    <li>品牌 Tab 切换（TEEK / Blueberry / 小布 / Specialized），每个品牌独立配色</li>
+    <li>周周上新卡片：扇形堆叠布局，手势滑动切换，弹簧动画</li>
+    <li>分类横滑卡片：4 层渐变模拟底部暗角</li>
+    <li>筛选 Tab：全部 / Ebike / 公路车 / 山地车 / 折叠车 / 宠物拖箱</li>
+    <li>全宽产品卡：图片 + 名称 + 日租价 + 时租价 + 零售价</li>
+    <li>底部 TabBar：毛玻璃效果 + Home Indicator</li>
+  </ul>
+
+  <div class="highlight">
+    <h3>技术挑战：无依赖渐变</h3>
+    <p>Snack Expo 不支持 expo-linear-gradient，小野用多层 View + rgba 背景色模拟线性渐变（GradientDown / GradientUp 组件），6 层叠加实现平滑过渡效果。这个方案后来成为团队的标准渐变实现方式。</p>
+  </div>
+
+  <h2>Figma 还原细节</h2>
+  <div class="code-block">// Figma Token 提取示例
+Nav Tab: active 16px/600, inactive 14px/400 opacity 0.6
+Badge: bg #202229, borderRadius 6, stroke #1D1F24 0.5px
+Footer: glass bg rgba(255,255,255,0.16), stroke rgba(255,255,255,0.52)
+Product name: 20px/700, letterSpacing -2%
+Select button: 89x36, borderRadius 18, bg #0A0519
+Retail price: color #879099, 10px/400
+Hour price: 11px/400</div>
+
+  <h2>经验教训</h2>
+  <p>这个项目暴露了最多问题：推翻重写导致回归、筛选 Tab 对比度丢失、Gradient 组件 prop 改名没同步调用方。每一个 bug 都是因为没有自检就交付。这是"精修优于重写"和"交付前必须自检"两条准则的直接来源。</p>
+</div>
+</body>
+</html>

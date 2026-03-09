@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>极速骑行 App · 野野 × 小野</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#06080D;color:#E8ECF1;font-family:-apple-system,'SF Pro Display','PingFang SC','Helvetica Neue',sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:#3B82F6;text-decoration:none}
+.back{position:fixed;bottom:24px;right:24px;z-index:100;font-size:13px;color:rgba(255,255,255,0.7);display:flex;align-items:center;gap:6px;transition:all 0.3s;background:rgba(6,8,13,0.7);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:10px 18px;border-radius:24px;border:1px solid rgba(255,255,255,0.1)}
+.back:hover{color:#fff;border-color:rgba(255,255,255,0.3)}
+.hero-img{width:100%;height:60vh;min-height:360px;object-fit:cover;display:block;filter:brightness(0.7)}
+.hero-overlay{position:relative;margin-top:-120px;padding:0 24px;max-width:800px;margin-left:auto;margin-right:auto;z-index:2}
+.hero-overlay h1{font-size:clamp(32px,5vw,48px);font-weight:800;letter-spacing:-1px;margin-bottom:8px}
+.hero-overlay .sub{font-size:16px;color:rgba(255,255,255,0.55);margin-bottom:24px}
+.tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:40px}
+.tags span{font-size:11px;padding:4px 12px;border-radius:20px;background:rgba(59,130,246,0.12);color:#3B82F6}
+.content{max-width:800px;margin:0 auto;padding:0 24px 80px}
+.content h2{font-size:22px;font-weight:700;margin:48px 0 16px;letter-spacing:-0.3px}
+.content p{font-size:15px;color:rgba(255,255,255,0.6);margin-bottom:16px;line-height:1.8}
+.content ul{padding-left:20px;margin-bottom:16px}
+.content li{font-size:14px;color:rgba(255,255,255,0.55);margin-bottom:8px}
+.code-block{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:20px 24px;margin:16px 0 24px;overflow-x:auto;font-family:'SF Mono','Fira Code',monospace;font-size:13px;color:rgba(255,255,255,0.7);line-height:1.6;white-space:pre}
+.highlight{background:linear-gradient(135deg,rgba(59,130,246,0.08),rgba(249,115,22,0.06));border:1px solid rgba(59,130,246,0.12);border-radius:16px;padding:24px;margin:24px 0}
+.highlight h3{font-size:16px;font-weight:600;margin-bottom:8px}
+.highlight p{font-size:14px;color:rgba(255,255,255,0.55);margin:0}
+/* Phone Mockup Gallery */
+.phone-gallery{display:flex;gap:24px;overflow-x:auto;padding:24px 0 32px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+.phone-gallery::-webkit-scrollbar{height:4px}
+.phone-gallery::-webkit-scrollbar-track{background:transparent}
+.phone-gallery::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:4px}
+.phone-frame{flex-shrink:0;width:260px;scroll-snap-align:center}
+.phone-device{width:260px;height:520px;border-radius:36px;border:3px solid rgba(255,255,255,0.12);background:#111;position:relative;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.6)}
+.phone-device::before{content:'';position:absolute;top:12px;left:50%;transform:translateX(-50%);width:80px;height:24px;border-radius:12px;background:rgba(0,0,0,0.9);z-index:10}
+.app-screen{width:100%;height:100%;position:relative;overflow:hidden;overflow-y:auto}
+.app-screen::-webkit-scrollbar{display:none}
+.phone-label{text-align:center;margin-top:12px;font-size:12px;color:rgba(255,255,255,0.4)}
+</style>
+</head>
+<body>
+<a href="index.html#projects" class="back">← 返回总览</a>
+<img class="hero-img" src="https://images.unsplash.com/photo-1544191696-102dbdaeeaa0?w=1400&q=80" alt="极速骑行">
+<div class="hero-overlay">
+  <h1>极速骑行 App</h1>
+  <div class="sub">高端山地骑行应用 · React Native · 7 个版本迭代</div>
+  <div class="tags"><span>React Native</span><span>Expo Snack</span><span>深色沉浸</span><span>丝滑动画</span><span>多版本迭代</span></div>
+</div>
+<div class="content">
+  <h2>界面预览</h2>
+  <p>极速骑行 App 的核心界面展示——深色沉浸式设计，运动感十足：</p>
+  <div class="phone-gallery">
+    <div class="phone-frame">
+      <div class="phone-device">
+        <div class="app-screen" style="background:#0a0a0a;font-family:-apple-system,'SF Pro Display','PingFang SC',sans-serif;">
+          <div style="padding:0;">
+            <div style="height:200px;background:linear-gradient(135deg,#667eea,#764ba2);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;">
+              <div style="font-size:16px;font-weight:bold;color:#fff;text-align:center;margin-bottom:6px;">征服每一座山峰</div>
+              <div style="font-size:9px;color:rgba(255,255,255,0.9);text-align:center;margin-bottom:12px;">专业级山地车，为极限而生</div>
+              <div style="background:#fff;padding:6px 20px;border-radius:13px;"><span style="font-size:8px;font-weight:600;color:#667eea;">立即探索</span></div>
+            </div>
+            <div style="padding:12px;">
+              <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;">
+                <span style="font-size:13px;font-weight:bold;color:#fff;">爆款热销</span>
+                <span style="background:#f5576c;padding:2px 6px;border-radius:6px;font-size:7px;font-weight:bold;color:#fff;">HOT</span>
+              </div>
+              <div style="display:flex;gap:8px;overflow:hidden;">
+                <div style="min-width:140px;background:#1a1a1a;border-radius:10px;overflow:hidden;">
+                  <div style="height:80px;background:#333;position:relative;padding:6px;">
+                    <span style="background:#667eea;padding:2px 6px;border-radius:6px;font-size:7px;color:#fff;">年度爆款</span>
+                  </div>
+                  <div style="padding:8px;">
+                    <div style="font-size:9px;font-weight:600;color:#fff;margin-bottom:2px;">Thunder Pro 碳纤维</div>
+                    <div style="font-size:7px;color:#999;margin-bottom:4px;">销量突破10000+台</div>
+                    <div style="display:flex;align-items:center;gap:4px;">
+                      <span style="font-size:10px;font-weight:bold;color:#667eea;">¥18,999</span>
+                      <span style="font-size:7px;color:#666;text-decoration:line-through;">¥24,999</span>
+                    </div>
+                  </div>
+                </div>
+                <div style="min-width:140px;background:#1a1a1a;border-radius:10px;overflow:hidden;">
+                  <div style="height:80px;background:#333;position:relative;padding:6px;">
+                    <span style="background:#f5576c;padding:2px 6px;border-radius:6px;font-size:7px;color:#fff;">新品上市</span>
+                  </div>
+                  <div style="padding:8px;">
+                    <div style="font-size:9px;font-weight:600;color:#fff;margin-bottom:2px;">Storm Elite 电助力</div>
+                    <div style="font-size:7px;color:#999;margin-bottom:4px;">智能电控系统</div>
+                    <span style="font-size:10px;font-weight:bold;color:#667eea;">¥28,999</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="position:absolute;bottom:0;left:0;right:0;height:44px;background:#1a1a1a;border-top:1px solid #333;display:flex;justify-content:space-around;align-items:center;">
+            <div style="text-align:center;"><div style="font-size:12px;">🏠</div><div style="font-size:6px;color:#667eea;">首页</div></div>
+            <div style="text-align:center;"><div style="font-size:12px;">��</div><div style="font-size:6px;color:#999;">车型</div></div>
+            <div style="text-align:center;"><div style="font-size:12px;">🛍️</div><div style="font-size:6px;color:#999;">配件</div></div>
+            <div style="text-align:center;"><div style="font-size:12px;">📱</div><div style="font-size:6px;color:#999;">发现</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="phone-label">首页 · Hero + 爆款热销</div>
+    </div>
+    <div class="phone-frame">
+      <div class="phone-device">
+        <div class="app-screen" style="background:#0a0a0a;font-family:-apple-system,'SF Pro Display','PingFang SC',sans-serif;">
+          <div style="padding:12px;">
+            <div style="font-size:14px;font-weight:bold;color:#fff;margin-bottom:10px;">精选车型</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+              <div style="background:#1a1a1a;border-radius:8px;overflow:hidden;">
+                <div style="height:60px;background:#333;"></div>
+                <div style="padding:6px;">
+                  <div style="font-size:8px;font-weight:600;color:#fff;">XC竞速系列</div>
+                  <div style="font-size:6px;color:#999;margin:2px 0;">轻量化碳纤维车架</div>
+                  <div style="font-size:9px;font-weight:bold;color:#667eea;">¥15,999</div>
+                </div>
+              </div>
+              <div style="background:#1a1a1a;border-radius:8px;overflow:hidden;">
+                <div style="height:60px;background:#333;"></div>
+                <div style="padding:6px;">
+                  <div style="font-size:8px;font-weight:600;color:#fff;">Trail全能系列</div>
+                  <div style="font-size:6px;color:#999;margin:2px 0;">150mm行程避震</div>
+                  <div style="font-size:9px;font-weight:bold;color:#667eea;">¥22,999</div>
+                </div>
+              </div>
+              <div style="background:#1a1a1a;border-radius:8px;overflow:hidden;">
+                <div style="height:60px;background:#333;"></div>
+                <div style="padding:6px;">
+                  <div style="font-size:8px;font-weight:600;color:#fff;">Enduro极限系列</div>
+                  <div style="font-size:6px;color:#999;margin:2px 0;">180mm双避震系统</div>
+                  <div style="font-size:9px;font-weight:bold;color:#667eea;">¥35,999</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="position:absolute;bottom:0;left:0;right:0;height:44px;background:#1a1a1a;border-top:1px solid #333;display:flex;justify-content:space-around;align-items:center;">
+            <div style="text-align:center;"><div style="font-size:12px;">🏠</div><div style="font-size:6px;color:#999;">首页</div></div>
+            <div style="text-align:center;"><div style="font-size:12px;">🚴</div><div style="font-size:6px;color:#667eea;">车型</div></div>
+            <div style="text-align:center;"><div style="font-size:12px;">🛍️</div><div style="font-size:6px;color:#999;">配件</div></div>
+            <div style="text-align:center;"><div style="font-size:12px;">📱</div><div style="font-size:6px;color:#999;">发现</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="phone-label">车型 · 精选系列</div>
+    </div>
+    <div class="phone-frame">
+      <div class="phone-device">
+        <div class="app-screen" style="background:#0a0a0a;font-family:-apple-system,'SF Pro Display','PingFang SC',sans-serif;">
+          <div style="padding:12px;">
+            <div style="font-size:14px;font-weight:bold;color:#fff;margin-bottom:10px;">骑行装备</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;">
+              <div style="background:#1a1a1a;border-radius:8px;padding:8px;text-align:center;">
+                <div style="font-size:18px;margin-bottom:4px;">🧤</div>
+                <div style="font-size:7px;font-weight:600;color:#fff;">专业手套</div>
+                <div style="font-size:6px;color:#999;">防滑透气</div>
+                <div style="font-size:8px;font-weight:bold;color:#667eea;margin-top:2px;">¥299</div>
+              </div>
+              <div style="background:#1a1a1a;border-radius:8px;padding:8px;text-align:center;">
+                <div style="font-size:18px;margin-bottom:4px;">⌚</div>
+                <div style="font-size:7px;font-weight:600;color:#fff;">运动手表</div>
+                <div style="font-size:6px;color:#999;">GPS定位</div>
+                <div style="font-size:8px;font-weight:bold;color:#667eea;margin-top:2px;">¥1,299</div>
+              </div>
+              <div style="background:#1a1a1a;border-radius:8px;padding:8px;text-align:center;">
+                <div style="font-size:18px;margin-bottom:4px;">🕶️</div>
+                <div style="font-size:7px;font-weight:600;color:#fff;">骑行眼镜</div>
+                <div style="font-size:6px;color:#999;">防紫外线</div>
+                <div style="font-size:8px;font-weight:bold;color:#667eea;margin-top:2px;">¥599</div>
+              </div>
+              <div style="background:#1a1a1a;border-radius:8px;padding:8px;text-align:center;">
+                <div style="font-size:18px;margin-bottom:4px;">🎽</div>
+                <div style="font-size:7px;font-weight:600;color:#fff;">速干衣</div>
+                <div style="font-size:6px;color:#999;">排汗快干</div>
+                <div style="font-size:8px;font-weight:bold;color:#667eea;margin-top:2px;">¥399</div>
+              </div>
+              <div style="background:#1a1a1a;border-radius:8px;padding:8px;text-align:center;">
+                <div style="font-size:18px;margin-bottom:4px;">🪖</div>
+                <div style="font-size:7px;font-weight:600;color:#fff;">安全头盔</div>
+                <div style="font-size:6px;color:#999;">轻量防护</div>
+                <div style="font-size:8px;font-weight:bold;color:#667eea;margin-top:2px;">¥899</div>
+              </div>
+              <div style="background:#1a1a1a;border-radius:8px;padding:8px;text-align:center;">
+                <div style="font-size:18px;margin-bottom:4px;">👟</div>
+                <div style="font-size:7px;font-weight:600;color:#fff;">锁鞋</div>
+                <div style="font-size:6px;color:#999;">专业锁踏</div>
+                <div style="font-size:8px;font-weight:bold;color:#667eea;margin-top:2px;">¥799</div>
+              </div>
+            </div>
+          </div>
+          <div style="position:absolute;bottom:0;left:0;right:0;height:44px;background:#1a1a1a;border-top:1px solid #333;display:flex;justify-content:space-around;align-items:center;">
+            <div style="text-align:center;"><div style="font-size:12px;">🏠</div><div style="font-size:6px;color:#999;">首页</div></div>
+            <div style="text-align:center;"><div style="font-size:12px;">🚴</div><div style="font-size:6px;color:#999;">车型</div></div>
+            <div style="text-align:center;"><div style="font-size:12px;">🛍️</div><div style="font-size:6px;color:#667eea;">配件</div></div>
+            <div style="text-align:center;"><div style="font-size:12px;">📱</div><div style="font-size:6px;color:#999;">发现</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="phone-label">配件 · 骑行装备</div>
+    </div>
+    <div class="phone-frame">
+      <div class="phone-device">
+        <div class="app-screen" style="background:#0a0a0a;font-family:-apple-system,'SF Pro Display','PingFang SC',sans-serif;">
+          <div style="padding:12px;">
+            <div style="font-size:14px;font-weight:bold;color:#fff;margin-bottom:10px;">发现更多</div>
+            <div style="background:#1a1a1a;border-radius:8px;padding:8px;display:flex;gap:8px;margin-bottom:8px;">
+              <div style="width:45px;height:45px;background:#333;border-radius:6px;flex-shrink:0;"></div>
+              <div style="flex:1;">
+                <div style="display:inline-block;background:rgba(245,87,108,0.2);padding:1px 5px;border-radius:4px;margin-bottom:3px;"><span style="font-size:6px;color:#f5576c;font-weight:600;">热门话题</span></div>
+                <div style="font-size:8px;font-weight:600;color:#fff;margin-bottom:2px;">川藏线骑行攻略完整版</div>
+                <div style="display:flex;gap:8px;"><span style="font-size:6px;color:#666;">👁️ 28.3k</span><span style="font-size:6px;color:#666;">💬 892</span></div>
+              </div>
+            </div>
+            <div style="background:#1a1a1a;border-radius:8px;padding:8px;display:flex;gap:8px;margin-bottom:8px;">
+              <div style="width:45px;height:45px;background:#333;border-radius:6px;flex-shrink:0;"></div>
+              <div style="flex:1;">
+                <div style="display:inline-block;background:rgba(102,126,234,0.2);padding:1px 5px;border-radius:4px;margin-bottom:3px;"><span style="font-size:6px;color:#667eea;font-weight:600;">车型推荐</span></div>
+                <div style="font-size:8px;font-weight:600;color:#fff;margin-bottom:2px;">2024年度最佳山地车TOP10</div>
+                <div style="display:flex;gap:8px;"><span style="font-size:6px;color:#666;">👁️ 12.5k</span><span style="font-size:6px;color:#666;">💬 328</span></div>
+              </div>
+            </div>
+            <div style="background:#1a1a1a;border-radius:8px;padding:8px;display:flex;gap:8px;">
+              <div style="width:45px;height:45px;background:#333;border-radius:6px;flex-shrink:0;"></div>
+              <div style="flex:1;">
+                <div style="display:inline-block;background:rgba(245,87,108,0.2);padding:1px 5px;border-radius:4px;margin-bottom:3px;"><span style="font-size:6px;color:#f5576c;font-weight:600;">热门话题</span></div>
+                <div style="font-size:8px;font-weight:600;color:#fff;margin-bottom:2px;">骑行减肥30天挑战</div>
+                <div style="display:flex;gap:8px;"><span style="font-size:6px;color:#666;">👁️ 35.2k</span><span style="font-size:6px;color:#666;">💬 1.2k</span></div>
+              </div>
+            </div>
+          </div>
+          <div style="position:absolute;bottom:0;left:0;right:0;height:44px;background:#1a1a1a;border-top:1px solid #333;display:flex;justify-content:space-around;align-items:center;">
+            <div style="text-align:center;"><div style="font-size:12px;">🏠</div><div style="font-size:6px;color:#999;">首页</div></div>
+            <div style="text-align:center;"><div style="font-size:12px;">🚴</div><div style="font-size:6px;color:#999;">车型</div></div>
+            <div style="text-align:center;"><div style="font-size:12px;">🛍️</div><div style="font-size:6px;color:#999;">配件</div></div>
+            <div style="text-align:center;"><div style="font-size:12px;">📱</div><div style="font-size:6px;color:#667eea;">发现</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="phone-label">发现 · 骑行社区</div>
+    </div>
+  </div>
+  <div style="font-size:13px;color:rgba(255,255,255,0.35);margin-bottom:8px;">← 左右滑动查看更多界面 · 基于 App.tsx 真实代码数据渲染</div>
+  <div style="margin:16px 0 0;display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+    <button onclick="copyCode('jisu')" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:24px;background:linear-gradient(135deg,#3B82F6,#2563eb);color:#fff;border:none;cursor:pointer;font-size:13px;font-weight:600;transition:transform 0.2s;font-family:inherit;">📋 复制完整代码</button>
+    <a href="https://snack.expo.dev" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:24px;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.7);border:1px solid rgba(255,255,255,0.15);cursor:pointer;font-size:13px;font-weight:500;text-decoration:none;transition:all 0.2s;">🚀 打开 Snack Expo</a>
+    <span id="jisu-status" style="font-size:12px;color:rgba(255,255,255,0.35);display:block;margin-top:8px;">使用方法：① 点「复制完整代码」→ ② 点「打开 Snack Expo」→ ③ 在 Snack 编辑器中全选(⌘A)并粘贴(⌘V)</span>
+  </div>
+<script>
+function copyCode(id) {
+  var codeEl = document.getElementById(id + '-code');
+  if (!codeEl) return;
+  var code = codeEl.textContent;
+  navigator.clipboard.writeText(code).then(function() {
+    var btn = event.target;
+    btn.textContent = '✅ 已复制！去 Snack 粘贴 →';
+    btn.style.background = 'linear-gradient(135deg,#10B981,#059669)';
+    document.getElementById(id + '-status').textContent = '代码已复制到剪贴板 → 现在点右边按钮打开 Snack → 在编辑器中 ⌘A 全选后 ⌘V 粘贴';
+    document.getElementById(id + '-status').style.color = '#4ade80';
+    setTimeout(function() { btn.textContent = '📋 复制完整代码'; btn.style.background = 'linear-gradient(135deg,#3B82F6,#2563eb)'; }, 5000);
+  });
+}
+</script>
+<pre id="jisu-code" style="position:absolute;left:-9999px;">import React, { useState } from 'react';
+import {
+  SafeAreaView,
+  ScrollView,
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions,
+  FlatList,
+} from 'react-native';
+
+var { width } = Dimensions.get('window');
+
+function GradientBg(props) {
+  var colors = props.colors || ['#667eea', '#764ba2'];
+  var layers = 8;
+  var views = [];
+  for (var i = 0; i &lt; layers; i++) {
+    var ratio = i / (layers - 1);
+    var r1 = parseInt(colors[0].slice(1,3),16), g1 = parseInt(colors[0].slice(3,5),16), b1 = parseInt(colors[0].slice(5,7),16);
+    var r2 = parseInt(colors[1].slice(1,3),16), g2 = parseInt(colors[1].slice(3,5),16), b2 = parseInt(colors[1].slice(5,7),16);
+    var r = Math.round(r1 + (r2-r1)*ratio), g = Math.round(g1 + (g2-g1)*ratio), b = Math.round(b1 + (b2-b1)*ratio);
+    views.push(
+      &lt;View key={i} style={{position:'absolute',left:0,right:0,top:Math.round((props.h||400)/layers*i),height:Math.ceil((props.h||400)/layers)+1,backgroundColor:'rgb('+r+','+g+','+b+')'}} /&gt;
+    );
+  }
+  return &lt;View style={[{position:'relative',overflow:'hidden'},props.style]}&gt;{views}{props.children}&lt;/View&gt;;
+}
+
+export default function App() {
+  var st = useState(0);
+  var selectedTab = st[0], setSelectedTab = st[1];
+
+  return (
+    &lt;SafeAreaView style={styles.container}&gt;
+      &lt;View style={styles.content}&gt;
+        {selectedTab === 0 &amp;&amp; &lt;HomeScreen /&gt;}
+        {selectedTab === 1 &amp;&amp; &lt;BikesScreen /&gt;}
+        {selectedTab === 2 &amp;&amp; &lt;AccessoriesScreen /&gt;}
+        {selectedTab === 3 &amp;&amp; &lt;FeedScreen /&gt;}
+      &lt;/View&gt;
+      &lt;View style={styles.tabBar}&gt;
+        &lt;TabButton icon="🏠" label="首页" active={selectedTab === 0} onPress={function(){setSelectedTab(0);}} /&gt;
+        &lt;TabButton icon="🚴" label="车型" active={selectedTab === 1} onPress={function(){setSelectedTab(1);}} /&gt;
+        &lt;TabButton icon="🛍️" label="配件" active={selectedTab === 2} onPress={function(){setSelectedTab(2);}} /&gt;
+        &lt;TabButton icon="📱" label="发现" active={selectedTab === 3} onPress={function(){setSelectedTab(3);}} /&gt;
+      &lt;/View&gt;
+    &lt;/SafeAreaView&gt;
+  );
+}
+
+function TabButton(props) {
+  return (
+    &lt;TouchableOpacity style={styles.tabButton} onPress={props.onPress}&gt;
+      &lt;Text style={styles.tabIcon}&gt;{props.icon}&lt;/Text&gt;
+      &lt;Text style={[styles.tabLabel, props.active &amp;&amp; styles.tabLabelActive]}&gt;{props.label}&lt;/Text&gt;
+    &lt;/TouchableOpacity&gt;
+  );
+}
+
+function HomeScreen() {
+  var featuredBikes = [
+    { title: 'Thunder Pro 碳纤维', subtitle: '销量突破10000+台', price: '¥18,999', oldPrice: '¥24,999', tag: '年度爆款', isHot: true },
+    { title: 'Storm Elite 电助力', subtitle: '智能电控系统', price: '¥28,999', tag: '新品上市', isHot: false },
+    { title: 'Viper X1 速降车', subtitle: '专业竞技级', price: '¥42,999', tag: '新品上市', isHot: false },
+  ];
+
+  return (
+    &lt;ScrollView style={styles.screen}&gt;
+      &lt;GradientBg colors={['#667eea','#764ba2']} h={400} style={styles.hero}&gt;
+        &lt;Text style={styles.heroTitle}&gt;征服每一座山峰&lt;/Text&gt;
+        &lt;Text style={styles.heroSubtitle}&gt;专业级山地车，为极限而生&lt;/Text&gt;
+        &lt;TouchableOpacity style={styles.ctaButton}&gt;
+          &lt;Text style={styles.ctaButtonText}&gt;立即探索&lt;/Text&gt;
+        &lt;/TouchableOpacity&gt;
+      &lt;/GradientBg&gt;
+      &lt;View style={styles.section}&gt;
+        &lt;View style={styles.sectionHeader}&gt;
+          &lt;Text style={styles.sectionTitle}&gt;爆款热销&lt;/Text&gt;
+          &lt;View style={styles.hotBadge}&gt;&lt;Text style={styles.hotBadgeText}&gt;HOT&lt;/Text&gt;&lt;/View&gt;
+        &lt;/View&gt;
+        &lt;FlatList
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          data={featuredBikes}
+          keyExtractor={function(item) { return item.title; }}
+          contentContainerStyle={styles.featuredList}
+          renderItem={function(info) { return &lt;FeaturedBikeCard item={info.item} /&gt;; }}
+        /&gt;
+      &lt;/View&gt;
+    &lt;/ScrollView&gt;
+  );
+}
+
+function FeaturedBikeCard(props) {
+  var item = props.item;
+  return (
+    &lt;View style={styles.featuredCard}&gt;
+      &lt;View style={styles.featuredImage}&gt;
+        &lt;View style={[styles.tag, item.isHot ? styles.tagHot : styles.tagNew]}&gt;
+          &lt;Text style={styles.tagText}&gt;{item.tag}&lt;/Text&gt;
+        &lt;/View&gt;
+      &lt;/View&gt;
+      &lt;View style={styles.featuredContent}&gt;
+        &lt;Text style={styles.featuredTitle}&gt;{item.title}&lt;/Text&gt;
+        &lt;Text style={styles.featuredSubtitle}&gt;{item.subtitle}&lt;/Text&gt;
+        &lt;View style={styles.priceRow}&gt;
+          &lt;Text style={styles.price}&gt;{item.price}&lt;/Text&gt;
+          {item.oldPrice &amp;&amp; &lt;Text style={styles.oldPrice}&gt;{item.oldPrice}&lt;/Text&gt;}
+        &lt;/View&gt;
+      &lt;/View&gt;
+    &lt;/View&gt;
+  );
+}
+
+function BikesScreen() {
+  var bikes = [
+    { name: 'XC竞速系列', desc: '轻量化碳纤维车架', price: '¥15,999' },
+    { name: 'Trail全能系列', desc: '150mm行程避震', price: '¥22,999' },
+    { name: 'Enduro极限系列', desc: '180mm双避震系统', price: '¥35,999' },
+  ];
+  return (
+    &lt;ScrollView style={styles.screen}&gt;
+      &lt;Text style={styles.screenTitle}&gt;精选车型&lt;/Text&gt;
+      &lt;View style={styles.grid}&gt;
+        {bikes.map(function(bike) { return &lt;BikeCard key={bike.name} item={bike} /&gt;; })}
+      &lt;/View&gt;
+    &lt;/ScrollView&gt;
+  );
+}
+
+function BikeCard(props) {
+  var item = props.item;
+  return (
+    &lt;View style={styles.bikeCard}&gt;
+      &lt;View style={styles.bikeImage} /&gt;
+      &lt;View style={styles.bikeContent}&gt;
+        &lt;Text style={styles.bikeName}&gt;{item.name}&lt;/Text&gt;
+        &lt;Text style={styles.bikeDesc}&gt;{item.desc}&lt;/Text&gt;
+        &lt;Text style={styles.bikePrice}&gt;{item.price}&lt;/Text&gt;
+      &lt;/View&gt;
+    &lt;/View&gt;
+  );
+}
+
+function AccessoriesScreen() {
+  var accessories = [
+    { icon: '🧤', name: '专业手套', desc: '防滑透气', price: '¥299' },
+    { icon: '⌚', name: '运动手表', desc: 'GPS定位', price: '¥1,299' },
+    { icon: '🕶️', name: '骑行眼镜', desc: '防紫外线', price: '¥599' },
+    { icon: '🎽', name: '速干衣', desc: '排汗快干', price: '¥399' },
+    { icon: '🪖', name: '安全头盔', desc: '轻量防护', price: '¥899' },
+    { icon: '👟', name: '锁鞋', desc: '专业锁踏', price: '¥799' },
+  ];
+  return (
+    &lt;ScrollView style={styles.screen}&gt;
+      &lt;Text style={styles.screenTitle}&gt;骑行装备&lt;/Text&gt;
+      &lt;View style={styles.accessoriesGrid}&gt;
+        {accessories.map(function(item) { return &lt;AccessoryCard key={item.name} item={item} /&gt;; })}
+      &lt;/View&gt;
+    &lt;/ScrollView&gt;
+  );
+}
+
+function AccessoryCard(props) {
+  var item = props.item;
+  return (
+    &lt;View style={styles.accessoryCard}&gt;
+      &lt;Text style={styles.accessoryIcon}&gt;{item.icon}&lt;/Text&gt;
+      &lt;Text style={styles.accessoryName}&gt;{item.name}&lt;/Text&gt;
+      &lt;Text style={styles.accessoryDesc}&gt;{item.desc}&lt;/Text&gt;
+      &lt;Text style={styles.accessoryPrice}&gt;{item.price}&lt;/Text&gt;
+    &lt;/View&gt;
+  );
+}
+
+function FeedScreen() {
+  var feeds = [
+    { tag: '车型推荐', title: '2024年度最佳山地车TOP10', views: '12.5k', comments: '328' },
+    { tag: '热门话题', title: '川藏线骑行攻略完整版', views: '28.3k', comments: '892' },
+    { tag: '产品服务', title: '免费保养服务升级', views: '8.9k', comments: '156' },
+    { tag: '车型推荐', title: '新手入门车型选购指南', views: '15.7k', comments: '445' },
+    { tag: '热门话题', title: '骑行减肥30天挑战', views: '35.2k', comments: '1.2k' },
+    { tag: '产品服务', title: '以旧换新活动开启', views: '19.8k', comments: '567' },
+  ];
+  return (
+    &lt;ScrollView style={styles.screen}&gt;
+      &lt;Text style={styles.screenTitle}&gt;发现更多&lt;/Text&gt;
+      {feeds.map(function(feed, index) { return &lt;FeedCard key={index} item={feed} /&gt;; })}
+    &lt;/ScrollView&gt;
+  );
+}
+
+function FeedCard(props) {
+  var item = props.item;
+  var isHot = item.tag === '热门话题';
+  return (
+    &lt;View style={styles.feedCard}&gt;
+      &lt;View style={styles.feedImage} /&gt;
+      &lt;View style={styles.feedContent}&gt;
+        &lt;View style={[styles.feedTag, isHot ? styles.feedTagHot : styles.feedTagNormal]}&gt;
+          &lt;Text style={[styles.feedTagText, isHot ? styles.feedTagTextHot : styles.feedTagTextNormal]}&gt;{item.tag}&lt;/Text&gt;
+        &lt;/View&gt;
+        &lt;Text style={styles.feedTitle}&gt;{item.title}&lt;/Text&gt;
+        &lt;View style={styles.feedMeta}&gt;
+          &lt;Text style={styles.feedMetaText}&gt;👁️ {item.views}&lt;/Text&gt;
+          &lt;Text style={styles.feedMetaText}&gt;💬 {item.comments}&lt;/Text&gt;
+        &lt;/View&gt;
+      &lt;/View&gt;
+    &lt;/View&gt;
+  );
+}
+
+var styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: '#0a0a0a' },
+  content: { flex: 1 },
+  screen: { flex: 1 },
+  screenTitle: { fontSize: 28, fontWeight: 'bold', color: '#fff', padding: 20 },
+  tabBar: { flexDirection: 'row', backgroundColor: '#1a1a1a', borderTopWidth: 1, borderTopColor: '#333' },
+  tabButton: { flex: 1, alignItems: 'center', paddingVertical: 12 },
+  tabIcon: { fontSize: 24, marginBottom: 4 },
+  tabLabel: { fontSize: 11, color: '#999' },
+  tabLabelActive: { color: '#667eea' },
+  hero: { height: 400, justifyContent: 'center', alignItems: 'center', padding: 20 },
+  heroTitle: { fontSize: 32, fontWeight: 'bold', color: '#fff', textAlign: 'center', marginBottom: 12, zIndex: 1 },
+  heroSubtitle: { fontSize: 16, color: 'rgba(255,255,255,0.9)', textAlign: 'center', marginBottom: 24, zIndex: 1 },
+  ctaButton: { backgroundColor: '#fff', paddingHorizontal: 40, paddingVertical: 16, borderRadius: 25, zIndex: 1 },
+  ctaButtonText: { fontSize: 16, fontWeight: '600', color: '#667eea' },
+  section: { paddingVertical: 24 },
+  sectionHeader: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20, marginBottom: 16 },
+  sectionTitle: { fontSize: 24, fontWeight: 'bold', color: '#fff', marginRight: 12 },
+  hotBadge: { backgroundColor: '#f5576c', paddingHorizontal: 12, paddingVertical: 6, borderRadius: 12 },
+  hotBadgeText: { fontSize: 11, fontWeight: 'bold', color: '#fff' },
+  featuredList: { paddingHorizontal: 20 },
+  featuredCard: { width: 280, backgroundColor: '#1a1a1a', borderRadius: 20, marginRight: 16, overflow: 'hidden' },
+  featuredImage: { height: 160, backgroundColor: '#333', justifyContent: 'flex-start', alignItems: 'flex-start', padding: 12 },
+  tag: { paddingHorizontal: 12, paddingVertical: 6, borderRadius: 12 },
+  tagHot: { backgroundColor: '#667eea' },
+  tagNew: { backgroundColor: '#f5576c' },
+  tagText: { fontSize: 11, fontWeight: '600', color: '#fff' },
+  featuredContent: { padding: 16 },
+  featuredTitle: { fontSize: 16, fontWeight: '600', color: '#fff', marginBottom: 6 },
+  featuredSubtitle: { fontSize: 13, color: '#999', marginBottom: 12 },
+  priceRow: { flexDirection: 'row', alignItems: 'center' },
+  price: { fontSize: 20, fontWeight: 'bold', color: '#667eea', marginRight: 8 },
+  oldPrice: { fontSize: 13, color: '#666', textDecorationLine: 'line-through' },
+  grid: { flexDirection: 'row', flexWrap: 'wrap', padding: 12 },
+  bikeCard: { width: (width - 48) / 2, backgroundColor: '#1a1a1a', borderRadius: 16, margin: 8, overflow: 'hidden' },
+  bikeImage: { height: 120, backgroundColor: '#333' },
+  bikeContent: { padding: 12 },
+  bikeName: { fontSize: 14, fontWeight: '600', color: '#fff', marginBottom: 4 },
+  bikeDesc: { fontSize: 11, color: '#999', marginBottom: 8 },
+  bikePrice: { fontSize: 16, fontWeight: 'bold', color: '#667eea' },
+  accessoriesGrid: { flexDirection: 'row', flexWrap: 'wrap', padding: 12 },
+  accessoryCard: { width: (width - 60) / 3, backgroundColor: '#1a1a1a', borderRadius: 16, margin: 6, padding: 16, alignItems: 'center' },
+  accessoryIcon: { fontSize: 36, marginBottom: 8 },
+  accessoryName: { fontSize: 12, fontWeight: '600', color: '#fff', marginBottom: 4, textAlign: 'center' },
+  accessoryDesc: { fontSize: 10, color: '#999', marginBottom: 6, textAlign: 'center' },
+  accessoryPrice: { fontSize: 14, fontWeight: 'bold', color: '#667eea' },
+  feedCard: { flexDirection: 'row', backgroundColor: '#1a1a1a', borderRadius: 16, margin: 16, marginTop: 0, padding: 16 },
+  feedImage: { width: 90, height: 90, backgroundColor: '#333', borderRadius: 12, marginRight: 16 },
+  feedContent: { flex: 1 },
+  feedTag: { alignSelf: 'flex-start', paddingHorizontal: 10, paddingVertical: 4, borderRadius: 8, marginBottom: 8 },
+  feedTagNormal: { backgroundColor: 'rgba(102, 126, 234, 0.2)' },
+  feedTagHot: { backgroundColor: 'rgba(245, 87, 108, 0.2)' },
+  feedTagText: { fontSize: 10, fontWeight: '600' },
+  feedTagTextNormal: { color: '#667eea' },
+  feedTagTextHot: { color: '#f5576c' },
+  feedTitle: { fontSize: 14, fontWeight: '600', color: '#fff', marginBottom: 8 },
+  feedMeta: { flexDirection: 'row' },
+  feedMetaText: { fontSize: 11, color: '#666', marginRight: 16 },
+});</pre>
+
+  <h2>交互与动画</h2>
+  <div class="highlight">
+    <h3>核心动效参数</h3>
+    <p>页面转场：Animated.timing, duration 300ms, easing ease-in-out<br>
+    卡片展开：Animated.spring, tension 80, friction 12（弹性自然，无过冲）<br>
+    Tab 切换：Animated.timing, duration 200ms（快速响应，不拖沓）<br>
+    所有动画使用 useNativeDriver: true，确保 60fps 流畅渲染</p>
+  </div>
+
+  <h2>项目概述</h2>
+  <p>极速骑行是整个协作的起点。野野提出了一个高端山地骑行 App 的概念，小野从零开始用 React Native 实现，经历了 7 个版本的持续打磨。</p>
+  <p>设计语言以深色沉浸式为核心，强调运动感和速度感。每个版本都在动画流畅度、视觉层次、交互细节上做了优化。</p>
+
+  <h2>设计亮点</h2>
+  <ul>
+    <li>深色沉浸式 UI，营造专业骑行氛围</li>
+    <li>丝滑的页面转场和卡片动画，60fps 流畅体验</li>
+    <li>多 Tab 导航：首页、车型、配件、发现</li>
+    <li>渐变色系统与品牌色统一</li>
+    <li>适配 Snack Expo 在线预览，纯 JS 无 TypeScript</li>
+  </ul>
+
+  <div class="highlight">
+    <h3>版本演进</h3>
+    <p>App.tsx → App-Simple.tsx → App-Fixed.tsx → App-Premium.tsx → App-Final.tsx → App-Exact.tsx → App-Perfect.tsx，每一版都是对上一版的精修和提升。从基础布局到动画打磨，从粗糙原型到像素级品质。</p>
+  </div>
+
+  <h2>技术实现</h2>
+  <p>基于 React Native + Expo，使用 Animated API 实现所有动画效果。为了兼容 Snack Expo 的限制，全部使用纯 JavaScript（无 TypeScript 类型注解），不依赖 expo-linear-gradient 等第三方库。</p>
+  <div class="code-block">// 核心技术栈
+React Native + Expo
+Animated API (spring / timing)
+纯 JavaScript（Snack 兼容）
+无第三方动画库依赖
+7 个版本持续迭代</div>
+
+  <h2>经验教训</h2>
+  <p>这个项目最大的教训是"版本过多"。7 个版本意味着大量重复工作，如果一开始就分析透彻、规划清楚，可能 3 个版本就能达到最终品质。这也是后来建立"分析→规划→执行→自检→交付"工作流的直接原因。</p>
+</div>
+</body>
+</html>

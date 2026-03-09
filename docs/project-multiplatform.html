@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>多平台适配 · 野野 × 小野</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#06080D;color:#E8ECF1;font-family:-apple-system,'SF Pro Display','PingFang SC','Helvetica Neue',sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:#3B82F6;text-decoration:none}
+.back{position:fixed;bottom:24px;right:24px;z-index:100;font-size:13px;color:rgba(255,255,255,0.7);display:flex;align-items:center;gap:6px;transition:all 0.3s;background:rgba(6,8,13,0.7);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:10px 18px;border-radius:24px;border:1px solid rgba(255,255,255,0.1)}
+.back:hover{color:#fff;border-color:rgba(255,255,255,0.3)}
+.hero-img{width:100%;height:60vh;min-height:360px;object-fit:cover;display:block;filter:brightness(0.7)}
+.hero-overlay{position:relative;margin-top:-120px;padding:0 24px;max-width:800px;margin-left:auto;margin-right:auto;z-index:2}
+.hero-overlay h1{font-size:clamp(32px,5vw,48px);font-weight:800;letter-spacing:-1px;margin-bottom:8px}
+.hero-overlay .sub{font-size:16px;color:rgba(255,255,255,0.55);margin-bottom:24px}
+.tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:40px}
+.tags span{font-size:11px;padding:4px 12px;border-radius:20px;background:rgba(59,130,246,0.12);color:#3B82F6}
+.content{max-width:800px;margin:0 auto;padding:0 24px 80px}
+.content h2{font-size:22px;font-weight:700;margin:48px 0 16px;letter-spacing:-0.3px}
+.content p{font-size:15px;color:rgba(255,255,255,0.6);margin-bottom:16px;line-height:1.8}
+.content ul{padding-left:20px;margin-bottom:16px}
+.content li{font-size:14px;color:rgba(255,255,255,0.55);margin-bottom:8px}
+.code-block{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:20px 24px;margin:16px 0 24px;overflow-x:auto;font-family:'SF Mono','Fira Code',monospace;font-size:13px;color:rgba(255,255,255,0.7);line-height:1.6;white-space:pre}
+.platform-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0}
+@media(max-width:640px){.platform-grid{grid-template-columns:1fr}}
+.platform-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:16px;padding:24px;text-align:center}
+.platform-card h3{font-size:16px;font-weight:600;margin-bottom:4px}
+.platform-card .lang{font-size:12px;color:#3B82F6;margin-bottom:12px}
+.platform-card p{font-size:13px;color:rgba(255,255,255,0.5)}
+.highlight{background:linear-gradient(135deg,rgba(59,130,246,0.08),rgba(249,115,22,0.06));border:1px solid rgba(59,130,246,0.12);border-radius:16px;padding:24px;margin:24px 0}
+.highlight h3{font-size:16px;font-weight:600;margin-bottom:8px}
+.highlight p{font-size:14px;color:rgba(255,255,255,0.55);margin:0}
+</style>
+</head>
+<body>
+<a href="index.html#projects" class="back">← 返回总览</a>
+<img class="hero-img" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1400&q=80" alt="多平台">
+<div class="hero-overlay">
+  <h1>多平台适配</h1>
+  <div class="sub">同一设计概念 · iOS SwiftUI · Android Kotlin · Flutter Dart</div>
+  <div class="tags"><span>SwiftUI</span><span>Kotlin</span><span>Flutter</span><span>跨平台一致性</span></div>
+</div>
+<div class="content">
+  <h2>项目概述</h2>
+  <p>将极速骑行 App 的设计概念分别用三个原生/跨平台技术栈实现，验证设计系统在不同平台上的一致性和可移植性。这是 UED Leader 必须具备的能力——不被单一技术栈限制。</p>
+
+  <div class="platform-grid">
+    <div class="platform-card">
+      <h3>iOS</h3>
+      <div class="lang">SwiftUI</div>
+      <p>Apple 原生声明式 UI，利用 SwiftUI 的动画系统实现流畅交互</p>
+    </div>
+    <div class="platform-card">
+      <h3>Android</h3>
+      <div class="lang">Kotlin</div>
+      <p>Android 原生开发，Material Design 3 适配，Compose 声明式布局</p>
+    </div>
+    <div class="platform-card">
+      <h3>跨平台</h3>
+      <div class="lang">Flutter Dart</div>
+      <p>Google 跨平台框架，一套代码双端运行，Widget 体系高度自定义</p>
+    </div>
+  </div>
+
+  <h2>跨平台设计一致性</h2>
+  <ul>
+    <li>统一的深色沉浸式设计语言，三个平台视觉感受一致</li>
+    <li>相同的配色体系、字号规范、间距规则</li>
+    <li>各平台原生动画 API 实现相同的交互效果</li>
+    <li>尊重平台差异：iOS 的圆角风格、Android 的 Material 规范、Flutter 的 Widget 特性</li>
+  </ul>
+
+  <div class="highlight">
+    <h3>核心收获</h3>
+    <p>跨平台适配不是"复制粘贴"，而是"理解本质后重新表达"。同一个设计意图，在 SwiftUI 里用 .animation()，在 Kotlin 里用 AnimatedVisibility，在 Flutter 里用 AnimatedContainer——API 不同，但体验一致。这就是设计系统的价值。</p>
+  </div>
+
+  <h2>代码片段对比</h2>
+  <div class="code-block">// SwiftUI
+NavigationView {
+    ScrollView { ... }
+    .preferredColorScheme(.dark)
+}
+
+// Kotlin Compose
+Surface(color = Color(0xFF0A0519)) {
+    LazyColumn { ... }
+}
+
+// Flutter
+MaterialApp(
+    theme: ThemeData.dark(),
+    home: Scaffold(body: ListView(...))
+)</div>
+</div>
+</body>
+</html>

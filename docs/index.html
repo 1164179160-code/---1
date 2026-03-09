@@ -85,6 +85,13 @@
     0%, 100% { opacity: 0; transform: translateX(0); }
     50% { opacity: 1; transform: translateX(80px); }
   }
+  /* Particle Canvas */
+  .hero-particles {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
   .hero-label {
     font-size: 13px;
     letter-spacing: 4px;
@@ -175,6 +182,100 @@
     color: var(--accent);
     margin-top: 16px;
   }
+  /* ---- Project Showcase ---- */
+  .showcase {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+    padding: 0 24px;
+  }
+  .showcase-card {
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 0.4s;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    position: relative;
+  }
+  .showcase-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  }
+  .showcase-cover {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+  .showcase-card:hover .showcase-cover { transform: scale(1.05); }
+  .showcase-cover-wrap {
+    overflow: hidden;
+    position: relative;
+  }
+  .showcase-cover-wrap::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 60%;
+    background: linear-gradient(transparent, rgba(6,8,13,0.95));
+    pointer-events: none;
+  }
+  .showcase-overlay {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 28px 32px;
+    z-index: 2;
+  }
+  .showcase-overlay h3 {
+    font-size: clamp(22px, 3vw, 28px);
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+  }
+  .showcase-overlay p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.5;
+    margin-bottom: 12px;
+    max-width: 560px;
+  }
+  .showcase-badge {
+    position: absolute;
+    top: 16px; right: 16px;
+    font-size: 11px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #fff;
+    letter-spacing: 0.5px;
+    z-index: 2;
+  }
+  .showcase-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+  .showcase-tags span {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.7);
+  }
+  .showcase-cta {
+    position: absolute;
+    bottom: 28px; right: 32px;
+    font-size: 13px;
+    color: var(--accent);
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: opacity 0.3s, transform 0.3s;
+    z-index: 2;
+  }
+  .showcase-card:hover .showcase-cta { opacity: 1; transform: translateX(0); }
 
   /* ---- Timeline ---- */
   .timeline { position: relative; padding-left: 32px; }
@@ -337,13 +438,14 @@
 
 <!-- ==================== HERO ==================== -->
 <div class="hero">
+  <canvas class="hero-particles" id="heroParticles"></canvas>
   <div class="hero-lines"><span></span><span></span><span></span><span></span><span></span></div>
   <div class="hero-label fade-up">Collaboration Retrospective</div>
   <h1 class="fade-up d1">野野 × 小野<br>协作复盘</h1>
   <p class="fade-up d2">产品设计师与 UED Leader AI，从零开始构建骑行产品体验矩阵的全过程记录。</p>
   <div class="hero-meta fade-up d3">
     <span>📅 2026.03</span>
-    <span>🚲 5 个产品</span>
+    <span>🚲 6 个产品</span>
     <span>📱 4 个平台</span>
     <span>💬 多轮深度协作</span>
   </div>
@@ -380,43 +482,87 @@
 </section>
 
 <!-- ==================== 项目回顾 ==================== -->
-<section>
-  <div class="section-tag fade-up">Projects</div>
-  <div class="section-title fade-up d1">我们一起做了什么</div>
-  <div class="section-desc fade-up d2">
-    从一个山地骑行 App 的想法开始，逐步扩展到完整的骑行产品体验矩阵——跨越 4 个平台、5 个独立产品。
+<section id="projects" style="max-width:100%;padding-left:0;padding-right:0;">
+  <div style="max-width:960px;margin:0 auto;padding:0 24px;">
+    <div class="section-tag fade-up">Projects</div>
+    <div class="section-title fade-up d1">我们一起做了什么</div>
+    <div class="section-desc fade-up d2">
+      从一个山地骑行 App 的想法开始，逐步扩展到完整的骑行产品体验矩阵——跨越 4 个平台、5 个独立产品。<br>点击任意作品查看详情。
+    </div>
   </div>
-  <div class="cards">
-    <div class="card fade-up d1">
-      <div class="card-icon" style="background:linear-gradient(135deg,#3B82F6,#60A5FA);">🏔</div>
-      <h3>极速骑行 App</h3>
-      <p>高端山地骑行应用，深色沉浸式 UI，丝滑动画，多版本迭代打磨。React Native 实现，Snack Expo 可预览。</p>
-      <span class="tag">React Native · 7 个版本</span>
-    </div>
-    <div class="card fade-up d2">
-      <div class="card-icon" style="background:linear-gradient(135deg,#1E40AF,#3B82F6);">🫐</div>
-      <h3>蓝莓骑行 首页</h3>
-      <p>基于 Figma 设计稿的超高保真还原。品牌切换、周卡体系、筛选系统、底部导航——每个像素都对齐。</p>
-      <span class="tag">Figma → Code · 像素级</span>
-    </div>
-    <div class="card fade-up d3">
-      <div class="card-icon" style="background:linear-gradient(135deg,#F97316,#FBBF24);">📍</div>
-      <h3>还车网点 搜索页</h3>
-      <p>还车网点搜索交互页面，搜索框、历史记录、推荐网点，完整的搜索体验流程。</p>
-      <span class="tag">React Native · 搜索体验</span>
-    </div>
-    <div class="card fade-up d4">
-      <div class="card-icon" style="background:linear-gradient(135deg,#DC2626,#F97316);">📖</div>
-      <h3>BikeBook 3D 画廊</h3>
-      <p>沉浸式 3D 自行车展示网站，WebGL 渲染，交互式旋转浏览，视觉冲击力拉满。</p>
-      <span class="tag">HTML · 3D · WebGL</span>
-    </div>
-    <div class="card fade-up d5">
-      <div class="card-icon" style="background:linear-gradient(135deg,#8B5CF6,#3B82F6);">🌐</div>
-      <h3>多平台适配</h3>
-      <p>同一骑行产品概念，分别用 iOS SwiftUI、Android Kotlin、Flutter Dart 实现，验证跨平台设计一致性。</p>
-      <span class="tag">iOS · Android · Flutter</span>
-    </div>
+  <div class="showcase">
+    <a class="showcase-card fade-up d1" href="project-jisu.html">
+      <div class="showcase-cover-wrap">
+        <img class="showcase-cover" src="https://images.unsplash.com/photo-1544191696-102dbdaeeaa0?w=1600&q=80" alt="极速骑行">
+        <span class="showcase-badge">React Native · 7 版本</span>
+        <div class="showcase-overlay">
+          <h3>极速骑行 App</h3>
+          <p>高端山地骑行应用，深色沉浸式 UI，丝滑动画体验。从概念到 7 个版本的持续打磨。</p>
+          <div class="showcase-tags"><span>React Native</span><span>动画</span><span>深色沉浸</span></div>
+        </div>
+        <div class="showcase-cta">查看详情 →</div>
+      </div>
+    </a>
+    <a class="showcase-card fade-up d2" href="project-blueberry.html">
+      <div class="showcase-cover-wrap">
+        <img class="showcase-cover" src="https://images.unsplash.com/photo-1571333250630-f0230c320b6d?w=1600&q=80" alt="蓝莓骑行">
+        <span class="showcase-badge">Figma → Code · 像素级</span>
+        <div class="showcase-overlay">
+          <h3>蓝莓骑行 首页</h3>
+          <p>基于 Figma 设计稿的超高保真还原。品牌切换、周卡体系、筛选系统，每个像素都对齐。</p>
+          <div class="showcase-tags"><span>Figma 还原</span><span>品牌系统</span><span>纯 JS</span></div>
+        </div>
+        <div class="showcase-cta">查看详情 →</div>
+      </div>
+    </a>
+    <a class="showcase-card fade-up d3" href="project-return.html">
+      <div class="showcase-cover-wrap">
+        <img class="showcase-cover" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=80" alt="还车网点">
+        <span class="showcase-badge">React Native · 搜索体验</span>
+        <div class="showcase-overlay">
+          <h3>还车网点 搜索页</h3>
+          <p>完整的还车网点搜索交互体验。搜索框、历史记录、推荐网点，闭环用户旅程的最后一环。</p>
+          <div class="showcase-tags"><span>搜索体验</span><span>交互设计</span></div>
+        </div>
+        <div class="showcase-cta">查看详情 →</div>
+      </div>
+    </a>
+    <a class="showcase-card fade-up d4" href="bikebook.html">
+      <div class="showcase-cover-wrap">
+        <img class="showcase-cover" src="https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=1600&q=80" alt="BikeBook">
+        <span class="showcase-badge">HTML · 3D · 可交互</span>
+        <div class="showcase-overlay">
+          <h3>BikeBook 3D 画廊</h3>
+          <p>沉浸式 3D 自行车展示网站。纯 CSS + JS 实现交互式旋转浏览，视觉冲击力拉满。</p>
+          <div class="showcase-tags"><span>3D</span><span>沉浸式</span><span>零依赖</span></div>
+        </div>
+        <div class="showcase-cta">在线体验 →</div>
+      </div>
+    </a>
+    <a class="showcase-card fade-up d5" href="project-website.html">
+      <div class="showcase-cover-wrap">
+        <img class="showcase-cover" src="https://images.unsplash.com/photo-1544191696-102dbdaeeaa0?w=1600&q=80" alt="极速骑行网站">
+        <span class="showcase-badge">HTML · CSS · JS · 响应式</span>
+        <div class="showcase-overlay">
+          <h3>极速骑行 官网</h3>
+          <p>我们最初的作品——极速骑行品牌官网。视差滚动、3D 卡片悬停、全响应式布局。</p>
+          <div class="showcase-tags"><span>Web</span><span>视差滚动</span><span>品牌官网</span></div>
+        </div>
+        <div class="showcase-cta">在线体验 →</div>
+      </div>
+    </a>
+    <a class="showcase-card fade-up d5" href="project-multiplatform.html">
+      <div class="showcase-cover-wrap">
+        <img class="showcase-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1600&q=80" alt="多平台">
+        <span class="showcase-badge">iOS · Android · Flutter</span>
+        <div class="showcase-overlay">
+          <h3>多平台适配</h3>
+          <p>同一骑行产品概念，SwiftUI / Kotlin / Flutter 三平台实现，验证跨平台设计一致性。</p>
+          <div class="showcase-tags"><span>SwiftUI</span><span>Kotlin</span><span>Flutter</span></div>
+        </div>
+        <div class="showcase-cta">查看详情 →</div>
+      </div>
+    </a>
   </div>
 </section>
 
@@ -716,9 +862,9 @@
   <div class="section-title fade-up d1">数据一览</div>
   <div class="principles fade-up d2">
     <div class="principle">
-      <div class="num">5</div>
+      <div class="num">6</div>
       <h4>产品交付</h4>
-      <p>极速骑行 · 蓝莓骑行 · 还车网点 · BikeBook · 多平台适配</p>
+      <p>极速骑行 · 蓝莓骑行 · 还车网点 · BikeBook · 官网 · 多平台适配</p>
     </div>
     <div class="principle">
       <div class="num">4</div>
@@ -756,6 +902,129 @@
     el.style.animationPlayState = 'paused';
     observer.observe(el);
   });
+})();
+
+// ==================== Hero Particle Animation ====================
+(function() {
+  var c = document.getElementById('heroParticles');
+  if (!c) return;
+  var ctx = c.getContext('2d');
+  var particles = [];
+  var COUNT = 60;
+  var CONNECT_DIST = 120;
+  var mouse = { x: -999, y: -999 };
+
+  function resize() {
+    var hero = c.parentElement;
+    c.width = hero.offsetWidth;
+    c.height = hero.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  c.parentElement.addEventListener('mousemove', function(e) {
+    var rect = c.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
+  });
+  c.parentElement.addEventListener('mouseleave', function() {
+    mouse.x = -999; mouse.y = -999;
+  });
+
+  for (var i = 0; i < COUNT; i++) {
+    var isBlue = Math.random() > 0.3;
+    particles.push({
+      x: Math.random() * c.width,
+      y: Math.random() * c.height,
+      vx: (Math.random() - 0.5) * 0.4,
+      vy: (Math.random() - 0.5) * 0.4,
+      r: Math.random() * 2 + 0.8,
+      color: isBlue ? '59,130,246' : '249,115,22',
+      alpha: Math.random() * 0.5 + 0.2,
+      pulse: Math.random() * Math.PI * 2,
+      pulseSpeed: Math.random() * 0.02 + 0.005
+    });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, c.width, c.height);
+    // update & draw particles
+    for (var i = 0; i < particles.length; i++) {
+      var p = particles[i];
+      p.pulse += p.pulseSpeed;
+      var glow = p.alpha + Math.sin(p.pulse) * 0.15;
+      if (glow < 0.05) glow = 0.05;
+
+      // mouse repel
+      var dx = p.x - mouse.x, dy = p.y - mouse.y;
+      var dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 100 && dist > 0) {
+        var force = (100 - dist) / 100 * 0.8;
+        p.vx += (dx / dist) * force;
+        p.vy += (dy / dist) * force;
+      }
+
+      p.vx *= 0.99; p.vy *= 0.99;
+      p.x += p.vx; p.y += p.vy;
+
+      if (p.x < 0) p.x = c.width;
+      if (p.x > c.width) p.x = 0;
+      if (p.y < 0) p.y = c.height;
+      if (p.y > c.height) p.y = 0;
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(' + p.color + ',' + glow.toFixed(3) + ')';
+      ctx.fill();
+
+      // glow effect for larger particles
+      if (p.r > 1.5) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r * 3, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(' + p.color + ',' + (glow * 0.15).toFixed(3) + ')';
+        ctx.fill();
+      }
+    }
+
+    // draw connections
+    for (var i = 0; i < particles.length; i++) {
+      for (var j = i + 1; j < particles.length; j++) {
+        var a = particles[i], b = particles[j];
+        var dx = a.x - b.x, dy = a.y - b.y;
+        var d = Math.sqrt(dx * dx + dy * dy);
+        if (d < CONNECT_DIST) {
+          var op = (1 - d / CONNECT_DIST) * 0.12;
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.strokeStyle = 'rgba(59,130,246,' + op.toFixed(3) + ')';
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+
+    // mouse connections
+    if (mouse.x > 0) {
+      for (var i = 0; i < particles.length; i++) {
+        var p = particles[i];
+        var dx = p.x - mouse.x, dy = p.y - mouse.y;
+        var d = Math.sqrt(dx * dx + dy * dy);
+        if (d < 150) {
+          var op = (1 - d / 150) * 0.2;
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(mouse.x, mouse.y);
+          ctx.strokeStyle = 'rgba(249,115,22,' + op.toFixed(3) + ')';
+          ctx.lineWidth = 0.6;
+          ctx.stroke();
+        }
+      }
+    }
+
+    requestAnimationFrame(draw);
+  }
+  draw();
 })();
 </script>
 </body>

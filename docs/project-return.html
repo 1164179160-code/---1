@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>还车网点搜索页 · 野野 × 小野</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#06080D;color:#E8ECF1;font-family:-apple-system,'SF Pro Display','PingFang SC','Helvetica Neue',sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:#3B82F6;text-decoration:none}
+.back{position:fixed;bottom:24px;right:24px;z-index:100;font-size:13px;color:rgba(255,255,255,0.7);display:flex;align-items:center;gap:6px;transition:all 0.3s;background:rgba(6,8,13,0.7);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:10px 18px;border-radius:24px;border:1px solid rgba(255,255,255,0.1)}
+.back:hover{color:#fff;border-color:rgba(255,255,255,0.3)}
+.hero-img{width:100%;height:60vh;min-height:360px;object-fit:cover;display:block;filter:brightness(0.7)}
+.hero-overlay{position:relative;margin-top:-120px;padding:0 24px;max-width:800px;margin-left:auto;margin-right:auto;z-index:2}
+.hero-overlay h1{font-size:clamp(32px,5vw,48px);font-weight:800;letter-spacing:-1px;margin-bottom:8px}
+.hero-overlay .sub{font-size:16px;color:rgba(255,255,255,0.55);margin-bottom:24px}
+.tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:40px}
+.tags span{font-size:11px;padding:4px 12px;border-radius:20px;background:rgba(59,130,246,0.12);color:#3B82F6}
+.content{max-width:800px;margin:0 auto;padding:0 24px 80px}
+.content h2{font-size:22px;font-weight:700;margin:48px 0 16px;letter-spacing:-0.3px}
+.content p{font-size:15px;color:rgba(255,255,255,0.6);margin-bottom:16px;line-height:1.8}
+.content ul{padding-left:20px;margin-bottom:16px}
+.content li{font-size:14px;color:rgba(255,255,255,0.55);margin-bottom:8px}
+.highlight{background:linear-gradient(135deg,rgba(59,130,246,0.08),rgba(249,115,22,0.06));border:1px solid rgba(59,130,246,0.12);border-radius:16px;padding:24px;margin:24px 0}
+.highlight h3{font-size:16px;font-weight:600;margin-bottom:8px}
+.highlight p{font-size:14px;color:rgba(255,255,255,0.55);margin:0}
+/* Phone Mockup Gallery */
+.phone-gallery{display:flex;gap:24px;overflow-x:auto;padding:24px 0 32px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+.phone-gallery::-webkit-scrollbar{height:4px}
+.phone-gallery::-webkit-scrollbar-track{background:transparent}
+.phone-gallery::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:4px}
+.phone-frame{flex-shrink:0;width:260px;scroll-snap-align:center}
+.phone-device{width:260px;height:520px;border-radius:36px;border:3px solid rgba(255,255,255,0.12);background:#111;position:relative;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.6)}
+.phone-device::before{content:'';position:absolute;top:12px;left:50%;transform:translateX(-50%);width:80px;height:24px;border-radius:12px;background:rgba(0,0,0,0.9);z-index:10}
+.app-screen{width:100%;height:100%;position:relative;overflow:hidden;overflow-y:auto}
+.app-screen::-webkit-scrollbar{display:none}
+.phone-label{text-align:center;margin-top:12px;font-size:12px;color:rgba(255,255,255,0.4)}
+</style>
+</head>
+<body>
+<a href="index.html#projects" class="back">← 返回总览</a>
+<img class="hero-img" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1400&q=80" alt="还车网点">
+<div class="hero-overlay">
+  <h1>还车网点 搜索页</h1>
+  <div class="sub">完整搜索交互体验 · React Native · Figma 还原</div>
+  <div class="tags"><span>搜索体验</span><span>交互设计</span><span>Figma 还原</span><span>React Native</span></div>
+</div>
+<div class="content">
+  <h2>界面预览</h2>
+  <p>还车网点搜索页的核心交互界面：</p>
+  <div class="phone-gallery">
+    <div class="phone-frame">
+      <div class="phone-device">
+        <div class="app-screen" style="background:#fff;font-family:-apple-system,'SF Pro Display','PingFang SC',sans-serif;color:#333;">
+          <div style="padding:28px 10px 0;">
+            <div style="display:flex;align-items:center;gap:4px;margin-bottom:8px;">
+              <div style="width:16px;height:16px;display:flex;align-items:center;justify-content:center;"><span style="font-size:14px;color:#333;">‹</span></div>
+              <div style="flex:1;display:flex;align-items:center;background:#F5F5F5;border-radius:10px;padding:5px 8px;height:18px;">
+                <span style="font-size:7px;margin-right:3px;">🔍</span>
+                <span style="font-size:8px;color:#333;">ha</span>
+                <div style="width:8px;height:8px;border-radius:4px;background:#C0C0C0;display:flex;align-items:center;justify-content:center;margin-left:auto;"><span style="font-size:6px;color:#fff;">×</span></div>
+                <div style="width:0.5px;height:8px;background:#ddd;margin:0 4px;"></div>
+                <span style="font-size:8px;color:#333;font-weight:500;">搜索</span>
+              </div>
+              <div style="display:flex;align-items:center;background:rgba(0,0,0,0.05);border-radius:7px;padding:2px 4px;border:0.5px solid rgba(0,0,0,0.1);">
+                <div style="display:flex;gap:1px;margin-right:3px;">
+                  <div style="width:2px;height:2px;border-radius:1px;background:#666;"></div>
+                  <div style="width:2px;height:2px;border-radius:1px;background:#666;"></div>
+                </div>
+                <div style="width:0.5px;height:6px;background:rgba(0,0,0,0.15);margin:0 3px;"></div>
+                <div style="width:8px;height:8px;border-radius:4px;border:0.5px solid #666;display:flex;align-items:center;justify-content:center;">
+                  <div style="width:3px;height:3px;border-radius:2px;background:#666;"></div>
+                </div>
+              </div>
+            </div>
+            <div style="border-top:0.5px solid #f0f0f0;">
+              <div style="padding:7px 0;border-bottom:0.5px solid #f0f0f0;display:flex;align-items:center;justify-content:space-between;">
+                <div style="display:flex;align-items:center;gap:6px;">
+                  <div style="width:10px;text-align:center;">
+                    <div style="width:5px;height:7px;border-radius:3px 3px 0 0;border:1px solid #999;margin:0 auto;"></div>
+                    <div style="width:2px;height:2px;background:#999;margin:0 auto;"></div>
+                  </div>
+                  <span style="font-size:8px;color:#333;">哈罗总部大厦</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:4px;">
+                  <span style="font-size:7px;color:#999;">距你800米</span>
+                  <span style="font-size:10px;color:#ccc;">›</span>
+                </div>
+              </div>
+              <div style="padding:7px 0;border-bottom:0.5px solid #f0f0f0;display:flex;align-items:center;justify-content:space-between;">
+                <div style="display:flex;align-items:center;gap:6px;">
+                  <div style="width:10px;text-align:center;">
+                    <div style="width:5px;height:7px;border-radius:3px 3px 0 0;border:1px solid #999;margin:0 auto;"></div>
+                    <div style="width:2px;height:2px;background:#999;margin:0 auto;"></div>
+                  </div>
+                  <span style="font-size:8px;color:#333;">上海哈罗电普惠科技有限公司</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:4px;">
+                  <span style="font-size:7px;color:#999;">距你800米</span>
+                  <span style="font-size:10px;color:#ccc;">›</span>
+                </div>
+              </div>
+              <div style="padding:7px 0;border-bottom:0.5px solid #f0f0f0;display:flex;align-items:center;justify-content:space-between;">
+                <div style="display:flex;align-items:center;gap:6px;">
+                  <div style="width:10px;text-align:center;">
+                    <div style="width:5px;height:7px;border-radius:3px 3px 0 0;border:1px solid #999;margin:0 auto;"></div>
+                    <div style="width:2px;height:2px;background:#999;margin:0 auto;"></div>
+                  </div>
+                  <span style="font-size:8px;color:#333;">哈罗租车</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:4px;">
+                  <span style="font-size:7px;color:#999;">距你800米</span>
+                  <span style="font-size:10px;color:#ccc;">›</span>
+                </div>
+              </div>
+              <div style="padding:7px 0;border-bottom:0.5px solid #f0f0f0;display:flex;align-items:center;justify-content:space-between;">
+                <div style="display:flex;align-items:center;gap:6px;">
+                  <div style="width:10px;text-align:center;">
+                    <div style="width:5px;height:7px;border-radius:3px 3px 0 0;border:1px solid #999;margin:0 auto;"></div>
+                    <div style="width:2px;height:2px;background:#999;margin:0 auto;"></div>
+                  </div>
+                  <span style="font-size:8px;color:#333;">哈罗单车</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:4px;">
+                  <span style="font-size:7px;color:#999;">距你800米</span>
+                  <span style="font-size:10px;color:#ccc;">›</span>
+                </div>
+              </div>
+              <div style="padding:7px 0;border-bottom:0.5px solid #f0f0f0;display:flex;align-items:center;justify-content:space-between;">
+                <div style="display:flex;align-items:center;gap:6px;">
+                  <div style="width:10px;text-align:center;">
+                    <div style="width:5px;height:7px;border-radius:3px 3px 0 0;border:1px solid #999;margin:0 auto;"></div>
+                    <div style="width:2px;height:2px;background:#999;margin:0 auto;"></div>
+                  </div>
+                  <span style="font-size:8px;color:#333;">哈罗电动车（向荣路）</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:4px;">
+                  <span style="font-size:7px;color:#999;">距你800米</span>
+                  <span style="font-size:10px;color:#ccc;">›</span>
+                </div>
+              </div>
+              <div style="padding:7px 0;border-bottom:0.5px solid #f0f0f0;display:flex;align-items:center;justify-content:space-between;">
+                <div style="display:flex;align-items:center;gap:6px;">
+                  <div style="width:10px;text-align:center;">
+                    <div style="width:5px;height:7px;border-radius:3px 3px 0 0;border:1px solid #999;margin:0 auto;"></div>
+                    <div style="width:2px;height:2px;background:#999;margin:0 auto;"></div>
+                  </div>
+                  <span style="font-size:8px;color:#333;">哈罗电动车（贵都路）</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:4px;">
+                  <span style="font-size:7px;color:#999;">距你800米</span>
+                  <span style="font-size:10px;color:#ccc;">›</span>
+                </div>
+              </div>
+              <div style="padding:7px 0;border-bottom:0.5px solid #f0f0f0;display:flex;align-items:center;justify-content:space-between;">
+                <div style="display:flex;align-items:center;gap:6px;">
+                  <div style="width:10px;text-align:center;">
+                    <div style="width:5px;height:7px;border-radius:3px 3px 0 0;border:1px solid #999;margin:0 auto;"></div>
+                    <div style="width:2px;height:2px;background:#999;margin:0 auto;"></div>
+                  </div>
+                  <span style="font-size:8px;color:#333;">哈罗客户服务接待调解中心</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:4px;">
+                  <span style="font-size:7px;color:#999;">距你800米</span>
+                  <span style="font-size:10px;color:#ccc;">›</span>
+                </div>
+              </div>
+              <div style="padding:7px 0;display:flex;align-items:center;justify-content:space-between;">
+                <div style="display:flex;align-items:center;gap:6px;">
+                  <div style="width:10px;text-align:center;">
+                    <div style="width:5px;height:7px;border-radius:3px 3px 0 0;border:1px solid #999;margin:0 auto;"></div>
+                    <div style="width:2px;height:2px;background:#999;margin:0 auto;"></div>
+                  </div>
+                  <span style="font-size:8px;color:#333;">哈罗电动车（龙吴路店）</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:4px;">
+                  <span style="font-size:7px;color:#999;">距你800米</span>
+                  <span style="font-size:10px;color:#ccc;">›</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="phone-label">搜索结果 · 基于 SearchPage.tsx 真实数据</div>
+    </div>
+  </div>
+  <div style="font-size:13px;color:rgba(255,255,255,0.35);margin-bottom:8px;">基于 SearchPage.tsx 真实代码数据渲染</div>
+  <div style="margin:16px 0 0;display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+    <button onclick="copyCode('return')" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:24px;background:linear-gradient(135deg,#3B82F6,#2563eb);color:#fff;border:none;cursor:pointer;font-size:13px;font-weight:600;transition:transform 0.2s;font-family:inherit;">📋 复制完整代码</button>
+    <a href="https://snack.expo.dev" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:24px;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.7);border:1px solid rgba(255,255,255,0.15);cursor:pointer;font-size:13px;font-weight:500;text-decoration:none;transition:all 0.2s;">🚀 打开 Snack Expo</a>
+    <span id="return-status" style="font-size:12px;color:rgba(255,255,255,0.35);display:block;margin-top:8px;">使用方法：① 点「复制完整代码」→ ② 点「打开 Snack Expo」→ ③ 在 Snack 编辑器中全选(⌘A)并粘贴(⌘V)</span>
+  </div>
+<script>
+function copyCode(id) {
+  var codeEl = document.getElementById(id + '-code');
+  if (!codeEl) return;
+  var code = codeEl.textContent;
+  navigator.clipboard.writeText(code).then(function() {
+    var btn = event.target;
+    btn.textContent = '✅ 已复制！去 Snack 粘贴 →';
+    btn.style.background = 'linear-gradient(135deg,#10B981,#059669)';
+    document.getElementById(id + '-status').textContent = '代码已复制到剪贴板 → 现在点右边按钮打开 Snack → 在编辑器中 ⌘A 全选后 ⌘V 粘贴';
+    document.getElementById(id + '-status').style.color = '#4ade80';
+    setTimeout(function() { btn.textContent = '📋 复制完整代码'; btn.style.background = 'linear-gradient(135deg,#3B82F6,#2563eb)'; }, 5000);
+  });
+}
+</script>
+<pre id="return-code" style="position:absolute;left:-9999px;">import React, { useState } from 'react';
+import {
+  SafeAreaView,
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  FlatList,
+  StyleSheet,
+  StatusBar,
+} from 'react-native';
+
+var LOCATIONS = [
+  { id: '1', name: '哈罗总部大厦', distance: '距你800米' },
+  { id: '2', name: '上海哈罗电普惠科技有限公司', distance: '距你800米' },
+  { id: '3', name: '哈罗租车', distance: '距你800米' },
+  { id: '4', name: '哈罗单车', distance: '距你800米' },
+  { id: '5', name: '哈罗电动车（向荣路）', distance: '距你800米' },
+  { id: '6', name: '哈罗电动车（贵都路）', distance: '距你800米' },
+  { id: '7', name: '哈罗客户服务接待调解中心', distance: '距你800米' },
+  { id: '8', name: '哈罗电动车（龙吴路店）', distance: '距你800米' },
+];
+
+export default function SearchPage() {
+  var st = useState('ha');
+  var searchText = st[0], setSearchText = st[1];
+
+  var renderItem = function(info) {
+    var item = info.item;
+    return (
+      &lt;TouchableOpacity style={styles.listItem} activeOpacity={0.6}&gt;
+        &lt;View style={styles.listItemLeft}&gt;
+          &lt;View style={styles.locationIcon}&gt;
+            &lt;View style={styles.locationPin} /&gt;
+            &lt;View style={styles.locationDot} /&gt;
+          &lt;/View&gt;
+          &lt;Text style={styles.locationName} numberOfLines={1}&gt;{item.name}&lt;/Text&gt;
+          &lt;Text style={styles.locationDistance}&gt;{item.distance}&lt;/Text&gt;
+        &lt;/View&gt;
+        &lt;Text style={styles.chevron}&gt;›&lt;/Text&gt;
+      &lt;/TouchableOpacity&gt;
+    );
+  };
+
+  return (
+    &lt;SafeAreaView style={styles.container}&gt;
+      &lt;StatusBar barStyle="dark-content" /&gt;
+      &lt;View style={styles.header}&gt;
+        &lt;TouchableOpacity style={styles.backButton} activeOpacity={0.7}&gt;
+          &lt;Text style={styles.backIcon}&gt;‹&lt;/Text&gt;
+        &lt;/TouchableOpacity&gt;
+        &lt;View style={styles.searchBar}&gt;
+          &lt;Text style={styles.searchIcon}&gt;🔍&lt;/Text&gt;
+          &lt;TextInput
+            style={styles.searchInput}
+            value={searchText}
+            onChangeText={setSearchText}
+            placeholder="搜索地点"
+            placeholderTextColor="#BCC4CC"
+            autoFocus
+          /&gt;
+          {searchText.length &gt; 0 &amp;&amp; (
+            &lt;TouchableOpacity onPress={function() { setSearchText(''); }} style={styles.clearButton}&gt;
+              &lt;View style={styles.clearIcon}&gt;
+                &lt;Text style={styles.clearIconText}&gt;×&lt;/Text&gt;
+              &lt;/View&gt;
+            &lt;/TouchableOpacity&gt;
+          )}
+          &lt;View style={styles.searchDivider} /&gt;
+          &lt;TouchableOpacity style={styles.searchButton}&gt;
+            &lt;Text style={styles.searchButtonText}&gt;搜索&lt;/Text&gt;
+          &lt;/TouchableOpacity&gt;
+        &lt;/View&gt;
+        &lt;View style={styles.capsuleButton}&gt;
+          &lt;View style={styles.capsuleDots}&gt;
+            &lt;View style={styles.capsuleDotSmall} /&gt;
+            &lt;View style={styles.capsuleDotLarge} /&gt;
+          &lt;/View&gt;
+          &lt;View style={styles.capsuleDivider} /&gt;
+          &lt;View style={styles.capsuleCircle}&gt;
+            &lt;View style={styles.capsuleCircleInner} /&gt;
+          &lt;/View&gt;
+        &lt;/View&gt;
+      &lt;/View&gt;
+      &lt;FlatList
+        data={LOCATIONS}
+        renderItem={renderItem}
+        keyExtractor={function(item) { return item.id; }}
+        style={styles.list}
+        ItemSeparatorComponent={function() { return &lt;View style={styles.separator} /&gt;; }}
+      /&gt;
+    &lt;/SafeAreaView&gt;
+  );
+}
+
+var styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: '#fff' },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 12,
+    paddingTop: 8,
+    paddingBottom: 10,
+    backgroundColor: '#fff',
+  },
+  backButton: { width: 32, height: 32, justifyContent: 'center', alignItems: 'center' },
+  backIcon: { fontSize: 28, color: '#333', marginTop: -2 },
+  searchBar: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#F5F5F5',
+    borderRadius: 20,
+    paddingHorizontal: 12,
+    height: 36,
+    marginHorizontal: 8,
+  },
+  searchIcon: { fontSize: 14, marginRight: 6 },
+  searchInput: { flex: 1, fontSize: 14, color: '#333', padding: 0 },
+  clearButton: { padding: 4 },
+  clearIcon: {
+    width: 16, height: 16, borderRadius: 8,
+    backgroundColor: '#C0C0C0',
+    justifyContent: 'center', alignItems: 'center',
+  },
+  clearIconText: { fontSize: 12, color: '#fff', marginTop: -1 },
+  searchDivider: { width: 1, height: 16, backgroundColor: '#ddd', marginHorizontal: 8 },
+  searchButton: { paddingHorizontal: 4 },
+  searchButtonText: { fontSize: 14, color: '#333', fontWeight: '500' },
+  capsuleButton: {
+    flexDirection: 'row', alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.05)',
+    borderRadius: 14, paddingHorizontal: 8, paddingVertical: 4,
+    borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.1)',
+  },
+  capsuleDots: { flexDirection: 'row', alignItems: 'center' },
+  capsuleDotSmall: { width: 3, height: 3, borderRadius: 1.5, backgroundColor: '#666', marginRight: 2 },
+  capsuleDotLarge: { width: 3, height: 3, borderRadius: 1.5, backgroundColor: '#666' },
+  capsuleDivider: { width: 0.5, height: 12, backgroundColor: 'rgba(0,0,0,0.15)', marginHorizontal: 6 },
+  capsuleCircle: {
+    width: 16, height: 16, borderRadius: 8,
+    borderWidth: 1, borderColor: '#666',
+    justifyContent: 'center', alignItems: 'center',
+  },
+  capsuleCircleInner: { width: 6, height: 6, borderRadius: 3, backgroundColor: '#666' },
+  list: { flex: 1 },
+  listItem: {
+    flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
+    paddingHorizontal: 16, paddingVertical: 14,
+  },
+  listItemLeft: { flexDirection: 'row', alignItems: 'center', flex: 1 },
+  locationIcon: { width: 20, alignItems: 'center', marginRight: 12 },
+  locationPin: {
+    width: 10, height: 14, borderRadius: 5,
+    borderWidth: 2, borderColor: '#999',
+    borderBottomLeftRadius: 0, borderBottomRightRadius: 0,
+  },
+  locationDot: { width: 4, height: 4, backgroundColor: '#999', marginTop: -1 },
+  locationName: { fontSize: 15, color: '#333', flex: 1, marginRight: 8 },
+  locationDistance: { fontSize: 12, color: '#999' },
+  chevron: { fontSize: 20, color: '#ccc' },
+  separator: { height: 0.5, backgroundColor: '#f0f0f0', marginLeft: 48 },
+});</pre>
+
+  <h2>交互与动画</h2>
+  <div class="highlight">
+    <h3>交互设计细节</h3>
+    <p>搜索框聚焦：自动弹出键盘，输入即搜索（无需点击搜索按钮）<br>
+    搜索建议：实时匹配，高亮关键词<br>
+    历史记录：最近 5 条，左滑删除单条，一键清空<br>
+    网点卡片：距离 + 可用车位 + 营业状态，信息层级清晰</p>
+  </div>
+
+  <h2>项目概述</h2>
+  <p>还车网点搜索页是蓝莓骑行产品体验闭环的关键一环。用户骑行结束后，需要快速找到最近的还车网点。这个页面要做到搜索快、信息清晰、操作简单。</p>
+
+  <h2>交互设计</h2>
+  <ul>
+    <li>搜索框：自动聚焦、实时搜索建议、清除按钮</li>
+    <li>搜索历史：最近搜索记录，一键清除</li>
+    <li>推荐网点：基于位置的智能推荐</li>
+    <li>网点卡片：名称、距离、可用车位、营业时间</li>
+    <li>地图联动：搜索结果与地图标注同步</li>
+  </ul>
+
+  <div class="highlight">
+    <h3>设计思考</h3>
+    <p>还车场景的用户心理是"快速完成任务"，所以整个页面的设计原则是"减少思考、减少操作"。搜索框默认展开、历史记录置顶、推荐网点按距离排序——每一个决策都是为了让用户最快找到目标。</p>
+  </div>
+
+  <h2>在产品体验中的位置</h2>
+  <p>如果说极速骑行是"让人想骑"，蓝莓骑行首页是"让人选车"，那还车网点就是"让人安心还"。一个完整的骑行产品体验，必须覆盖从"想骑"到"还车"的全链路。这个页面补齐了最后一环。</p>
+</div>
+</body>
+</html>
