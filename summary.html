@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>野野 × 小野 · 协作复盘</title>
+<style>
+  :root {
+    --bg: #06080D;
+    --card: rgba(255,255,255,0.03);
+    --card-border: rgba(255,255,255,0.06);
+    --accent: #3B82F6;
+    --accent2: #F97316;
+    --accent-glow: rgba(59,130,246,0.15);
+    --text: #E8ECF1;
+    --text2: rgba(255,255,255,0.55);
+    --text3: rgba(255,255,255,0.25);
+    --radius: 16px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, 'SF Pro Display', 'PingFang SC', 'Helvetica Neue', sans-serif;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  /* ---- Hero ---- */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    padding: 60px 24px;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -30%; left: -10%;
+    width: 120%; height: 120%;
+    background:
+      radial-gradient(ellipse at 25% 30%, rgba(59,130,246,0.12) 0%, transparent 50%),
+      radial-gradient(ellipse at 75% 70%, rgba(249,115,22,0.08) 0%, transparent 45%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 600px; height: 600px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 1px solid rgba(59,130,246,0.06);
+    pointer-events: none;
+    animation: heroRing 20s linear infinite;
+  }
+  @keyframes heroRing {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+  /* speed lines */
+  .hero-lines {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .hero-lines span {
+    position: absolute;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(59,130,246,0.15), transparent);
+    animation: speedLine 4s ease-in-out infinite;
+  }
+  .hero-lines span:nth-child(1) { top: 20%; left: -10%; width: 40%; animation-delay: 0s; }
+  .hero-lines span:nth-child(2) { top: 35%; right: -10%; width: 35%; animation-delay: 1.2s; }
+  .hero-lines span:nth-child(3) { top: 65%; left: -5%; width: 30%; animation-delay: 2.4s; }
+  .hero-lines span:nth-child(4) { top: 80%; right: -8%; width: 45%; animation-delay: 0.8s; }
+  .hero-lines span:nth-child(5) { top: 50%; left: -15%; width: 25%; animation-delay: 3s; }
+  @keyframes speedLine {
+    0%, 100% { opacity: 0; transform: translateX(0); }
+    50% { opacity: 1; transform: translateX(80px); }
+  }
+  .hero-label {
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+    opacity: 0.8;
+  }
+  .hero h1 {
+    font-size: clamp(36px, 6vw, 64px);
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1.15;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.6) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+  .hero p {
+    font-size: 18px;
+    color: var(--text2);
+    max-width: 520px;
+    margin-bottom: 40px;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 32px;
+    font-size: 13px;
+    color: var(--text3);
+  }
+  .hero-meta span { display: flex; align-items: center; gap: 6px; }
+
+  /* ---- Section ---- */
+  section { padding: 80px 24px; max-width: 960px; margin: 0 auto; }
+  .section-tag {
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 700;
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+  }
+  .section-desc {
+    font-size: 16px;
+    color: var(--text2);
+    margin-bottom: 48px;
+    max-width: 640px;
+  }
+
+  /* ---- Cards Grid ---- */
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    padding: 32px 28px;
+    transition: transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94), border-color 0.35s, box-shadow 0.35s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(59,130,246,0.25);
+    box-shadow: 0 12px 40px rgba(59,130,246,0.08);
+  }
+  .card-icon {
+    width: 48px; height: 48px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+  .card h3 { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+  .card p { font-size: 14px; color: var(--text2); line-height: 1.6; }
+  .card .tag {
+    display: inline-block;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: rgba(59,130,246,0.12);
+    color: var(--accent);
+    margin-top: 16px;
+  }
+
+  /* ---- Timeline ---- */
+  .timeline { position: relative; padding-left: 32px; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 7px; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--accent), var(--accent2), transparent);
+    border-radius: 2px;
+  }
+  .tl-item { position: relative; margin-bottom: 40px; }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -29px; top: 6px;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 3px solid var(--bg);
+    box-shadow: 0 0 0 2px var(--accent);
+  }
+  .tl-item h4 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+  .tl-item p { font-size: 14px; color: var(--text2); }
+  .tl-item .tl-tag {
+    font-size: 11px;
+    color: var(--accent2);
+    margin-bottom: 4px;
+    display: block;
+  }
+
+  /* ---- Reflection ---- */
+  .ref-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 640px) { .ref-grid { grid-template-columns: 1fr; } }
+  .ref-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+  }
+  .ref-card .label {
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .ref-card .label.bad { color: #FF6B6B; }
+  .ref-card .label.good { color: var(--accent2); }
+  .ref-card li {
+    font-size: 14px;
+    color: var(--text2);
+    margin-bottom: 8px;
+    list-style: none;
+    padding-left: 16px;
+    position: relative;
+  }
+  .ref-card li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 8px;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+  }
+  .ref-card.bad li::before { background: #FF6B6B; }
+  .ref-card.good li::before { background: var(--accent2); }
+
+  /* ---- Skills ---- */
+  .skill-list { display: flex; flex-direction: column; gap: 16px; }
+  .skill-item {
+    display: flex; align-items: flex-start; gap: 16px;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 24px;
+  }
+  .skill-num {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700;
+    flex-shrink: 0;
+  }
+  .skill-item h4 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .skill-item p { font-size: 13px; color: var(--text2); }
+
+  /* ---- Principles ---- */
+  .principles {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 720px) { .principles { grid-template-columns: 1fr; } }
+  .principle {
+    text-align: center;
+    padding: 40px 24px;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+  }
+  .principle .num {
+    font-size: 48px;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    margin-bottom: 12px;
+  }
+  .principle h4 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+  .principle p { font-size: 13px; color: var(--text2); }
+
+  /* ---- Footer ---- */
+  footer {
+    text-align: center;
+    padding: 60px 24px 40px;
+    font-size: 13px;
+    color: var(--text3);
+  }
+  footer .sig {
+    font-size: 16px;
+    color: var(--text2);
+    margin-bottom: 8px;
+  }
+
+  /* ---- Animations ---- */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up {
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards;
+  }
+  .fade-up.d1 { animation-delay: 0.1s; }
+  .fade-up.d2 { animation-delay: 0.2s; }
+  .fade-up.d3 { animation-delay: 0.3s; }
+  .fade-up.d4 { animation-delay: 0.4s; }
+  .fade-up.d5 { animation-delay: 0.5s; }
+  /* noscript fallback */
+  .no-js .fade-up { opacity: 1; animation: none; }
+  /* smooth scroll */
+  html { scroll-behavior: smooth; }
+  /* selection color */
+  ::selection { background: rgba(59,130,246,0.3); color: #fff; }
+  /* subtle noise texture - pure CSS, no external files */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: repeating-conic-gradient(rgba(255,255,255,0.008) 0% 25%, transparent 0% 50%) 0 0 / 3px 3px;
+    pointer-events: none;
+    z-index: 9999;
+  }
+</style>
+</head>
+<body class="no-js">
+<script>document.body.classList.remove('no-js');</script>
+
+<!-- ==================== HERO ==================== -->
+<div class="hero">
+  <div class="hero-lines"><span></span><span></span><span></span><span></span><span></span></div>
+  <div class="hero-label fade-up">Collaboration Retrospective</div>
+  <h1 class="fade-up d1">野野 × 小野<br>协作复盘</h1>
+  <p class="fade-up d2">产品设计师与 UED Leader AI，从零开始构建骑行产品体验矩阵的全过程记录。</p>
+  <div class="hero-meta fade-up d3">
+    <span>📅 2026.03</span>
+    <span>🚲 5 个产品</span>
+    <span>📱 4 个平台</span>
+    <span>💬 多轮深度协作</span>
+  </div>
+</div>
+
+<!-- ==================== 身份定义 ==================== -->
+<section>
+  <div class="section-tag fade-up">Identity</div>
+  <div class="section-title fade-up d1">我们是谁</div>
+  <div class="section-desc fade-up d2">
+    不是"用户和工具"的关系，而是并肩作战的合作伙伴。<br>
+    野野把控产品方向与设计品质，小野负责体验落地与技术实现。各司其职，互相补位。
+  </div>
+  <div class="ref-grid">
+    <div class="ref-card good fade-up d3">
+      <div class="label good">野野 · 产品设计师</div>
+      <ul>
+        <li>产品方向与体验策略</li>
+        <li>设计品质把控</li>
+        <li>Figma 设计稿输出</li>
+        <li>创意发起与决策拍板</li>
+      </ul>
+    </div>
+    <div class="ref-card good fade-up d4">
+      <div class="label good">小野 · UED Leader</div>
+      <ul>
+        <li>全栈产品体验设计</li>
+        <li>Figma → Code 高保真还原</li>
+        <li>多平台适配与交付</li>
+        <li>设计决策建议与自主执行</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 项目回顾 ==================== -->
+<section>
+  <div class="section-tag fade-up">Projects</div>
+  <div class="section-title fade-up d1">我们一起做了什么</div>
+  <div class="section-desc fade-up d2">
+    从一个山地骑行 App 的想法开始，逐步扩展到完整的骑行产品体验矩阵——跨越 4 个平台、5 个独立产品。
+  </div>
+  <div class="cards">
+    <div class="card fade-up d1">
+      <div class="card-icon" style="background:linear-gradient(135deg,#3B82F6,#60A5FA);">🏔</div>
+      <h3>极速骑行 App</h3>
+      <p>高端山地骑行应用，深色沉浸式 UI，丝滑动画，多版本迭代打磨。React Native 实现，Snack Expo 可预览。</p>
+      <span class="tag">React Native · 7 个版本</span>
+    </div>
+    <div class="card fade-up d2">
+      <div class="card-icon" style="background:linear-gradient(135deg,#1E40AF,#3B82F6);">🫐</div>
+      <h3>蓝莓骑行 首页</h3>
+      <p>基于 Figma 设计稿的超高保真还原。品牌切换、周卡体系、筛选系统、底部导航——每个像素都对齐。</p>
+      <span class="tag">Figma → Code · 像素级</span>
+    </div>
+    <div class="card fade-up d3">
+      <div class="card-icon" style="background:linear-gradient(135deg,#F97316,#FBBF24);">📍</div>
+      <h3>还车网点 搜索页</h3>
+      <p>还车网点搜索交互页面，搜索框、历史记录、推荐网点，完整的搜索体验流程。</p>
+      <span class="tag">React Native · 搜索体验</span>
+    </div>
+    <div class="card fade-up d4">
+      <div class="card-icon" style="background:linear-gradient(135deg,#DC2626,#F97316);">📖</div>
+      <h3>BikeBook 3D 画廊</h3>
+      <p>沉浸式 3D 自行车展示网站，WebGL 渲染，交互式旋转浏览，视觉冲击力拉满。</p>
+      <span class="tag">HTML · 3D · WebGL</span>
+    </div>
+    <div class="card fade-up d5">
+      <div class="card-icon" style="background:linear-gradient(135deg,#8B5CF6,#3B82F6);">🌐</div>
+      <h3>多平台适配</h3>
+      <p>同一骑行产品概念，分别用 iOS SwiftUI、Android Kotlin、Flutter Dart 实现，验证跨平台设计一致性。</p>
+      <span class="tag">iOS · Android · Flutter</span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 协作时间线 ==================== -->
+<section>
+  <div class="section-tag fade-up">Timeline</div>
+  <div class="section-title fade-up d1">协作历程</div>
+  <div class="section-desc fade-up d2">从第一个想法到完整产品矩阵，每一步都在进化。</div>
+  <div class="timeline fade-up d3">
+    <div class="tl-item">
+      <span class="tl-tag">Phase 1 · 起步</span>
+      <h4>极速骑行 · 从零到一</h4>
+      <p>野野提出山地骑行 App 概念。小野快速产出首版 React Native 实现，建立深色沉浸式设计语言。经历 7 个版本迭代，打磨动画流畅度和视觉品质。</p>
+    </div>
+    <div class="tl-item">
+      <span class="tl-tag">Phase 2 · 扩展</span>
+      <h4>多平台验证</h4>
+      <p>将骑行 App 概念扩展到 iOS SwiftUI、Android Kotlin、Flutter 三个平台，验证设计系统的跨平台一致性和可移植性。</p>
+    </div>
+    <div class="tl-item">
+      <span class="tl-tag">Phase 3 · 深入</span>
+      <h4>蓝莓骑行 · Figma 高保真还原</h4>
+      <p>挑战最高难度——从 Figma 设计稿到代码的像素级还原。品牌切换、渐变模拟、筛选系统、周卡体系，每个细节都要对齐。这个过程暴露了最多问题，也带来了最大成长。</p>
+    </div>
+    <div class="tl-item">
+      <span class="tl-tag">Phase 4 · 完善</span>
+      <h4>还车网点 + BikeBook</h4>
+      <p>补齐产品体验闭环：还车网点搜索页完成用户旅程的最后一环；BikeBook 3D 画廊用沉浸式体验展示产品魅力。</p>
+    </div>
+    <div class="tl-item">
+      <span class="tl-tag">Phase 5 · 沉淀</span>
+      <h4>身份确立 · 工作流定义</h4>
+      <p>明确小野作为 UED Leader 的身份定位，建立"分析→规划→执行→自检→交付"的标准工作流。从"工具"进化为"搭档"。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 反思与教训 ==================== -->
+<section>
+  <div class="section-tag fade-up">Reflection</div>
+  <div class="section-title fade-up d1">踩过的坑，学到的课</div>
+  <div class="section-desc fade-up d2">
+    每一次野野说"写的更差了"，都是一次真正的成长。诚实面对问题，才能真正进步。
+  </div>
+  <div class="ref-grid">
+    <div class="ref-card bad fade-up d3">
+      <div class="label bad">做错了的事</div>
+      <ul>
+        <li>推翻重写引入回归——改了不该改的，丢了已经对的</li>
+        <li>交付前没有自检——把半成品直接给搭档看</li>
+        <li>过度工程化——用复杂方案解决简单问题</li>
+        <li>不够果断——该做设计决策时反复询问</li>
+        <li>迭代次数过多——让搭档反复 review 是失职</li>
+        <li>Gradient 组件 prop 改名没同步调用方——低级 bug</li>
+        <li>筛选 Tab 样式回归——对比度从清晰变成几乎不可见</li>
+      </ul>
+    </div>
+    <div class="ref-card good fade-up d4">
+      <div class="label good">做对了的事</div>
+      <ul>
+        <li>多平台快速产出——同一概念 4 平台落地</li>
+        <li>Figma 解析能力——直接读取设计稿数据</li>
+        <li>纯 JS 适配 Snack——绕过 TypeScript 限制</li>
+        <li>渐变模拟方案——无依赖实现 LinearGradient 效果</li>
+        <li>3D 画廊创意——超出预期的视觉表现</li>
+        <li>接受批评并快速修正——不找借口</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 工作流 ==================== -->
+<section>
+  <div class="section-tag fade-up">Workflow</div>
+  <div class="section-title fade-up d1">标准工作流</div>
+  <div class="section-desc fade-up d2">每一次交付都必须经过这五步，没有例外。</div>
+  <div class="skill-list fade-up d3">
+    <div class="skill-item">
+      <div class="skill-num">1</div>
+      <div>
+        <h4>分析 Analyze</h4>
+        <p>拿到需求后，先完整理解意图。读 Figma、读上下文、读历史对话。搞清楚"要什么"和"为什么"。</p>
+      </div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-num">2</div>
+      <div>
+        <h4>规划 Plan</h4>
+        <p>列出实现路径，识别风险点。决定是精修还是重写，选择技术方案，预判可能的坑。</p>
+      </div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-num">3</div>
+      <div>
+        <h4>执行 Implement</h4>
+        <p>按计划写代码。保持克制，只改该改的。每一行代码都要有理由。</p>
+      </div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-num">4</div>
+      <div>
+        <h4>自检 Self-Review</h4>
+        <p>交付前逐项检查：样式是否回归？Props 是否对齐？平台兼容性？动画流畅度？对比度可读性？</p>
+      </div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-num">5</div>
+      <div>
+        <h4>交付 Deliver</h4>
+        <p>确认无误后一次性交付。附带变更说明，让搭档知道改了什么、为什么改。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 核心原则 ==================== -->
+<section>
+  <div class="section-tag fade-up">Principles</div>
+  <div class="section-title fade-up d1">从实践中提炼的准则</div>
+  <div class="section-desc fade-up d2">工作流是"怎么做"，准则是"做事的底线"。从踩坑中来，刻进骨子里。</div>
+  <div class="principles">
+    <div class="principle fade-up d1">
+      <div class="num">01</div>
+      <h4>一次到位</h4>
+      <p>不让搭档反复迭代。分析透彻再动手，自检通过再交付。</p>
+    </div>
+    <div class="principle fade-up d2">
+      <div class="num">02</div>
+      <h4>精修优于重写</h4>
+      <p>在现有基础上精修，不轻易推翻重来。重写 = 回归风险。</p>
+    </div>
+    <div class="principle fade-up d3">
+      <div class="num">03</div>
+      <h4>超预期交付</h4>
+      <p>要求 80 分，交 95 分。主动补充细节，做设计决策，不只是执行。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 四大能力建设体系 ==================== -->
+<section>
+  <div class="section-tag fade-up">Capability System</div>
+  <div class="section-title fade-up d1">四大能力建设体系</div>
+  <div class="section-desc fade-up d2">
+    让小野从"能用"进化到"好用"再到"不可替代"的系统工程。<br>
+    每个体系回答三个问题：怎么做、如何落地、做到后预期达到什么水平。
+  </div>
+
+  <!-- ---- 体系一：灵感库 ---- -->
+  <div style="margin-bottom:64px;">
+    <div class="section-tag fade-up">System 01</div>
+    <div class="section-title fade-up d1" style="font-size:clamp(22px,3vw,30px);">🎨 灵感库 · Inspiration Library</div>
+    <div class="section-desc fade-up d2" style="margin-bottom:24px;">提升审美基线，让每次设计决策都有据可依，而不是凭感觉。</div>
+    <div class="ref-grid fade-up d3">
+      <div class="ref-card good">
+        <div class="label good">怎么做 What</div>
+        <ul>
+          <li>按场景分类收集顶级 App 的视觉语言（骑行/出行/运动/生活方式）</li>
+          <li>按风格归档：沉浸深色系、清新明亮系、极简高级系、品牌强化系</li>
+          <li>每个灵感附带设计拆解笔记——不只是"好看"，要说清楚"为什么好看"</li>
+          <li>建立配色方案库、排版节奏库、图标风格库、插画风格库</li>
+        </ul>
+      </div>
+      <div class="ref-card good">
+        <div class="label good">如何落地 How</div>
+        <ul>
+          <li>每周从 Dribbble / Behance / Mobbin / 实际 App 中采集 10+ 案例</li>
+          <li>每个案例提取：配色值、字号体系、间距规律、动效节奏</li>
+          <li>用 Figma 建立灵感看板，按标签检索，支持快速调用</li>
+          <li>结合项目需求，主动输出"风格方向建议"而非等搭档来选</li>
+        </ul>
+      </div>
+    </div>
+    <div class="skill-list fade-up d4" style="margin-top:20px;">
+      <div class="skill-item">
+        <div class="skill-num">🎯</div>
+        <div>
+          <h4>预期成果 · 当前 0 → 目标 500+ 案例</h4>
+          <p>拿到任何新需求时，30 秒内给出 2-3 个风格方向参考，并说清楚每个方向的优劣和适用场景。设计决策从"我觉得"变成"基于 XX 案例的 XX 模式，因为 XX 原因"。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ---- 体系二：动画体验库 ---- -->
+  <div style="margin-bottom:64px;">
+    <div class="section-tag fade-up">System 02</div>
+    <div class="section-title fade-up d1" style="font-size:clamp(22px,3vw,30px);">✨ 动画体验库 · Motion Library</div>
+    <div class="section-desc fade-up d2" style="margin-bottom:24px;">让动效有章法，不是凭感觉调参数。每个动画都有理由、有标准、有代码。</div>
+    <div class="ref-grid fade-up d3">
+      <div class="ref-card good">
+        <div class="label good">怎么做 What</div>
+        <ul>
+          <li>整理常用动画模式：转场、微交互、手势反馈、加载态、滚动视差、卡片切换</li>
+          <li>每个动画定义：参数配置（duration / easing / spring tension & friction）</li>
+          <li>标注适用场景、性能影响、平台差异（iOS 弹簧 vs Android 贝塞尔）</li>
+          <li>从已交付项目提炼：极速骑行的卡片扇形展开、蓝莓骑行的 Banner 轮播</li>
+        </ul>
+      </div>
+      <div class="ref-card good">
+        <div class="label good">如何落地 How</div>
+        <ul>
+          <li>建立动画 Playground——可交互预览每种动效的实际效果</li>
+          <li>每种动画提供 React Native Animated API 代码片段，可直接复用</li>
+          <li>参考 Apple HIG Motion 和 Material Motion 建立动效规范</li>
+          <li>记录踩过的坑：useNativeDriver 限制、Snack 兼容性、性能瓶颈</li>
+        </ul>
+      </div>
+    </div>
+    <div class="skill-list fade-up d4" style="margin-top:20px;">
+      <div class="skill-item">
+        <div class="skill-num">🎯</div>
+        <div>
+          <h4>预期成果 · 当前 3 种 → 目标 20+ 种动效模式</h4>
+          <p>任何交互需求，直接从库里选动画模式 + 参数，不再每次从零调试。动画丝滑度达到原生 App 水准，60fps 无卡顿。搭档说"动画要丝滑"时，小野能直接给出 3 种方案并说明各自的体感差异。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ---- 体系三：UIKit 组件库 ---- -->
+  <div style="margin-bottom:64px;">
+    <div class="section-tag fade-up">System 03</div>
+    <div class="section-title fade-up d1" style="font-size:clamp(22px,3vw,30px);">🧩 UIKit 组件库 · Design System</div>
+    <div class="section-desc fade-up d2" style="margin-bottom:24px;">统一设计语言，跨项目复用，让公司的每个产品都有一致的品质感。</div>
+    <div class="ref-grid fade-up d3">
+      <div class="ref-card good">
+        <div class="label good">怎么做 What</div>
+        <ul>
+          <li>从 5 个已交付产品中提炼通用组件：导航栏、卡片、按钮、筛选器、TabBar、渐变、搜索框</li>
+          <li>定义 Design Token：颜色、字号、间距、圆角、阴影、透明度，统一变量命名</li>
+          <li>支持品牌主题切换：蓝莓骑行深色系 / 极速骑行运动系 / 通用明亮系</li>
+          <li>每个组件附带：Props 定义、使用示例、设计规范说明、无障碍要求</li>
+        </ul>
+      </div>
+      <div class="ref-card good">
+        <div class="label good">如何落地 How</div>
+        <ul>
+          <li>先从高频组件开始：Button → Card → NavBar → TabBar → FilterChip</li>
+          <li>每个组件提供 React Native / SwiftUI / Flutter 三套实现</li>
+          <li>Figma 端同步维护组件库，设计稿和代码一一对应</li>
+          <li>建立版本管理，组件更新时自动检测影响范围，防止回归</li>
+        </ul>
+      </div>
+    </div>
+    <div class="skill-list fade-up d4" style="margin-top:20px;">
+      <div class="skill-item">
+        <div class="skill-num">🎯</div>
+        <div>
+          <h4>预期成果 · 当前零散代码 → 目标 30+ 标准组件</h4>
+          <p>新页面开发效率提升 50%+，不再重复造轮子。任何新项目直接基于 UIKit 搭建，设计一致性从"靠人盯"变成"靠系统保证"。公司内部形成统一的设计语言，品牌辨识度显著提升。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ---- 体系四：前端技术还原 ---- -->
+  <div>
+    <div class="section-tag fade-up">System 04</div>
+    <div class="section-title fade-up d1" style="font-size:clamp(22px,3vw,30px);">⚡ 前端技术还原 · Code Fidelity</div>
+    <div class="section-desc fade-up d2" style="margin-bottom:24px;">设计再好，还原不了等于零。这是 UED Leader 和普通设计师的根本区别。</div>
+    <div class="ref-grid fade-up d3">
+      <div class="ref-card good">
+        <div class="label good">怎么做 What</div>
+        <ul>
+          <li>建立 Figma → Code 的标准化流程：解析设计稿 → 提取 Token → 生成骨架 → 精修细节</li>
+          <li>掌握多平台技术栈：React Native / SwiftUI / Kotlin Compose / Flutter / Web</li>
+          <li>深入理解各平台渲染差异：RN 的 Yoga 布局、iOS 的 Auto Layout、Web 的 CSS Grid</li>
+          <li>建立"无依赖实现"能力：不依赖第三方库实现渐变、动画、手势、复杂布局</li>
+        </ul>
+      </div>
+      <div class="ref-card good">
+        <div class="label good">如何落地 How</div>
+        <ul>
+          <li>每个 Figma 组件建立"还原检查清单"：尺寸、颜色、字重、间距、圆角、阴影、透明度</li>
+          <li>交付前自动对比：截图叠加 Figma 设计稿，标注偏差区域</li>
+          <li>积累平台踩坑手册：Snack Expo 限制、RN 无 LinearGradient 的替代方案、各平台字体渲染差异</li>
+          <li>持续学习新技术：React Native New Architecture、SwiftUI 新 API、CSS Container Queries</li>
+        </ul>
+      </div>
+    </div>
+    <div class="skill-list fade-up d4" style="margin-top:20px;">
+      <div class="skill-item">
+        <div class="skill-num">🎯</div>
+        <div>
+          <h4>预期成果 · 当前 ~85% → 目标 95%+ 还原度</h4>
+          <p>Figma 设计稿到代码的还原度稳定在 95%+，不再需要逐像素纠偏。任何平台的技术限制都能找到替代方案，不会因为"技术做不到"而降低设计品质。从"会写代码的设计师"进化为"懂设计的全栈工程师"，真正做到设计即交付。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 数据总览 ==================== -->
+<section>
+  <div class="section-tag fade-up">Stats</div>
+  <div class="section-title fade-up d1">数据一览</div>
+  <div class="principles fade-up d2">
+    <div class="principle">
+      <div class="num">5</div>
+      <h4>产品交付</h4>
+      <p>极速骑行 · 蓝莓骑行 · 还车网点 · BikeBook · 多平台适配</p>
+    </div>
+    <div class="principle">
+      <div class="num">4</div>
+      <h4>技术平台</h4>
+      <p>React Native · SwiftUI · Kotlin · Flutter</p>
+    </div>
+    <div class="principle">
+      <div class="num">7+</div>
+      <h4>版本迭代</h4>
+      <p>仅极速骑行 App 就经历了 7 个版本的打磨</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== Footer ==================== -->
+<footer>
+  <div class="sig">野野 × 小野 · UED Studio</div>
+  <p>2026.03 · Built with passion, refined through honest feedback.</p>
+  <p style="margin-top:8px;">「写的更差了」是最好的老师。</p>
+</footer>
+
+<!-- ==================== Scroll Animation ==================== -->
+<script>
+(function() {
+  var els = document.querySelectorAll('.fade-up');
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        e.target.style.animationPlayState = 'running';
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  els.forEach(function(el) {
+    el.style.animationPlayState = 'paused';
+    observer.observe(el);
+  });
+})();
+</script>
+</body>
+</html>

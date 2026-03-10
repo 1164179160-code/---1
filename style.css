@@ -1,0 +1,458 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    background: #0a0a0a;
+    color: #fff;
+    overflow-x: hidden;
+}
+
+/* 导航栏 */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(10, 10, 10, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 40px;
+}
+
+.nav-menu a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.nav-menu a:hover {
+    color: #667eea;
+}
+
+/* 英雄区 */
+.hero-section {
+    position: relative;
+    height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-image: url('https://images.unsplash.com/photo-1544191696-102dbdaeeaa0?w=1920');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.7) 0%, rgba(118, 75, 162, 0.7) 100%);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    animation: fadeInUp 1s ease-out;
+}
+
+.hero-title {
+    font-size: 72px;
+    font-weight: 900;
+    margin-bottom: 20px;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.hero-subtitle {
+    font-size: 24px;
+    margin-bottom: 40px;
+    opacity: 0.9;
+}
+
+.cta-button {
+    padding: 18px 48px;
+    font-size: 18px;
+    font-weight: 600;
+    background: #fff;
+    color: #667eea;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* 车型区 - 视差效果 */
+.bikes-section {
+    padding: 120px 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.section-title {
+    font-size: 48px;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 80px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.bikes-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 40px;
+}
+
+.bike-card {
+    background: #1a1a1a;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+
+.bike-card:hover {
+    transform: translateY(-15px) scale(1.02);
+    box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
+}
+
+.bike-image {
+    height: 300px;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.5s;
+}
+
+.bike-card:hover .bike-image {
+    transform: scale(1.1);
+}
+
+.bike-info {
+    padding: 30px;
+}
+
+.bike-info h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.bike-info p {
+    color: #999;
+    margin-bottom: 20px;
+}
+
+.price {
+    font-size: 28px;
+    font-weight: 700;
+    color: #667eea;
+}
+
+/* 爆款推荐 */
+.featured-section {
+    padding: 120px 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+    background: linear-gradient(180deg, transparent 0%, rgba(102, 126, 234, 0.05) 100%);
+}
+
+.featured-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 80px;
+}
+
+.badge {
+    padding: 8px 20px;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 700;
+    animation: pulse 2s infinite;
+}
+
+.featured-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+}
+
+.featured-card {
+    background: #1a1a1a;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.4s;
+    border: 2px solid transparent;
+}
+
+.featured-card:hover {
+    border-color: #667eea;
+    transform: translateY(-10px);
+    box-shadow: 0 20px 60px rgba(102, 126, 234, 0.4);
+}
+
+.main-card {
+    grid-column: span 1;
+}
+
+.featured-image {
+    height: 250px;
+    background-size: cover;
+    background-position: center;
+}
+
+.featured-content {
+    padding: 30px;
+}
+
+.tag {
+    display: inline-block;
+    padding: 6px 16px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.tag.new {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.featured-content h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.featured-content p {
+    color: #999;
+    margin-bottom: 20px;
+}
+
+.price-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.price-new {
+    font-size: 28px;
+    font-weight: 700;
+    color: #667eea;
+}
+
+.price-old {
+    font-size: 18px;
+    color: #666;
+    text-decoration: line-through;
+}
+
+/* 配套商品 */
+.accessories-section {
+    padding: 120px 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.accessories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+}
+
+.accessory-card {
+    background: #1a1a1a;
+    padding: 40px 30px;
+    border-radius: 20px;
+    text-align: center;
+    transition: all 0.3s;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.accessory-card:hover {
+    border-color: #667eea;
+    transform: translateY(-10px);
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+}
+
+.accessory-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+}
+
+.accessory-card h4 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.accessory-card p {
+    color: #999;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+/* Feed流 */
+.feed-section {
+    padding: 120px 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.feed-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+}
+
+.feed-card {
+    background: #1a1a1a;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.feed-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.3);
+}
+
+.feed-image {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+}
+
+.feed-content {
+    padding: 25px;
+}
+
+.feed-tag {
+    display: inline-block;
+    padding: 5px 12px;
+    background: rgba(102, 126, 234, 0.2);
+    color: #667eea;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.feed-tag.hot {
+    background: rgba(245, 87, 108, 0.2);
+    color: #f5576c;
+}
+
+.feed-content h4 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+
+.feed-content p {
+    color: #999;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.feed-meta {
+    display: flex;
+    gap: 20px;
+    font-size: 14px;
+    color: #666;
+}
+
+/* 页脚 */
+.footer {
+    padding: 60px 40px;
+    text-align: center;
+    background: #0a0a0a;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: #666;
+}
+
+/* 动画 */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 42px;
+    }
+    
+    .hero-subtitle {
+        font-size: 18px;
+    }
+    
+    .section-title {
+        font-size: 32px;
+    }
+    
+    .bikes-container,
+    .featured-grid,
+    .accessories-grid,
+    .feed-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .nav-menu {
+        gap: 20px;
+    }
+}
