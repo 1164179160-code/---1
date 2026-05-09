@@ -1,0 +1,968 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>车控页改版原型 v4</title>
+  <style>
+    :root {
+      --bg: #f4f5f7;
+      --ink: #101114;
+      --sub: #666f7b;
+      --muted: #9aa3ad;
+      --blue: #2d64ff;
+      --cyan: #13a8ff;
+      --green: #21d874;
+      --orange: #ff8a1f;
+      --red: #ff4b45;
+      --line: #e9edf1;
+      --card: #fff;
+      --shadow: 0 10px 28px rgba(24, 35, 50, .08);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: var(--ink);
+      background: #dde3ea;
+    }
+
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 26px 20px 40px;
+    }
+
+    .intro h1 {
+      margin: 0 0 8px;
+      font-size: 26px;
+    }
+
+    .intro p {
+      margin: 0 0 18px;
+      color: #52606d;
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .scenario-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .scenario-tabs button {
+      border: 1px solid #cfd8e3;
+      background: white;
+      color: #222a33;
+      border-radius: 10px;
+      padding: 9px 12px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .scenario-tabs button.active {
+      background: #111;
+      border-color: #111;
+      color: white;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 390px minmax(0, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .phone {
+      width: 390px;
+      height: 844px;
+      border-radius: 28px;
+      padding: 3px;
+      background: #11151a;
+      box-shadow: 0 20px 44px rgba(0, 0, 0, .28);
+      position: sticky;
+      top: 16px;
+    }
+
+    .screen {
+      height: 838px;
+      border-radius: 25px;
+      overflow: hidden;
+      position: relative;
+      background: var(--bg);
+    }
+
+    .scroll {
+      height: 100%;
+      overflow: auto;
+      padding-bottom: 112px;
+      scrollbar-width: none;
+    }
+
+    .scroll::-webkit-scrollbar { display: none; }
+
+    .hero {
+      min-height: 382px;
+      padding: 18px 18px 0;
+      position: relative;
+      background:
+        radial-gradient(ellipse at 72% 44%, rgba(255, 236, 207, .95) 0%, rgba(255, 236, 207, .28) 30%, rgba(255,255,255,0) 54%),
+        linear-gradient(180deg, #a8b0ca 0%, #d7d9e4 52%, #f5f5f7 100%);
+      overflow: hidden;
+    }
+
+    .status {
+      height: 28px;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 16px;
+      font-weight: 750;
+    }
+
+    .topline {
+      position: relative;
+      margin-top: 13px;
+      height: 38px;
+    }
+
+    .plate {
+      position: absolute;
+      left: 0;
+      top: 4px;
+      max-width: 156px;
+      font-size: 24px;
+      font-weight: 780;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .pill {
+      position: absolute;
+      top: 0;
+      height: 38px;
+      border-radius: 22px;
+      background: rgba(255,255,255,.72);
+      border: 1px solid rgba(255,255,255,.95);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 760;
+      color: #20242a;
+    }
+
+    .pill.bluetooth { left: 168px; width: 94px; }
+    .pill.menu { right: 0; width: 82px; }
+
+    .battery {
+      margin-top: 26px;
+      width: 136px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .battery .pct {
+      display: flex;
+      align-items: baseline;
+      gap: 3px;
+      margin-bottom: 8px;
+    }
+
+    .battery strong {
+      font-size: 49px;
+      line-height: .9;
+      font-weight: 860;
+    }
+
+    .battery span {
+      font-size: 20px;
+      font-weight: 760;
+    }
+
+    .bar {
+      width: 118px;
+      height: 7px;
+      background: white;
+      border-radius: 9px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .bar i {
+      display: block;
+      width: var(--charge, 59%);
+      height: 100%;
+      background: var(--green);
+      border-radius: 9px;
+    }
+
+    .range {
+      font-size: 19px;
+      font-weight: 720;
+    }
+
+    .scooter {
+      position: absolute;
+      right: 0;
+      top: 122px;
+      width: 250px;
+      height: 178px;
+      z-index: 1;
+    }
+
+    .scooter .body {
+      position: absolute;
+      left: 54px;
+      top: 78px;
+      width: 132px;
+      height: 50px;
+      border-radius: 12px 16px 18px 18px;
+      background: linear-gradient(145deg, #f7f5ef, #d7d3c8);
+      box-shadow: inset -12px -9px 14px rgba(75, 80, 86, .16);
+    }
+
+    .scooter .bucket {
+      position: absolute;
+      left: 35px;
+      top: 30px;
+      width: 82px;
+      height: 64px;
+      border-radius: 10px 10px 18px 18px;
+      background: linear-gradient(180deg, #fff, #e8e3d8);
+      border: 2px solid rgba(55,55,55,.08);
+    }
+
+    .scooter .seat {
+      position: absolute;
+      left: 146px;
+      top: 50px;
+      width: 66px;
+      height: 24px;
+      border-radius: 18px;
+      background: #9f968b;
+      box-shadow: inset -8px -5px 10px rgba(0,0,0,.16);
+    }
+
+    .scooter .back {
+      position: absolute;
+      left: 202px;
+      top: 35px;
+      width: 24px;
+      height: 24px;
+      border-radius: 8px;
+      background: #8f877d;
+    }
+
+    .scooter .stem {
+      position: absolute;
+      left: 82px;
+      top: 4px;
+      width: 60px;
+      height: 66px;
+      border-top: 5px solid #5a534b;
+      border-left: 5px solid #5a534b;
+      transform: rotate(12deg);
+      border-radius: 5px;
+    }
+
+    .scooter .wheel {
+      position: absolute;
+      bottom: 16px;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      border: 10px solid #1f2429;
+      background: radial-gradient(circle, #d8dde2 0 32%, #747b84 33% 42%, transparent 43%);
+    }
+
+    .scooter .front { left: 52px; }
+    .scooter .back-wheel { right: 20px; width: 46px; height: 46px; bottom: 20px; border-width: 8px; }
+    .scooter .shadow {
+      position: absolute;
+      left: 28px;
+      right: 20px;
+      bottom: 6px;
+      height: 26px;
+      border-radius: 50%;
+      background: rgba(0,0,0,.16);
+      filter: blur(12px);
+    }
+
+    .segmented {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: 18px;
+      height: 48px;
+      border-radius: 26px;
+      background: rgba(255,255,255,.58);
+      border: 1px solid rgba(255,255,255,.96);
+      padding: 4px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+      z-index: 4;
+    }
+
+    .segmented button {
+      border: 0;
+      border-radius: 23px;
+      background: transparent;
+      color: #5f6873;
+      font-size: 17px;
+      font-weight: 780;
+      cursor: pointer;
+    }
+
+    .segmented button.active {
+      background: white;
+      color: #111;
+      box-shadow: 0 5px 16px rgba(34, 42, 52, .12);
+    }
+
+    .risk {
+      margin: 10px 18px 0;
+      min-height: 42px;
+      border-radius: 14px;
+      padding: 10px 13px;
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 14px;
+      font-weight: 680;
+    }
+
+    .risk.show { display: flex; }
+    .risk.orange { background: #fff0da; color: #ab5b00; }
+    .risk.red { background: #fff0ee; color: #d72525; }
+    .risk.blue { background: #eaf7ff; color: #0076bd; }
+    .risk.green { background: #e9fff1; color: #008746; }
+
+    .risk button {
+      border: 0;
+      border-radius: 16px;
+      padding: 6px 10px;
+      background: currentColor;
+      color: white;
+      font-size: 12px;
+      font-weight: 760;
+      white-space: nowrap;
+    }
+
+    .content {
+      padding: 12px 18px 0;
+    }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    .control-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .control-btn {
+      border: 0;
+      border-radius: 18px;
+      min-height: 96px;
+      background: white;
+      display: grid;
+      place-items: center;
+      gap: 8px;
+      color: #4d5660;
+      font-size: 15px;
+      font-weight: 720;
+      box-shadow: 0 1px 0 rgba(0,0,0,.03);
+    }
+
+    .control-btn.main {
+      background: #111;
+      color: white;
+      grid-column: span 3;
+      min-height: 64px;
+      display: flex;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .ico {
+      width: 30px;
+      height: 30px;
+      border: 3px solid currentColor;
+      position: relative;
+    }
+
+    .ico.bell { border-radius: 17px 17px 8px 8px; color: #7be82d; }
+    .ico.pin { border-radius: 50% 50% 50% 0; transform: rotate(-45deg); color: var(--cyan); }
+    .ico.seat { height: 18px; border-radius: 16px 16px 5px 5px; transform: rotate(-14deg); }
+    .ico.lock { border-radius: 7px; }
+    .ico.lock::before {
+      content: "";
+      position: absolute;
+      left: 4px;
+      top: -17px;
+      width: 14px;
+      height: 14px;
+      border: 3px solid currentColor;
+      border-bottom: 0;
+      border-radius: 13px 13px 0 0;
+    }
+
+    .card {
+      background: white;
+      border-radius: 18px;
+      margin-bottom: 12px;
+      overflow: hidden;
+      box-shadow: 0 1px 0 rgba(0,0,0,.03);
+    }
+
+    .card.pad { padding: 16px; }
+    .head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .title { font-size: 20px; font-weight: 820; }
+    .link { color: #9aa3ad; font-size: 15px; }
+    .sub { color: #8c95a0; font-size: 14px; line-height: 1.5; }
+
+    .map-card {
+      height: 186px;
+      position: relative;
+      background: #f8fafc;
+    }
+    .map-bg {
+      height: 104px;
+      background:
+        linear-gradient(28deg, transparent 0 45%, rgba(47,174,255,.36) 46% 48%, transparent 49%),
+        linear-gradient(120deg, transparent 0 28%, rgba(255,255,255,.95) 29% 33%, transparent 34%),
+        linear-gradient(65deg, transparent 0 64%, rgba(255,255,255,.95) 65% 69%, transparent 70%),
+        #e9edf3;
+      position: relative;
+    }
+    .pin-badge {
+      position: absolute;
+      left: 198px;
+      top: 48px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--cyan);
+      color: white;
+      border: 5px solid white;
+      display: grid;
+      place-items: center;
+      font-weight: 850;
+      box-shadow: 0 6px 14px rgba(19,168,255,.36);
+    }
+    .station {
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 12px;
+      min-height: 70px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.94);
+      display: grid;
+      grid-template-columns: 1fr 74px;
+      gap: 10px;
+      align-items: center;
+      padding: 0 12px;
+      box-shadow: 0 8px 18px rgba(27,33,45,.08);
+    }
+    .station b { display: block; font-size: 16px; margin-bottom: 5px; }
+    .station span { color: #8c95a0; font-size: 14px; }
+    .station-actions { display: flex; justify-content: flex-end; gap: 8px; }
+    .mini {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: #f2f4f6;
+      font-weight: 850;
+    }
+
+    .rent-time {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+      flex-wrap: wrap;
+      margin-bottom: 7px;
+    }
+    .rent-time span { font-size: 17px; }
+    .rent-time strong { font-size: 30px; line-height: 1; }
+    .order-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .btn {
+      border: 0;
+      min-height: 46px;
+      border-radius: 14px;
+      background: #f1f4f6;
+      font-size: 16px;
+      font-weight: 780;
+      color: #111;
+    }
+    .btn.primary { background: #111; color: white; }
+    .btn.blue { background: var(--blue); color: white; }
+    .btn.red { background: var(--red); color: white; }
+    .btn.orange { background: var(--orange); color: white; }
+
+    .energy-card {
+      background: #d9ffe7;
+      border-radius: 18px;
+      padding: 15px 14px;
+      margin-bottom: 12px;
+    }
+    .energy-inner {
+      min-height: 66px;
+      border-radius: 14px;
+      background: white;
+      display: grid;
+      grid-template-columns: 54px 1fr 86px;
+      gap: 8px;
+      align-items: center;
+      padding: 8px 10px;
+    }
+    .battery-asset {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: linear-gradient(145deg, #eafff1, #33db75);
+      color: white;
+      display: grid;
+      place-items: center;
+      font-size: 28px;
+      font-weight: 900;
+    }
+    .energy-num { font-size: 28px; font-weight: 860; }
+    .use-btn {
+      border: 0;
+      height: 42px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, #666, #3f3f3f);
+      color: white;
+      font-size: 16px;
+      font-weight: 780;
+    }
+
+    .deal-card {
+      background: linear-gradient(135deg, #ff355b, #ff7d2b);
+      border-radius: 18px;
+      color: white;
+      padding: 11px 10px 12px;
+      margin-bottom: 12px;
+    }
+    .deal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 15px;
+      margin-bottom: 8px;
+    }
+    .deal-head strong { font-size: 19px; margin-right: 6px; }
+    .deal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+    .deal {
+      background: white;
+      color: #111;
+      border-radius: 10px;
+      padding: 12px 9px 10px;
+      min-height: 126px;
+    }
+    .deal h3 { margin: 0 0 6px; font-size: 19px; line-height: 1.15; }
+    .deal p { margin: 0 0 8px; color: #8d96a1; font-size: 13px; }
+    .coupon {
+      display: inline-block;
+      border: 1px solid var(--orange);
+      color: var(--orange);
+      border-radius: 5px;
+      padding: 2px 4px;
+      font-size: 10px;
+      margin-right: 3px;
+    }
+    .price {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+      margin-top: 8px;
+    }
+    .price strong { color: #ff5b30; font-size: 25px; }
+    .price del { color: #969da6; font-size: 13px; }
+    .grab {
+      margin-left: auto;
+      width: 54px;
+      height: 28px;
+      border: 0;
+      border-radius: 15px;
+      background: #ff6936;
+      color: white;
+      font-size: 13px;
+      font-weight: 780;
+    }
+
+    .bottom-nav {
+      position: absolute;
+      left: 28px;
+      right: 28px;
+      bottom: 34px;
+      height: 66px;
+      border-radius: 34px;
+      background: rgba(255,255,255,.94);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      align-items: center;
+      text-align: center;
+      font-weight: 760;
+      font-size: 16px;
+      box-shadow: 0 10px 30px rgba(40, 50, 66, .14);
+    }
+    .bottom-nav .active {
+      height: 52px;
+      margin: 0 3px;
+      border-radius: 28px;
+      background: #f2f3f4;
+      display: grid;
+      place-items: center;
+    }
+    .homebar {
+      position: absolute;
+      left: 50%;
+      bottom: 8px;
+      transform: translateX(-50%);
+      width: 142px;
+      height: 5px;
+      border-radius: 4px;
+      background: #000;
+    }
+
+    .side { display: grid; gap: 14px; }
+    .panel {
+      background: white;
+      border: 1px solid #d4dde7;
+      border-radius: 14px;
+      padding: 16px;
+    }
+    .panel h2 { margin: 0 0 10px; font-size: 18px; }
+    .panel p, .panel li { color: #52606d; line-height: 1.65; font-size: 14px; }
+    .panel ul { margin: 8px 0 0; padding-left: 18px; }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .phone { position: static; margin: 0 auto; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="intro">
+      <h1>车控页改版原型 v4：控车 / 订单分离</h1>
+      <p>新的交互形式：默认进入“控车”，确保车控制和当前车位置始终清楚；订单租期、续租、还车、换电权益收进“订单”。风险状态用顶部提醒跨页透出。</p>
+    </section>
+
+    <nav class="scenario-tabs" aria-label="场景切换">
+      <button class="active" data-case="normal">正常</button>
+      <button data-case="nearDue">即将逾期</button>
+      <button data-case="overdue">已逾期</button>
+      <button data-case="lowHasCard">低电有卡</button>
+      <button data-case="lowNoCard">低电无卡</button>
+      <button data-case="cardLow">次数不足</button>
+      <button data-case="returnOut">站外还车</button>
+      <button data-case="error">开锁异常</button>
+    </nav>
+
+    <section class="layout">
+      <div class="phone">
+        <div class="screen">
+          <div class="scroll">
+            <section class="hero">
+              <div class="status"><span>9:41</span><span>▮▮▮  WiFi  ▰</span></div>
+              <div class="topline">
+                <div class="plate" id="plate">深圳 568988</div>
+                <div class="pill bluetooth">⌁ Ⅱ</div>
+                <div class="pill menu">•• ⦿</div>
+              </div>
+              <div class="battery">
+                <div class="pct"><strong id="battery">59</strong><span>%</span></div>
+                <div class="bar"><i id="charge"></i></div>
+                <div class="range" id="range">续航128km</div>
+              </div>
+              <div class="scooter" aria-hidden="true">
+                <div class="shadow"></div>
+                <div class="stem"></div>
+                <div class="bucket"></div>
+                <div class="body"></div>
+                <div class="seat"></div>
+                <div class="back"></div>
+                <div class="wheel front"></div>
+                <div class="wheel back-wheel"></div>
+              </div>
+              <div class="segmented">
+                <button class="active" data-tab="control">控车</button>
+                <button data-tab="order">订单</button>
+              </div>
+            </section>
+
+            <div class="risk" id="risk"><span id="riskText"></span><button id="riskBtn">处理</button></div>
+
+            <section class="content">
+              <div class="tab-panel active" id="controlPanel">
+                <div class="control-grid">
+                  <button class="control-btn main"><span class="ico lock"></span><span id="mainControl">临时开锁</span></button>
+                  <button class="control-btn"><span class="ico bell"></span><span>响铃寻车</span></button>
+                  <button class="control-btn"><span class="ico pin"></span><span>地图寻车</span></button>
+                  <button class="control-btn"><span class="ico seat"></span><span>坐桶锁</span></button>
+                </div>
+                <div id="controlCards"></div>
+              </div>
+              <div class="tab-panel" id="orderPanel">
+                <div id="orderCards"></div>
+              </div>
+            </section>
+          </div>
+
+          <nav class="bottom-nav">
+            <span>首页</span>
+            <span>地图</span>
+            <span class="active">控车</span>
+            <span>我的</span>
+          </nav>
+          <div class="homebar"></div>
+        </div>
+      </div>
+
+      <aside class="side">
+        <section class="panel">
+          <h2 id="caseTitle">正常</h2>
+          <p id="caseDesc">控车和订单分开，正常状态默认进入控车页，用户能马上看到车控制和当前车位置。</p>
+        </section>
+        <section class="panel">
+          <h2>交互策略</h2>
+          <ul id="strategy"></ul>
+        </section>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    const ui = {
+      map(d) {
+        return `
+          <section class="card map-card">
+            <div class="head" style="padding:16px 16px 0;margin:0;position:relative;z-index:2;">
+              <div class="title">${d.title}</div>
+              <div class="link">${d.link || "查看 ›"}</div>
+            </div>
+            <div class="map-bg"><div class="pin-badge">${d.pin || "车"}</div></div>
+            <div class="station">
+              <div><b>${d.name}</b><span>${d.addr}</span></div>
+              <div class="station-actions"><span class="mini">☎</span><span class="mini">➤</span></div>
+            </div>
+          </section>
+        `;
+      },
+      rent(d) {
+        return `
+          <section class="card pad">
+            <div class="head">
+              <div class="title">${d.title}</div>
+              <div class="link">查看订单 ›</div>
+            </div>
+            <div class="rent-time">
+              <span>${d.prefix || "剩余"}</span>
+              <strong>${d.a}</strong><span>${d.au}</span>
+              ${d.b ? `<strong>${d.b}</strong><span>${d.bu}</span>` : ""}
+              ${d.c ? `<strong>${d.c}</strong><span>${d.cu}</span>` : ""}
+            </div>
+            <div class="sub">${d.sub}</div>
+            <div class="order-actions">
+              <button class="btn">${d.left || "还车并结束订单"}</button>
+              <button class="btn ${d.rightClass || "blue"}">${d.right || "续租车辆"}</button>
+            </div>
+          </section>
+        `;
+      },
+      alert(d) {
+        return `
+          <section class="card pad">
+            <div class="head"><div class="title" style="color:${d.color};">${d.title}</div></div>
+            <div class="sub">${d.text}</div>
+            <div class="order-actions">
+              <button class="btn">${d.left}</button>
+              <button class="btn ${d.btnClass || "primary"}">${d.right}</button>
+            </div>
+          </section>
+        `;
+      },
+      energy(d) {
+        return `
+          <section class="energy-card">
+            <div class="head" style="margin-bottom:12px;">
+              <div class="title">${d.title}</div>
+              <div class="link">${d.link || "查看换电卡 ›"}</div>
+            </div>
+            <div class="energy-inner">
+              <div class="battery-asset">↯</div>
+              <div><span class="energy-num">${d.num}</span><span>${d.unit}</span><div class="sub">${d.sub}</div></div>
+              <button class="use-btn">${d.btn}</button>
+            </div>
+          </section>
+        `;
+      },
+      deals() {
+        return `
+          <section class="deal-card">
+            <div class="deal-head"><span><strong>特惠购卡</strong>未使用随时退</span><span>更多 ›</span></div>
+            <div class="deal-grid">
+              <div class="deal">
+                <h3>3天3次换电权益</h3><p>全国可用</p>
+                <span class="coupon">单次2.3元</span><span class="coupon">已优惠3.1元</span>
+                <div class="price"><strong>6.9</strong><span>元</span><del>10元</del><button class="grab">抢购</button></div>
+              </div>
+              <div class="deal">
+                <h3>6天8次换电权益</h3><p>上海、北京、杭州可用</p>
+                <span class="coupon">单次2.3元</span><span class="coupon">已优惠3.1元</span>
+                <div class="price"><strong>6.9</strong><span>元</span><del>10元</del><button class="grab">抢购</button></div>
+              </div>
+            </div>
+          </section>
+        `;
+      }
+    };
+
+    const cases = {
+      normal: {
+        title: "正常",
+        desc: "控车和订单分开，正常状态默认进入控车页，用户能马上看到车控制和当前车位置。",
+        battery: 59, range: "续航128km", control: "临时开锁", risk: null,
+        controlCards: () => ui.map({ title: "当前车位置", name: "车辆当前位置", addr: "闵行区莘庄哈啰总部大厦附近", pin: "车" }),
+        orderCards: () => ui.rent({ title: "订单租期", a: "2", au: "天", b: "23", bu: "小时", c: "59", cu: "分钟", sub: "09.24 23:59 到期" }),
+        strategy: ["默认进入控车页，车控制和当前位置强保证。", "订单租期收进订单页签，减少正常态干扰。", "无风险状态不展示换电卡营销。"]
+      },
+      nearDue: {
+        title: "即将逾期",
+        desc: "临期风险跨页透出，控车页顶部提醒；订单页承接续租和还车决策。",
+        battery: 45, range: "续航86km", control: "临时关锁", risk: ["orange", "车辆即将到期，建议续租或前往还车点", "续租"],
+        controlCards: () => ui.map({ title: "当前车位置", name: "车辆当前位置", addr: "距最近还车点320米", pin: "车" }),
+        orderCards: () => ui.alert({ color: "#ff8a1f", title: "即将到期", text: "剩余12分钟，继续骑行建议立即续租，避免产生额外费用。", left: "去还车点", right: "立即续租", btnClass: "orange" }) + ui.rent({ title: "订单租期", a: "0", au: "天", b: "0", bu: "小时", c: "12", cu: "分钟", sub: "短租订单即将到期" }),
+        strategy: ["临期提醒不藏在订单里，控车页也能看到。", "订单页主任务升级为续租/还车决策。", "仍保留当前位置，帮助判断是否去还车。"]
+      },
+      overdue: {
+        title: "已逾期",
+        desc: "逾期优先级最高，订单页只保留续租/还车处理，不展示营销。",
+        battery: 39, range: "续航72km", control: "临时关锁", risk: ["red", "车辆已逾期，请立即续租或还车", "处理"],
+        controlCards: () => ui.map({ title: "当前车位置", name: "车辆当前位置", addr: "距最近还车点320米", pin: "车" }),
+        orderCards: () => ui.alert({ color: "#ff4b45", title: "车辆已逾期", text: "当前已逾期23分钟，逾期期间可能产生额外费用，请立即处理。", left: "立即还车", right: "立即续租", btnClass: "red" }),
+        strategy: ["逾期跨页置顶。", "订单页屏蔽换电卡、补电营销。", "只保留立即还车和立即续租。"]
+      },
+      lowHasCard: {
+        title: "低电有卡",
+        desc: "低电且有换电卡时，直接给去使用；不再重复推荐购买。",
+        battery: 18, range: "续航28km", control: "临时关锁", risk: ["blue", "车辆电量偏低，可使用换电卡补电", "去使用"],
+        controlCards: () => ui.map({ title: "当前车位置", name: "车辆当前位置", addr: "距最近换电柜180米", pin: "车" }),
+        orderCards: () => ui.energy({ title: "车辆补电", num: "88", unit: "次", sub: "09.24 23:59 到期", btn: "去使用" }) + ui.map({ title: "附近换电柜", link: "查看全部 ›", name: "和平路换电柜", addr: "距你180米，可用电池6组", pin: "电" }),
+        strategy: ["低电提醒在控车页透出。", "有卡时主动作是去使用，不卖新卡。", "订单页展示权益和附近换电柜。"]
+      },
+      lowNoCard: {
+        title: "低电无卡",
+        desc: "低电且无换电卡时，先给换电柜，再推荐购卡。",
+        battery: 24, range: "续航42km", control: "临时关锁", risk: ["blue", "车辆电量偏低，附近有可用换电柜", "补电"],
+        controlCards: () => ui.map({ title: "当前车位置", name: "车辆当前位置", addr: "距最近换电柜180米", pin: "车" }),
+        orderCards: () => ui.alert({ color: "#13a8ff", title: "暂无可用换电卡", text: "当前电量偏低，可先前往附近换电柜；购买换电卡后本次即可使用。", left: "先去换电", right: "购买换电卡", btnClass: "blue" }) + ui.map({ title: "附近换电柜", link: "查看全部 ›", name: "和平路换电柜", addr: "距你180米，可用电池6组", pin: "电" }) + ui.deals(),
+        strategy: ["无卡时才推荐购买。", "仍先给补能点，保证当前问题可解决。", "购卡作为订单页转化，不进入控车主界面。"]
+      },
+      cardLow: {
+        title: "次数不足",
+        desc: "长租用户有卡但次数不足时，保留去使用，并推荐加购。",
+        battery: 31, range: "续航58km", control: "临时关锁", risk: ["green", "换电卡剩余次数较少，可加购备用", "加购"],
+        controlCards: () => ui.map({ title: "当前车位置", name: "车辆当前位置", addr: "距最近换电柜180米", pin: "车" }),
+        orderCards: () => ui.energy({ title: "车辆补电", num: "1", unit: "次", sub: "剩余次数较少，建议加购备用", btn: "去使用" }) + ui.deals(),
+        strategy: ["长租 + 次数不足才加购推荐。", "去使用仍是主动作。", "加购推荐放在订单页，不打断控车。"]
+      },
+      returnOut: {
+        title: "站外还车",
+        desc: "站外还车失败时，控车页置顶提醒，位置卡切换为最近可还点。",
+        battery: 54, range: "续航96km", control: "临时关锁", risk: ["red", "当前位置不在可还区域，暂不能还车", "导航"],
+        controlCards: () => ui.map({ title: "最近可还车点", link: "共1个还车点 ›", name: "小哈服务中心三林直营店", addr: "距你260米，营业中", pin: "还" }),
+        orderCards: () => ui.alert({ color: "#ff4b45", title: "当前不能还车", text: "你不在可还区域内，请前往最近还车点后再结束订单。", left: "查看规则", right: "去最近还车点", btnClass: "red" }) + ui.rent({ title: "订单租期", a: "2", au: "天", b: "20", bu: "小时", c: "16", cu: "分钟", sub: "还车前订单仍在进行" }),
+        strategy: ["站外失败优先级高于营销。", "控车页位置卡直接切到最近可还点。", "订单页解释原因并给导航。"]
+      },
+      error: {
+        title: "开锁异常",
+        desc: "异常只解决问题，控车页保留重试和客服，不展示订单营销。",
+        battery: 59, range: "续航128km", control: "重新开锁", risk: ["red", "开锁失败，请检查蓝牙和定位权限", "重试"],
+        controlCards: () => ui.alert({ color: "#ff4b45", title: "开锁失败", text: "请确认蓝牙和定位权限已开启。如仍失败，可重试、联系客服或申请换车。", left: "联系客服", right: "重新开锁", btnClass: "red" }) + ui.map({ title: "当前车位置", name: "车辆当前位置", addr: "闵行区莘庄哈啰总部大厦附近", pin: "车" }),
+        orderCards: () => ui.rent({ title: "订单租期", a: "2", au: "天", b: "23", bu: "小时", c: "59", cu: "分钟", sub: "异常期间订单仍在进行" }),
+        strategy: ["异常优先级最高。", "控车页直接给重试/客服。", "不展示换电卡和续租营销。"]
+      }
+    };
+
+    const els = {
+      battery: document.getElementById("battery"),
+      charge: document.getElementById("charge"),
+      range: document.getElementById("range"),
+      mainControl: document.getElementById("mainControl"),
+      risk: document.getElementById("risk"),
+      riskText: document.getElementById("riskText"),
+      riskBtn: document.getElementById("riskBtn"),
+      controlCards: document.getElementById("controlCards"),
+      orderCards: document.getElementById("orderCards"),
+      title: document.getElementById("caseTitle"),
+      desc: document.getElementById("caseDesc"),
+      strategy: document.getElementById("strategy")
+    };
+
+    let currentCase = "normal";
+
+    function switchInnerTab(tabName) {
+      document.querySelectorAll(".segmented button").forEach(b => b.classList.toggle("active", b.dataset.tab === tabName));
+      document.getElementById("controlPanel").classList.toggle("active", tabName === "control");
+      document.getElementById("orderPanel").classList.toggle("active", tabName === "order");
+    }
+
+    function render(key) {
+      currentCase = key;
+      const data = cases[key];
+      els.battery.textContent = data.battery;
+      els.charge.style.setProperty("--charge", `${data.battery}%`);
+      els.range.textContent = data.range;
+      els.mainControl.textContent = data.control;
+      if (data.risk) {
+        els.risk.className = `risk show ${data.risk[0]}`;
+        els.riskText.textContent = data.risk[1];
+        els.riskBtn.textContent = data.risk[2];
+      } else {
+        els.risk.className = "risk";
+      }
+      els.controlCards.innerHTML = data.controlCards();
+      els.orderCards.innerHTML = data.orderCards();
+      els.title.textContent = data.title;
+      els.desc.textContent = data.desc;
+      els.strategy.innerHTML = data.strategy.map(i => `<li>${i}</li>`).join("");
+      document.querySelectorAll(".scenario-tabs button").forEach(b => b.classList.toggle("active", b.dataset.case === key));
+      switchInnerTab("control");
+    }
+
+    document.querySelectorAll(".scenario-tabs button").forEach(btn => {
+      btn.addEventListener("click", () => render(btn.dataset.case));
+    });
+    document.querySelectorAll(".segmented button").forEach(btn => {
+      btn.addEventListener("click", () => switchInnerTab(btn.dataset.tab));
+    });
+    els.riskBtn.addEventListener("click", () => switchInnerTab("order"));
+    render("normal");
+  </script>
+</body>
+</html>
